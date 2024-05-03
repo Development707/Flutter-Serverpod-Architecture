@@ -1,7 +1,8 @@
 name: serverpod_architecture_server
 description: Starting point for a Serverpod server.
 # version: 1.0.0
-# homepage: https://www.example.com
+# homepage: https://github.com/Development707/Flutter-Serverpod-Architecture
+# repository: https://github.com/Development707/Flutter-Serverpod-Architecture/serverpod_architecture_server
 
 environment:
   sdk: ">=3.0.0 <4.0.0"
@@ -9,6 +10,8 @@ environment:
 dependencies:
   serverpod: 1.2.6
   serverpod_serialization: 1.2.6
+  serverpod_architecture_shared:
+    path: ../serverpod_architecture_shared
 
 dev_dependencies:
   lints: ^3.0.0

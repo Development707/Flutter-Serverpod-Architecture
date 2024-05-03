@@ -6,11 +6,12 @@
         {
             "label": "Generate",
             "type": "shell",
-            "command": "serverpod generate",
-            "options": {
-                "cwd": "serverpod_architecture_server"
-            },
-            "problemMatcher": [],
+            "dependsOrder": "sequence",
+            "dependsOn": [
+                "shared: dart run build_runner build --delete-conflicting-outputs",
+                "server: serverpod generate"
+            ],
+            "problemMatcher": []
         },
         {
             "label": "Migrations",
@@ -19,25 +20,43 @@
             "options": {
                 "cwd": "serverpod_architecture_server"
             },
-            "problemMatcher": [],
+            "problemMatcher": []
         },
         {
-            "label": "Docker start",
+            "label": "server: serverpod generate",
+            "type": "shell",
+            "command": "serverpod generate",
+            "options": {
+                "cwd": "serverpod_architecture_server"
+            },
+            "problemMatcher": []
+        },
+        {
+            "label": "server: docker compose up --build --detach",
             "type": "shell",
             "command": "docker compose up --build --detach",
             "options": {
                 "cwd": "serverpod_architecture_server"
             },
-            "problemMatcher": [],
+            "problemMatcher": []
         },
         {
-            "label": "Docker stop",
+            "label": "server: docker compose stop",
             "type": "shell",
             "command": "docker compose stop",
             "options": {
                 "cwd": "serverpod_architecture_server"
             },
-            "problemMatcher": [],
+            "problemMatcher": []
+        },
+        {
+            "label": "shared: dart run build_runner build --delete-conflicting-outputs",
+            "type": "shell",
+            "command": "dart run build_runner build --delete-conflicting-outputs",
+            "options": {
+                "cwd": "serverpod_architecture_shared"
+            },
+            "problemMatcher": []
         }
     ]
 }

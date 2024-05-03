@@ -6,3 +6,5 @@ company:
   - deleteCompany:
 example:
   - hello:
+  - getCustomClass:
+  - getFreezedCustomClass:

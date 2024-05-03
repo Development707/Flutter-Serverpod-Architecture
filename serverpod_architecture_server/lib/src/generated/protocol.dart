@@ -19,6 +19,8 @@ import 'example.dart' as _i7;
 import 'protocol.dart' as _i8;
 import 'package:serverpod_architecture_server/src/generated/company.dart'
     as _i9;
+import 'package:serverpod_architecture_shared/serverpod_architecture_shared.dart'
+    as _i10;
 export 'company.dart';
 export 'custom_exception.dart';
 export 'employee.dart';
@@ -199,6 +201,20 @@ class Protocol extends _i1.SerializationManagerServer {
       return (data as List).map((e) => deserialize<_i9.Company>(e)).toList()
           as dynamic;
     }
+    if (t == _i10.ClassName) {
+      return _i10.ClassName.fromJson(data, this) as T;
+    }
+    if (t == _i10.FreezedCustomClass) {
+      return _i10.FreezedCustomClass.fromJson(data, this) as T;
+    }
+    if (t == _i1.getType<_i10.ClassName?>()) {
+      return (data != null ? _i10.ClassName.fromJson(data, this) : null) as T;
+    }
+    if (t == _i1.getType<_i10.FreezedCustomClass?>()) {
+      return (data != null
+          ? _i10.FreezedCustomClass.fromJson(data, this)
+          : null) as T;
+    }
     try {
       return _i2.Protocol().deserialize<T>(data, t);
     } catch (_) {}
@@ -207,6 +223,12 @@ class Protocol extends _i1.SerializationManagerServer {
 
   @override
   String? getClassNameForObject(Object data) {
+    if (data is _i10.ClassName) {
+      return 'ClassName';
+    }
+    if (data is _i10.FreezedCustomClass) {
+      return 'FreezedCustomClass';
+    }
     if (data is _i3.Company) {
       return 'Company';
     }
@@ -227,6 +249,12 @@ class Protocol extends _i1.SerializationManagerServer {
 
   @override
   dynamic deserializeByClassName(Map<String, dynamic> data) {
+    if (data['className'] == 'ClassName') {
+      return deserialize<_i10.ClassName>(data['data']);
+    }
+    if (data['className'] == 'FreezedCustomClass') {
+      return deserialize<_i10.FreezedCustomClass>(data['data']);
+    }
     if (data['className'] == 'Company') {
       return deserialize<_i3.Company>(data['data']);
     }

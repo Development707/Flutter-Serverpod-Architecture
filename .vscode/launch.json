@@ -21,8 +21,8 @@
             "type": "dart",
             "program": "bin/main.dart",
             "flutterMode": "release",
-            "preLaunchTask": "Docker start",
-            "postDebugTask": "Docker stop",
+            "preLaunchTask": "server: docker compose up --build --detach",
+            "postDebugTask": "server: docker compose stop",
             "args": [
                 "--apply-migrations"
             ],

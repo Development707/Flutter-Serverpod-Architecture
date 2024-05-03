@@ -11,7 +11,10 @@
 import 'package:serverpod_client/serverpod_client.dart' as _i1;
 import 'dart:async' as _i2;
 import 'package:serverpod_architecture_client/src/protocol/company.dart' as _i3;
-import 'protocol.dart' as _i4;
+import 'package:serverpod_architecture_shared/src/class_name.dart' as _i4;
+import 'package:serverpod_architecture_shared/src/freezed_custom_class.dart'
+    as _i5;
+import 'protocol.dart' as _i6;
 
 /// {@category Endpoint}
 class EndpointCompany extends _i1.EndpointRef {
@@ -68,6 +71,20 @@ class EndpointExample extends _i1.EndpointRef {
         'hello',
         {'name': name},
       );
+
+  _i2.Future<_i4.ClassName> getCustomClass() =>
+      caller.callServerEndpoint<_i4.ClassName>(
+        'example',
+        'getCustomClass',
+        {},
+      );
+
+  _i2.Future<_i5.FreezedCustomClass> getFreezedCustomClass() =>
+      caller.callServerEndpoint<_i5.FreezedCustomClass>(
+        'example',
+        'getFreezedCustomClass',
+        {},
+      );
 }
 
 class Client extends _i1.ServerpodClient {
@@ -79,7 +96,7 @@ class Client extends _i1.ServerpodClient {
     Duration? connectionTimeout,
   }) : super(
           host,
-          _i4.Protocol(),
+          _i6.Protocol(),
           securityContext: securityContext,
           authenticationKeyManager: authenticationKeyManager,
           streamingConnectionTimeout: streamingConnectionTimeout,

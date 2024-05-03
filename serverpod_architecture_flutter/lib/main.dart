@@ -2,8 +2,9 @@ import 'package:serverpod_architecture_client/serverpod_architecture_client.dart
 import 'package:flutter/material.dart';
 import 'package:serverpod_flutter/serverpod_flutter.dart';
 
-import 'company/company.dart';
+import 'company/company_page.dart';
 import 'home/home_page.dart';
+import 'serialization/serialization_page.dart';
 
 // Sets up a singleton client object that can be used to talk to the server from
 // anywhere in our app. The client is generated from your server code.
@@ -31,6 +32,7 @@ class MyApp extends StatelessWidget {
       routes: <String, WidgetBuilder>{
         '/': (context) => const HomePage(title: 'Serverpod Example'),
         '/company': (context) => const CompanyPage(),
+        '/serialization': (context) => const SerializationPage(),
       },
     );
   }

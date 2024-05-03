@@ -1,0 +1,1 @@
+# serverpod_architecture_shared
