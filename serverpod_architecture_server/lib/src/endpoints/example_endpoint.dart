@@ -1,4 +1,6 @@
 import 'package:serverpod/serverpod.dart';
+import 'package:serverpod_architecture_server/src/generated/custom_exception.dart';
+import 'package:serverpod_architecture_server/src/generated/error_type.dart';
 import 'package:serverpod_architecture_shared/serverpod_architecture_shared.dart';
 
 // This is an example endpoint of your server. It's best practice to use the
@@ -31,6 +33,13 @@ class ExampleEndpoint extends Endpoint {
       firstName: 'John',
       lastName: 'Doe',
       age: 25,
+    );
+  }
+
+  Future<void> doThingy(Session session) async {
+    throw CustomException(
+      message: 'Failed to do thingy',
+      errorType: ErrorType.warning,
     );
   }
 }

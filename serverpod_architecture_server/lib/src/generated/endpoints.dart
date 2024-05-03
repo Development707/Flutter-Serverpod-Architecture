@@ -161,6 +161,15 @@ class Endpoints extends _i1.EndpointDispatch {
               (endpoints['example'] as _i3.ExampleEndpoint)
                   .getFreezedCustomClass(session),
         ),
+        'doThingy': _i1.MethodConnector(
+          name: 'doThingy',
+          params: {},
+          call: (
+            _i1.Session session,
+            Map<String, dynamic> params,
+          ) async =>
+              (endpoints['example'] as _i3.ExampleEndpoint).doThingy(session),
+        ),
       },
     );
   }

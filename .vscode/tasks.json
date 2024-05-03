@@ -16,7 +16,7 @@
         {
             "label": "Migrations",
             "type": "shell",
-            "command": "serverpod create-migration",
+            "command": "serverpod create-repair-migration",
             "options": {
                 "cwd": "serverpod_architecture_server"
             },

@@ -85,6 +85,12 @@ class EndpointExample extends _i1.EndpointRef {
         'getFreezedCustomClass',
         {},
       );
+
+  _i2.Future<void> doThingy() => caller.callServerEndpoint<void>(
+        'example',
+        'doThingy',
+        {},
+      );
 }
 
 class Client extends _i1.ServerpodClient {

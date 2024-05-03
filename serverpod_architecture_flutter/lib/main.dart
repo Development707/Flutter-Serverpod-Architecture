@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:serverpod_flutter/serverpod_flutter.dart';
 
 import 'company/company_page.dart';
+import 'exception/exception_page.dart';
 import 'home/home_page.dart';
 import 'serialization/serialization_page.dart';
 
@@ -33,6 +34,7 @@ class MyApp extends StatelessWidget {
         '/': (context) => const HomePage(title: 'Serverpod Example'),
         '/company': (context) => const CompanyPage(),
         '/serialization': (context) => const SerializationPage(),
+        '/exception': (context) => const ExceptionPage(),
       },
     );
   }
