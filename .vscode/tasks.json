@@ -14,9 +14,9 @@
             "problemMatcher": []
         },
         {
-            "label": "server: serverpod create-repair-migration",
+            "label": "server: serverpod create-migration",
             "type": "shell",
-            "command": "serverpod create-repair-migration",
+            "command": "serverpod create-migration",
             "options": {
                 "cwd": "serverpod_architecture_server"
             },

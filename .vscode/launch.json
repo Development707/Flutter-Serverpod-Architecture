@@ -18,9 +18,11 @@
             "name": "Server",
             "cwd": "serverpod_architecture_server",
             "request": "launch",
+            "flutterMode": "release",
+            "console": "debugConsole",
+            "internalConsoleOptions": "openOnSessionStart",
             "type": "dart",
             "program": "bin/main.dart",
-            "flutterMode": "release",
             "preLaunchTask": "server: docker compose up --build --detach",
             "postDebugTask": "server: docker compose stop",
             "args": [
