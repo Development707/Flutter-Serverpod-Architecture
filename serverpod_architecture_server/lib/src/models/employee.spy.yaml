@@ -2,6 +2,7 @@ class: Employee
 table: employee
 serverOnly: false
 fields:
+  company: Company?, relation(name=company_employees)
   name: String
   email: String?
   phone: String?

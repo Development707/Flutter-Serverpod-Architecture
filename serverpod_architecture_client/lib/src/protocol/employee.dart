@@ -9,10 +9,13 @@
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:serverpod_client/serverpod_client.dart' as _i1;
+import 'protocol.dart' as _i2;
 
 abstract class Employee extends _i1.SerializableEntity {
   Employee._({
     this.id,
+    required this.companyId,
+    this.company,
     required this.name,
     this.email,
     this.phone,
@@ -21,6 +24,8 @@ abstract class Employee extends _i1.SerializableEntity {
 
   factory Employee({
     int? id,
+    required int companyId,
+    _i2.Company? company,
     required String name,
     String? email,
     String? phone,
@@ -33,6 +38,10 @@ abstract class Employee extends _i1.SerializableEntity {
   ) {
     return Employee(
       id: serializationManager.deserialize<int?>(jsonSerialization['id']),
+      companyId:
+          serializationManager.deserialize<int>(jsonSerialization['companyId']),
+      company: serializationManager
+          .deserialize<_i2.Company?>(jsonSerialization['company']),
       name: serializationManager.deserialize<String>(jsonSerialization['name']),
       email:
           serializationManager.deserialize<String?>(jsonSerialization['email']),
@@ -48,6 +57,10 @@ abstract class Employee extends _i1.SerializableEntity {
   /// the id will be null.
   int? id;
 
+  int companyId;
+
+  _i2.Company? company;
+
   String name;
 
   String? email;
@@ -58,6 +71,8 @@ abstract class Employee extends _i1.SerializableEntity {
 
   Employee copyWith({
     int? id,
+    int? companyId,
+    _i2.Company? company,
     String? name,
     String? email,
     String? phone,
@@ -67,6 +82,8 @@ abstract class Employee extends _i1.SerializableEntity {
   Map<String, dynamic> toJson() {
     return {
       if (id != null) 'id': id,
+      'companyId': companyId,
+      if (company != null) 'company': company?.toJson(),
       'name': name,
       if (email != null) 'email': email,
       if (phone != null) 'phone': phone,
@@ -80,12 +97,16 @@ class _Undefined {}
 class _EmployeeImpl extends Employee {
   _EmployeeImpl({
     int? id,
+    required int companyId,
+    _i2.Company? company,
     required String name,
     String? email,
     String? phone,
     String? address,
   }) : super._(
           id: id,
+          companyId: companyId,
+          company: company,
           name: name,
           email: email,
           phone: phone,
@@ -95,6 +116,8 @@ class _EmployeeImpl extends Employee {
   @override
   Employee copyWith({
     Object? id = _Undefined,
+    int? companyId,
+    Object? company = _Undefined,
     String? name,
     Object? email = _Undefined,
     Object? phone = _Undefined,
@@ -102,6 +125,8 @@ class _EmployeeImpl extends Employee {
   }) {
     return Employee(
       id: id is int? ? id : this.id,
+      companyId: companyId ?? this.companyId,
+      company: company is _i2.Company? ? company : this.company?.copyWith(),
       name: name ?? this.name,
       email: email is String? ? email : this.email,
       phone: phone is String? ? phone : this.phone,

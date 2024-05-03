@@ -81,7 +81,6 @@ abstract class Company extends _i1.TableRow {
     return {
       'id': id,
       'name': name,
-      'employees': employees,
     };
   }
 
@@ -109,9 +108,6 @@ abstract class Company extends _i1.TableRow {
       case 'name':
         name = value;
         return;
-      case 'employees':
-        employees = value;
-        return;
       default:
         throw UnimplementedError();
     }
@@ -128,6 +124,7 @@ abstract class Company extends _i1.TableRow {
     bool orderDescending = false,
     bool useCache = true,
     _i1.Transaction? transaction,
+    CompanyInclude? include,
   }) async {
     return session.db.find<Company>(
       where: where != null ? where(Company.t) : null,
@@ -138,6 +135,7 @@ abstract class Company extends _i1.TableRow {
       orderDescending: orderDescending,
       useCache: useCache,
       transaction: transaction,
+      include: include,
     );
   }
 
@@ -150,6 +148,7 @@ abstract class Company extends _i1.TableRow {
     bool orderDescending = false,
     bool useCache = true,
     _i1.Transaction? transaction,
+    CompanyInclude? include,
   }) async {
     return session.db.findSingleRow<Company>(
       where: where != null ? where(Company.t) : null,
@@ -158,15 +157,20 @@ abstract class Company extends _i1.TableRow {
       orderDescending: orderDescending,
       useCache: useCache,
       transaction: transaction,
+      include: include,
     );
   }
 
   @Deprecated('Will be removed in 2.0.0. Use: db.findById instead.')
   static Future<Company?> findById(
     _i1.Session session,
-    int id,
-  ) async {
-    return session.db.findById<Company>(id);
+    int id, {
+    CompanyInclude? include,
+  }) async {
+    return session.db.findById<Company>(
+      id,
+      include: include,
+    );
   }
 
   @Deprecated('Will be removed in 2.0.0. Use: db.deleteWhere instead.')
@@ -234,8 +238,8 @@ abstract class Company extends _i1.TableRow {
     );
   }
 
-  static CompanyInclude include() {
-    return CompanyInclude._();
+  static CompanyInclude include({_i2.EmployeeIncludeList? employees}) {
+    return CompanyInclude._(employees: employees);
   }
 
   static CompanyIncludeList includeList({
@@ -298,34 +302,75 @@ class CompanyTable extends _i1.Table {
       'name',
       this,
     );
-    employees = _i1.ColumnSerializable(
-      'employees',
-      this,
-    );
   }
 
   /// The name of the company.
   late final _i1.ColumnString name;
 
   /// A list of people currently employed at the company.
-  late final _i1.ColumnSerializable employees;
+  _i2.EmployeeTable? ___employees;
+
+  /// A list of people currently employed at the company.
+  _i1.ManyRelation<_i2.EmployeeTable>? _employees;
+
+  _i2.EmployeeTable get __employees {
+    if (___employees != null) return ___employees!;
+    ___employees = _i1.createRelationTable(
+      relationFieldName: '__employees',
+      field: Company.t.id,
+      foreignField: _i2.Employee.t.companyId,
+      tableRelation: tableRelation,
+      createTable: (foreignTableRelation) =>
+          _i2.EmployeeTable(tableRelation: foreignTableRelation),
+    );
+    return ___employees!;
+  }
+
+  _i1.ManyRelation<_i2.EmployeeTable> get employees {
+    if (_employees != null) return _employees!;
+    var relationTable = _i1.createRelationTable(
+      relationFieldName: 'employees',
+      field: Company.t.id,
+      foreignField: _i2.Employee.t.companyId,
+      tableRelation: tableRelation,
+      createTable: (foreignTableRelation) =>
+          _i2.EmployeeTable(tableRelation: foreignTableRelation),
+    );
+    _employees = _i1.ManyRelation<_i2.EmployeeTable>(
+      tableWithRelations: relationTable,
+      table: _i2.EmployeeTable(
+          tableRelation: relationTable.tableRelation!.lastRelation),
+    );
+    return _employees!;
+  }
 
   @override
   List<_i1.Column> get columns => [
         id,
         name,
-        employees,
       ];
+
+  @override
+  _i1.Table? getRelationTable(String relationField) {
+    if (relationField == 'employees') {
+      return __employees;
+    }
+    return null;
+  }
 }
 
 @Deprecated('Use CompanyTable.t instead.')
 CompanyTable tCompany = CompanyTable();
 
 class CompanyInclude extends _i1.IncludeObject {
-  CompanyInclude._();
+  CompanyInclude._({_i2.EmployeeIncludeList? employees}) {
+    _employees = employees;
+  }
+
+  _i2.EmployeeIncludeList? _employees;
 
   @override
-  Map<String, _i1.Include?> get includes => {};
+  Map<String, _i1.Include?> get includes => {'employees': _employees};
 
   @override
   _i1.Table get table => Company.t;
@@ -354,6 +399,14 @@ class CompanyIncludeList extends _i1.IncludeList {
 class CompanyRepository {
   const CompanyRepository._();
 
+  final attach = const CompanyAttachRepository._();
+
+  final attachRow = const CompanyAttachRowRepository._();
+
+  final detach = const CompanyDetachRepository._();
+
+  final detachRow = const CompanyDetachRowRepository._();
+
   Future<List<Company>> find(
     _i1.Session session, {
     _i1.WhereExpressionBuilder<CompanyTable>? where,
@@ -363,6 +416,7 @@ class CompanyRepository {
     bool orderDescending = false,
     _i1.OrderByListBuilder<CompanyTable>? orderByList,
     _i1.Transaction? transaction,
+    CompanyInclude? include,
   }) async {
     return session.dbNext.find<Company>(
       where: where?.call(Company.t),
@@ -372,6 +426,7 @@ class CompanyRepository {
       limit: limit,
       offset: offset,
       transaction: transaction,
+      include: include,
     );
   }
 
@@ -383,6 +438,7 @@ class CompanyRepository {
     bool orderDescending = false,
     _i1.OrderByListBuilder<CompanyTable>? orderByList,
     _i1.Transaction? transaction,
+    CompanyInclude? include,
   }) async {
     return session.dbNext.findFirstRow<Company>(
       where: where?.call(Company.t),
@@ -391,6 +447,7 @@ class CompanyRepository {
       orderDescending: orderDescending,
       offset: offset,
       transaction: transaction,
+      include: include,
     );
   }
 
@@ -398,10 +455,12 @@ class CompanyRepository {
     _i1.Session session,
     int id, {
     _i1.Transaction? transaction,
+    CompanyInclude? include,
   }) async {
     return session.dbNext.findById<Company>(
       id,
       transaction: transaction,
+      include: include,
     );
   }
 
@@ -496,6 +555,91 @@ class CompanyRepository {
       where: where?.call(Company.t),
       limit: limit,
       transaction: transaction,
+    );
+  }
+}
+
+class CompanyAttachRepository {
+  const CompanyAttachRepository._();
+
+  Future<void> employees(
+    _i1.Session session,
+    Company company,
+    List<_i2.Employee> employee,
+  ) async {
+    if (employee.any((e) => e.id == null)) {
+      throw ArgumentError.notNull('employee.id');
+    }
+    if (company.id == null) {
+      throw ArgumentError.notNull('company.id');
+    }
+
+    var $employee =
+        employee.map((e) => e.copyWith(companyId: company.id)).toList();
+    await session.dbNext.update<_i2.Employee>(
+      $employee,
+      columns: [_i2.Employee.t.companyId],
+    );
+  }
+}
+
+class CompanyAttachRowRepository {
+  const CompanyAttachRowRepository._();
+
+  Future<void> employees(
+    _i1.Session session,
+    Company company,
+    _i2.Employee employee,
+  ) async {
+    if (employee.id == null) {
+      throw ArgumentError.notNull('employee.id');
+    }
+    if (company.id == null) {
+      throw ArgumentError.notNull('company.id');
+    }
+
+    var $employee = employee.copyWith(companyId: company.id);
+    await session.dbNext.updateRow<_i2.Employee>(
+      $employee,
+      columns: [_i2.Employee.t.companyId],
+    );
+  }
+}
+
+class CompanyDetachRepository {
+  const CompanyDetachRepository._();
+
+  Future<void> employees(
+    _i1.Session session,
+    List<_i2.Employee> employee,
+  ) async {
+    if (employee.any((e) => e.id == null)) {
+      throw ArgumentError.notNull('employee.id');
+    }
+
+    var $employee = employee.map((e) => e.copyWith(companyId: null)).toList();
+    await session.dbNext.update<_i2.Employee>(
+      $employee,
+      columns: [_i2.Employee.t.companyId],
+    );
+  }
+}
+
+class CompanyDetachRowRepository {
+  const CompanyDetachRowRepository._();
+
+  Future<void> employees(
+    _i1.Session session,
+    _i2.Employee employee,
+  ) async {
+    if (employee.id == null) {
+      throw ArgumentError.notNull('employee.id');
+    }
+
+    var $employee = employee.copyWith(companyId: null);
+    await session.dbNext.updateRow<_i2.Employee>(
+      $employee,
+      columns: [_i2.Employee.t.companyId],
     );
   }
 }

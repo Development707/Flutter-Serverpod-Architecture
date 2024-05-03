@@ -9,4 +9,4 @@ fields:
   foundedDate: DateTime?, !persist
 
   ### A list of people currently employed at the company.
-  employees: List<Employee>?, relation
+  employees: List<Employee>?, relation(name=company_employees)

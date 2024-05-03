@@ -9,10 +9,13 @@
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:serverpod/serverpod.dart' as _i1;
+import 'protocol.dart' as _i2;
 
 abstract class Employee extends _i1.TableRow {
   Employee._({
     int? id,
+    required this.companyId,
+    this.company,
     required this.name,
     this.email,
     this.phone,
@@ -22,6 +25,8 @@ abstract class Employee extends _i1.TableRow {
 
   factory Employee({
     int? id,
+    required int companyId,
+    _i2.Company? company,
     required String name,
     String? email,
     String? phone,
@@ -35,6 +40,10 @@ abstract class Employee extends _i1.TableRow {
   ) {
     return Employee(
       id: serializationManager.deserialize<int?>(jsonSerialization['id']),
+      companyId:
+          serializationManager.deserialize<int>(jsonSerialization['companyId']),
+      company: serializationManager
+          .deserialize<_i2.Company?>(jsonSerialization['company']),
       name: serializationManager.deserialize<String>(jsonSerialization['name']),
       email:
           serializationManager.deserialize<String?>(jsonSerialization['email']),
@@ -51,6 +60,10 @@ abstract class Employee extends _i1.TableRow {
 
   static const db = EmployeeRepository._();
 
+  int companyId;
+
+  _i2.Company? company;
+
   String name;
 
   String? email;
@@ -66,6 +79,8 @@ abstract class Employee extends _i1.TableRow {
 
   Employee copyWith({
     int? id,
+    int? companyId,
+    _i2.Company? company,
     String? name,
     String? email,
     String? phone,
@@ -76,6 +91,8 @@ abstract class Employee extends _i1.TableRow {
   Map<String, dynamic> toJson() {
     return {
       if (id != null) 'id': id,
+      'companyId': companyId,
+      if (company != null) 'company': company?.toJson(),
       'name': name,
       if (email != null) 'email': email,
       if (phone != null) 'phone': phone,
@@ -88,6 +105,7 @@ abstract class Employee extends _i1.TableRow {
   Map<String, dynamic> toJsonForDatabase() {
     return {
       'id': id,
+      'companyId': companyId,
       'name': name,
       'email': email,
       'phone': phone,
@@ -100,6 +118,8 @@ abstract class Employee extends _i1.TableRow {
   Map<String, dynamic> allToJson() {
     return {
       if (id != null) 'id': id,
+      'companyId': companyId,
+      if (company != null) 'company': company?.allToJson(),
       'name': name,
       if (email != null) 'email': email,
       if (phone != null) 'phone': phone,
@@ -117,6 +137,9 @@ abstract class Employee extends _i1.TableRow {
     switch (columnName) {
       case 'id':
         id = value;
+        return;
+      case 'companyId':
+        companyId = value;
         return;
       case 'name':
         name = value;
@@ -149,6 +172,7 @@ abstract class Employee extends _i1.TableRow {
     bool orderDescending = false,
     bool useCache = true,
     _i1.Transaction? transaction,
+    EmployeeInclude? include,
   }) async {
     return session.db.find<Employee>(
       where: where != null ? where(Employee.t) : null,
@@ -159,6 +183,7 @@ abstract class Employee extends _i1.TableRow {
       orderDescending: orderDescending,
       useCache: useCache,
       transaction: transaction,
+      include: include,
     );
   }
 
@@ -171,6 +196,7 @@ abstract class Employee extends _i1.TableRow {
     bool orderDescending = false,
     bool useCache = true,
     _i1.Transaction? transaction,
+    EmployeeInclude? include,
   }) async {
     return session.db.findSingleRow<Employee>(
       where: where != null ? where(Employee.t) : null,
@@ -179,15 +205,20 @@ abstract class Employee extends _i1.TableRow {
       orderDescending: orderDescending,
       useCache: useCache,
       transaction: transaction,
+      include: include,
     );
   }
 
   @Deprecated('Will be removed in 2.0.0. Use: db.findById instead.')
   static Future<Employee?> findById(
     _i1.Session session,
-    int id,
-  ) async {
-    return session.db.findById<Employee>(id);
+    int id, {
+    EmployeeInclude? include,
+  }) async {
+    return session.db.findById<Employee>(
+      id,
+      include: include,
+    );
   }
 
   @Deprecated('Will be removed in 2.0.0. Use: db.deleteWhere instead.')
@@ -255,8 +286,8 @@ abstract class Employee extends _i1.TableRow {
     );
   }
 
-  static EmployeeInclude include() {
-    return EmployeeInclude._();
+  static EmployeeInclude include({_i2.CompanyInclude? company}) {
+    return EmployeeInclude._(company: company);
   }
 
   static EmployeeIncludeList includeList({
@@ -285,6 +316,8 @@ class _Undefined {}
 class _EmployeeImpl extends Employee {
   _EmployeeImpl({
     int? id,
+    required int companyId,
+    _i2.Company? company,
     required String name,
     String? email,
     String? phone,
@@ -292,6 +325,8 @@ class _EmployeeImpl extends Employee {
     bool? isActive,
   }) : super._(
           id: id,
+          companyId: companyId,
+          company: company,
           name: name,
           email: email,
           phone: phone,
@@ -302,6 +337,8 @@ class _EmployeeImpl extends Employee {
   @override
   Employee copyWith({
     Object? id = _Undefined,
+    int? companyId,
+    Object? company = _Undefined,
     String? name,
     Object? email = _Undefined,
     Object? phone = _Undefined,
@@ -310,6 +347,8 @@ class _EmployeeImpl extends Employee {
   }) {
     return Employee(
       id: id is int? ? id : this.id,
+      companyId: companyId ?? this.companyId,
+      company: company is _i2.Company? ? company : this.company?.copyWith(),
       name: name ?? this.name,
       email: email is String? ? email : this.email,
       phone: phone is String? ? phone : this.phone,
@@ -321,6 +360,10 @@ class _EmployeeImpl extends Employee {
 
 class EmployeeTable extends _i1.Table {
   EmployeeTable({super.tableRelation}) : super(tableName: 'employee') {
+    companyId = _i1.ColumnInt(
+      'companyId',
+      this,
+    );
     name = _i1.ColumnString(
       'name',
       this,
@@ -343,6 +386,10 @@ class EmployeeTable extends _i1.Table {
     );
   }
 
+  late final _i1.ColumnInt companyId;
+
+  _i2.CompanyTable? _company;
+
   late final _i1.ColumnString name;
 
   late final _i1.ColumnString email;
@@ -353,25 +400,51 @@ class EmployeeTable extends _i1.Table {
 
   late final _i1.ColumnBool isActive;
 
+  _i2.CompanyTable get company {
+    if (_company != null) return _company!;
+    _company = _i1.createRelationTable(
+      relationFieldName: 'company',
+      field: Employee.t.companyId,
+      foreignField: _i2.Company.t.id,
+      tableRelation: tableRelation,
+      createTable: (foreignTableRelation) =>
+          _i2.CompanyTable(tableRelation: foreignTableRelation),
+    );
+    return _company!;
+  }
+
   @override
   List<_i1.Column> get columns => [
         id,
+        companyId,
         name,
         email,
         phone,
         address,
         isActive,
       ];
+
+  @override
+  _i1.Table? getRelationTable(String relationField) {
+    if (relationField == 'company') {
+      return company;
+    }
+    return null;
+  }
 }
 
 @Deprecated('Use EmployeeTable.t instead.')
 EmployeeTable tEmployee = EmployeeTable();
 
 class EmployeeInclude extends _i1.IncludeObject {
-  EmployeeInclude._();
+  EmployeeInclude._({_i2.CompanyInclude? company}) {
+    _company = company;
+  }
+
+  _i2.CompanyInclude? _company;
 
   @override
-  Map<String, _i1.Include?> get includes => {};
+  Map<String, _i1.Include?> get includes => {'company': _company};
 
   @override
   _i1.Table get table => Employee.t;
@@ -400,6 +473,8 @@ class EmployeeIncludeList extends _i1.IncludeList {
 class EmployeeRepository {
   const EmployeeRepository._();
 
+  final attachRow = const EmployeeAttachRowRepository._();
+
   Future<List<Employee>> find(
     _i1.Session session, {
     _i1.WhereExpressionBuilder<EmployeeTable>? where,
@@ -409,6 +484,7 @@ class EmployeeRepository {
     bool orderDescending = false,
     _i1.OrderByListBuilder<EmployeeTable>? orderByList,
     _i1.Transaction? transaction,
+    EmployeeInclude? include,
   }) async {
     return session.dbNext.find<Employee>(
       where: where?.call(Employee.t),
@@ -418,6 +494,7 @@ class EmployeeRepository {
       limit: limit,
       offset: offset,
       transaction: transaction,
+      include: include,
     );
   }
 
@@ -429,6 +506,7 @@ class EmployeeRepository {
     bool orderDescending = false,
     _i1.OrderByListBuilder<EmployeeTable>? orderByList,
     _i1.Transaction? transaction,
+    EmployeeInclude? include,
   }) async {
     return session.dbNext.findFirstRow<Employee>(
       where: where?.call(Employee.t),
@@ -437,6 +515,7 @@ class EmployeeRepository {
       orderDescending: orderDescending,
       offset: offset,
       transaction: transaction,
+      include: include,
     );
   }
 
@@ -444,10 +523,12 @@ class EmployeeRepository {
     _i1.Session session,
     int id, {
     _i1.Transaction? transaction,
+    EmployeeInclude? include,
   }) async {
     return session.dbNext.findById<Employee>(
       id,
       transaction: transaction,
+      include: include,
     );
   }
 
@@ -542,6 +623,29 @@ class EmployeeRepository {
       where: where?.call(Employee.t),
       limit: limit,
       transaction: transaction,
+    );
+  }
+}
+
+class EmployeeAttachRowRepository {
+  const EmployeeAttachRowRepository._();
+
+  Future<void> company(
+    _i1.Session session,
+    Employee employee,
+    _i2.Company company,
+  ) async {
+    if (employee.id == null) {
+      throw ArgumentError.notNull('employee.id');
+    }
+    if (company.id == null) {
+      throw ArgumentError.notNull('company.id');
+    }
+
+    var $employee = employee.copyWith(companyId: company.id);
+    await session.dbNext.updateRow<Employee>(
+      $employee,
+      columns: [Employee.t.companyId],
     );
   }
 }
