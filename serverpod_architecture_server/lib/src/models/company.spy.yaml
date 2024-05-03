@@ -6,7 +6,7 @@ fields:
   name: String
 
   ### The date the company was founded, if known.
-  foundedDate: DateTime?
+  foundedDate: DateTime?, !persist
 
   ### A list of people currently employed at the company.
-  employees: List<Employee>?
+  employees: List<Employee>?, relation

@@ -56,18 +56,6 @@ class Protocol extends _i1.SerializationManagerServer {
           isNullable: false,
           dartType: 'String',
         ),
-        _i2.ColumnDefinition(
-          name: 'foundedDate',
-          columnType: _i2.ColumnType.timestampWithoutTimeZone,
-          isNullable: true,
-          dartType: 'DateTime?',
-        ),
-        _i2.ColumnDefinition(
-          name: 'employees',
-          columnType: _i2.ColumnType.json,
-          isNullable: true,
-          dartType: 'List<protocol:Employee>?',
-        ),
       ],
       foreignKeys: [],
       indexes: [
@@ -130,8 +118,25 @@ class Protocol extends _i1.SerializationManagerServer {
           isNullable: true,
           dartType: 'bool?',
         ),
+        _i2.ColumnDefinition(
+          name: '_companyEmployeesCompanyId',
+          columnType: _i2.ColumnType.integer,
+          isNullable: true,
+          dartType: 'int?',
+        ),
       ],
-      foreignKeys: [],
+      foreignKeys: [
+        _i2.ForeignKeyDefinition(
+          constraintName: 'employee_fk_0',
+          columns: ['_companyEmployeesCompanyId'],
+          referenceTable: 'company',
+          referenceTableSchema: 'public',
+          referenceColumns: ['id'],
+          onUpdate: _i2.ForeignKeyAction.noAction,
+          onDelete: _i2.ForeignKeyAction.noAction,
+          matchType: null,
+        )
+      ],
       indexes: [
         _i2.IndexDefinition(
           indexName: 'employee_pkey',
