@@ -61,8 +61,6 @@ abstract class Employee extends _i1.TableRow {
 
   bool? isActive;
 
-  int? _companyEmployeesCompanyId;
-
   @override
   _i1.Table get table => t;
 
@@ -95,7 +93,6 @@ abstract class Employee extends _i1.TableRow {
       'phone': phone,
       'address': address,
       'isActive': isActive,
-      '_companyEmployeesCompanyId': _companyEmployeesCompanyId,
     };
   }
 
@@ -108,8 +105,6 @@ abstract class Employee extends _i1.TableRow {
       if (phone != null) 'phone': phone,
       if (address != null) 'address': address,
       if (isActive != null) 'isActive': isActive,
-      if (_companyEmployeesCompanyId != null)
-        '_companyEmployeesCompanyId': _companyEmployeesCompanyId,
     };
   }
 
@@ -137,9 +132,6 @@ abstract class Employee extends _i1.TableRow {
         return;
       case 'isActive':
         isActive = value;
-        return;
-      case '_companyEmployeesCompanyId':
-        _companyEmployeesCompanyId = value;
         return;
       default:
         throw UnimplementedError();
@@ -327,49 +319,6 @@ class _EmployeeImpl extends Employee {
   }
 }
 
-class EmployeeImplicit extends _EmployeeImpl {
-  EmployeeImplicit._({
-    int? id,
-    required String name,
-    String? email,
-    String? phone,
-    String? address,
-    bool? isActive,
-    this.$_companyEmployeesCompanyId,
-  }) : super(
-          id: id,
-          name: name,
-          email: email,
-          phone: phone,
-          address: address,
-          isActive: isActive,
-        );
-
-  factory EmployeeImplicit(
-    Employee employee, {
-    int? $_companyEmployeesCompanyId,
-  }) {
-    return EmployeeImplicit._(
-      id: employee.id,
-      name: employee.name,
-      email: employee.email,
-      phone: employee.phone,
-      address: employee.address,
-      isActive: employee.isActive,
-      $_companyEmployeesCompanyId: $_companyEmployeesCompanyId,
-    );
-  }
-
-  int? $_companyEmployeesCompanyId;
-
-  @override
-  Map<String, dynamic> allToJson() {
-    var jsonMap = super.allToJson();
-    jsonMap.addAll({'_companyEmployeesCompanyId': $_companyEmployeesCompanyId});
-    return jsonMap;
-  }
-}
-
 class EmployeeTable extends _i1.Table {
   EmployeeTable({super.tableRelation}) : super(tableName: 'employee') {
     name = _i1.ColumnString(
@@ -392,10 +341,6 @@ class EmployeeTable extends _i1.Table {
       'isActive',
       this,
     );
-    $_companyEmployeesCompanyId = _i1.ColumnInt(
-      '_companyEmployeesCompanyId',
-      this,
-    );
   }
 
   late final _i1.ColumnString name;
@@ -408,8 +353,6 @@ class EmployeeTable extends _i1.Table {
 
   late final _i1.ColumnBool isActive;
 
-  late final _i1.ColumnInt $_companyEmployeesCompanyId;
-
   @override
   List<_i1.Column> get columns => [
         id,
@@ -418,7 +361,6 @@ class EmployeeTable extends _i1.Table {
         phone,
         address,
         isActive,
-        $_companyEmployeesCompanyId,
       ];
 }
 
