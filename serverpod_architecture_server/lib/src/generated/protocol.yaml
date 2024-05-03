@@ -1,2 +1,8 @@
+company:
+  - getAllCompanies:
+  - getCompany:
+  - createCompany:
+  - updateCompany:
+  - deleteCompany:
 example:
   - hello:

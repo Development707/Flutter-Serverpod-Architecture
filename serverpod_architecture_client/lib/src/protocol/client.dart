@@ -10,7 +10,51 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:serverpod_client/serverpod_client.dart' as _i1;
 import 'dart:async' as _i2;
-import 'protocol.dart' as _i3;
+import 'package:serverpod_architecture_client/src/protocol/company.dart' as _i3;
+import 'protocol.dart' as _i4;
+
+/// {@category Endpoint}
+class EndpointCompany extends _i1.EndpointRef {
+  EndpointCompany(_i1.EndpointCaller caller) : super(caller);
+
+  @override
+  String get name => 'company';
+
+  _i2.Future<List<_i3.Company>> getAllCompanies() =>
+      caller.callServerEndpoint<List<_i3.Company>>(
+        'company',
+        'getAllCompanies',
+        {},
+      );
+
+  _i2.Future<_i3.Company?> getCompany(int id) =>
+      caller.callServerEndpoint<_i3.Company?>(
+        'company',
+        'getCompany',
+        {'id': id},
+      );
+
+  _i2.Future<_i3.Company> createCompany(_i3.Company company) =>
+      caller.callServerEndpoint<_i3.Company>(
+        'company',
+        'createCompany',
+        {'company': company},
+      );
+
+  _i2.Future<_i3.Company> updateCompany(_i3.Company company) =>
+      caller.callServerEndpoint<_i3.Company>(
+        'company',
+        'updateCompany',
+        {'company': company},
+      );
+
+  _i2.Future<int> deleteCompany(_i3.Company company) =>
+      caller.callServerEndpoint<int>(
+        'company',
+        'deleteCompany',
+        {'company': company},
+      );
+}
 
 /// {@category Endpoint}
 class EndpointExample extends _i1.EndpointRef {
@@ -35,19 +79,25 @@ class Client extends _i1.ServerpodClient {
     Duration? connectionTimeout,
   }) : super(
           host,
-          _i3.Protocol(),
+          _i4.Protocol(),
           securityContext: securityContext,
           authenticationKeyManager: authenticationKeyManager,
           streamingConnectionTimeout: streamingConnectionTimeout,
           connectionTimeout: connectionTimeout,
         ) {
+    company = EndpointCompany(this);
     example = EndpointExample(this);
   }
+
+  late final EndpointCompany company;
 
   late final EndpointExample example;
 
   @override
-  Map<String, _i1.EndpointRef> get endpointRefLookup => {'example': example};
+  Map<String, _i1.EndpointRef> get endpointRefLookup => {
+        'company': company,
+        'example': example,
+      };
 
   @override
   Map<String, _i1.ModuleEndpointCaller> get moduleLookup => {};
