@@ -91,6 +91,12 @@ class EndpointExample extends _i1.EndpointRef {
         'doThingy',
         {},
       );
+
+  _i2.Future<String> getRemoteIpAddress() => caller.callServerEndpoint<String>(
+        'example',
+        'getRemoteIpAddress',
+        {},
+      );
 }
 
 class Client extends _i1.ServerpodClient {

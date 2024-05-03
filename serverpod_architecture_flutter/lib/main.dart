@@ -6,6 +6,7 @@ import 'company/company_page.dart';
 import 'exception/exception_page.dart';
 import 'home/home_page.dart';
 import 'serialization/serialization_page.dart';
+import 'sessions/sessions_page.dart';
 
 // Sets up a singleton client object that can be used to talk to the server from
 // anywhere in our app. The client is generated from your server code.
@@ -35,6 +36,7 @@ class MyApp extends StatelessWidget {
         '/company': (context) => const CompanyPage(),
         '/serialization': (context) => const SerializationPage(),
         '/exception': (context) => const ExceptionPage(),
+        '/sessions': (context) => const SessionsPage(),
       },
     );
   }

@@ -42,4 +42,8 @@ class ExampleEndpoint extends Endpoint {
       errorType: ErrorType.warning,
     );
   }
+
+  Future<String> getRemoteIpAddress(Session session) async {
+    return (session as MethodCallSession).httpRequest.remoteIpAddress;
+  }
 }

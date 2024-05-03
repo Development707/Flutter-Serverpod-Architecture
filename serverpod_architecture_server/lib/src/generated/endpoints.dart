@@ -170,6 +170,16 @@ class Endpoints extends _i1.EndpointDispatch {
           ) async =>
               (endpoints['example'] as _i3.ExampleEndpoint).doThingy(session),
         ),
+        'getRemoteIpAddress': _i1.MethodConnector(
+          name: 'getRemoteIpAddress',
+          params: {},
+          call: (
+            _i1.Session session,
+            Map<String, dynamic> params,
+          ) async =>
+              (endpoints['example'] as _i3.ExampleEndpoint)
+                  .getRemoteIpAddress(session),
+        ),
       },
     );
   }
