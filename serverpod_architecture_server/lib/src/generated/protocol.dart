@@ -12,10 +12,17 @@ library protocol; // ignore_for_file: no_leading_underscores_for_library_prefixe
 import 'package:serverpod/serverpod.dart' as _i1;
 import 'package:serverpod/protocol.dart' as _i2;
 import 'company.dart' as _i3;
-import 'example.dart' as _i4;
+import 'custom_exception.dart' as _i4;
+import 'employee.dart' as _i5;
+import 'error_type.dart' as _i6;
+import 'example.dart' as _i7;
+import 'protocol.dart' as _i8;
 import 'package:serverpod_architecture_server/src/generated/company.dart'
-    as _i5;
+    as _i9;
 export 'company.dart';
+export 'custom_exception.dart';
+export 'employee.dart';
+export 'error_type.dart';
 export 'example.dart';
 
 class Protocol extends _i1.SerializationManagerServer {
@@ -53,11 +60,79 @@ class Protocol extends _i1.SerializationManagerServer {
           isNullable: true,
           dartType: 'DateTime?',
         ),
+        _i2.ColumnDefinition(
+          name: 'employees',
+          columnType: _i2.ColumnType.json,
+          isNullable: true,
+          dartType: 'List<protocol:Employee>?',
+        ),
       ],
       foreignKeys: [],
       indexes: [
         _i2.IndexDefinition(
           indexName: 'company_pkey',
+          tableSpace: null,
+          elements: [
+            _i2.IndexElementDefinition(
+              type: _i2.IndexElementDefinitionType.column,
+              definition: 'id',
+            )
+          ],
+          type: 'btree',
+          isUnique: true,
+          isPrimary: true,
+        )
+      ],
+      managed: true,
+    ),
+    _i2.TableDefinition(
+      name: 'employee',
+      dartName: 'Employee',
+      schema: 'public',
+      module: 'serverpod_architecture',
+      columns: [
+        _i2.ColumnDefinition(
+          name: 'id',
+          columnType: _i2.ColumnType.integer,
+          isNullable: false,
+          dartType: 'int?',
+          columnDefault: 'nextval(\'employee_id_seq\'::regclass)',
+        ),
+        _i2.ColumnDefinition(
+          name: 'name',
+          columnType: _i2.ColumnType.text,
+          isNullable: false,
+          dartType: 'String',
+        ),
+        _i2.ColumnDefinition(
+          name: 'email',
+          columnType: _i2.ColumnType.text,
+          isNullable: true,
+          dartType: 'String?',
+        ),
+        _i2.ColumnDefinition(
+          name: 'phone',
+          columnType: _i2.ColumnType.text,
+          isNullable: true,
+          dartType: 'String?',
+        ),
+        _i2.ColumnDefinition(
+          name: 'address',
+          columnType: _i2.ColumnType.text,
+          isNullable: true,
+          dartType: 'String?',
+        ),
+        _i2.ColumnDefinition(
+          name: 'isActive',
+          columnType: _i2.ColumnType.boolean,
+          isNullable: true,
+          dartType: 'bool?',
+        ),
+      ],
+      foreignKeys: [],
+      indexes: [
+        _i2.IndexDefinition(
+          indexName: 'employee_pkey',
           tableSpace: null,
           elements: [
             _i2.IndexElementDefinition(
@@ -87,17 +162,41 @@ class Protocol extends _i1.SerializationManagerServer {
     if (t == _i3.Company) {
       return _i3.Company.fromJson(data, this) as T;
     }
-    if (t == _i4.Example) {
-      return _i4.Example.fromJson(data, this) as T;
+    if (t == _i4.CustomException) {
+      return _i4.CustomException.fromJson(data, this) as T;
+    }
+    if (t == _i5.Employee) {
+      return _i5.Employee.fromJson(data, this) as T;
+    }
+    if (t == _i6.ErrorType) {
+      return _i6.ErrorType.fromJson(data) as T;
+    }
+    if (t == _i7.Example) {
+      return _i7.Example.fromJson(data, this) as T;
     }
     if (t == _i1.getType<_i3.Company?>()) {
       return (data != null ? _i3.Company.fromJson(data, this) : null) as T;
     }
-    if (t == _i1.getType<_i4.Example?>()) {
-      return (data != null ? _i4.Example.fromJson(data, this) : null) as T;
+    if (t == _i1.getType<_i4.CustomException?>()) {
+      return (data != null ? _i4.CustomException.fromJson(data, this) : null)
+          as T;
     }
-    if (t == List<_i5.Company>) {
-      return (data as List).map((e) => deserialize<_i5.Company>(e)).toList()
+    if (t == _i1.getType<_i5.Employee?>()) {
+      return (data != null ? _i5.Employee.fromJson(data, this) : null) as T;
+    }
+    if (t == _i1.getType<_i6.ErrorType?>()) {
+      return (data != null ? _i6.ErrorType.fromJson(data) : null) as T;
+    }
+    if (t == _i1.getType<_i7.Example?>()) {
+      return (data != null ? _i7.Example.fromJson(data, this) : null) as T;
+    }
+    if (t == _i1.getType<List<_i8.Employee>?>()) {
+      return (data != null
+          ? (data as List).map((e) => deserialize<_i8.Employee>(e)).toList()
+          : null) as dynamic;
+    }
+    if (t == List<_i9.Company>) {
+      return (data as List).map((e) => deserialize<_i9.Company>(e)).toList()
           as dynamic;
     }
     try {
@@ -111,7 +210,16 @@ class Protocol extends _i1.SerializationManagerServer {
     if (data is _i3.Company) {
       return 'Company';
     }
-    if (data is _i4.Example) {
+    if (data is _i4.CustomException) {
+      return 'CustomException';
+    }
+    if (data is _i5.Employee) {
+      return 'Employee';
+    }
+    if (data is _i6.ErrorType) {
+      return 'ErrorType';
+    }
+    if (data is _i7.Example) {
       return 'Example';
     }
     return super.getClassNameForObject(data);
@@ -122,8 +230,17 @@ class Protocol extends _i1.SerializationManagerServer {
     if (data['className'] == 'Company') {
       return deserialize<_i3.Company>(data['data']);
     }
+    if (data['className'] == 'CustomException') {
+      return deserialize<_i4.CustomException>(data['data']);
+    }
+    if (data['className'] == 'Employee') {
+      return deserialize<_i5.Employee>(data['data']);
+    }
+    if (data['className'] == 'ErrorType') {
+      return deserialize<_i6.ErrorType>(data['data']);
+    }
     if (data['className'] == 'Example') {
-      return deserialize<_i4.Example>(data['data']);
+      return deserialize<_i7.Example>(data['data']);
     }
     return super.deserializeByClassName(data);
   }
@@ -139,6 +256,8 @@ class Protocol extends _i1.SerializationManagerServer {
     switch (t) {
       case _i3.Company:
         return _i3.Company.t;
+      case _i5.Employee:
+        return _i5.Employee.t;
     }
     return null;
   }

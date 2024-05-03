@@ -1,5 +1,12 @@
+### Information about a company.
 class: Company
 table: company
 fields:
+  ### The name of the company.
   name: String
+
+  ### The date the company was founded, if known.
   foundedDate: DateTime?
+
+  ### A list of people currently employed at the company.
+  employees: List<Employee>?

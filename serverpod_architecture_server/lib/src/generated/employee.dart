@@ -9,69 +9,77 @@
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:serverpod/serverpod.dart' as _i1;
-import 'protocol.dart' as _i2;
-import 'package:serverpod_serialization/serverpod_serialization.dart';
 
-/// Information about a company.
-abstract class Company extends _i1.TableRow {
-  Company._({
+abstract class Employee extends _i1.TableRow {
+  Employee._({
     int? id,
     required this.name,
-    this.foundedDate,
-    this.employees,
+    this.email,
+    this.phone,
+    this.address,
+    this.isActive,
   }) : super(id);
 
-  factory Company({
+  factory Employee({
     int? id,
     required String name,
-    DateTime? foundedDate,
-    List<_i2.Employee>? employees,
-  }) = _CompanyImpl;
+    String? email,
+    String? phone,
+    String? address,
+    bool? isActive,
+  }) = _EmployeeImpl;
 
-  factory Company.fromJson(
+  factory Employee.fromJson(
     Map<String, dynamic> jsonSerialization,
     _i1.SerializationManager serializationManager,
   ) {
-    return Company(
+    return Employee(
       id: serializationManager.deserialize<int?>(jsonSerialization['id']),
       name: serializationManager.deserialize<String>(jsonSerialization['name']),
-      foundedDate: serializationManager
-          .deserialize<DateTime?>(jsonSerialization['foundedDate']),
-      employees: serializationManager
-          .deserialize<List<_i2.Employee>?>(jsonSerialization['employees']),
+      email:
+          serializationManager.deserialize<String?>(jsonSerialization['email']),
+      phone:
+          serializationManager.deserialize<String?>(jsonSerialization['phone']),
+      address: serializationManager
+          .deserialize<String?>(jsonSerialization['address']),
+      isActive: serializationManager
+          .deserialize<bool?>(jsonSerialization['isActive']),
     );
   }
 
-  static final t = CompanyTable();
+  static final t = EmployeeTable();
 
-  static const db = CompanyRepository._();
+  static const db = EmployeeRepository._();
 
-  /// The name of the company.
   String name;
 
-  /// The date the company was founded, if known.
-  DateTime? foundedDate;
+  String? email;
 
-  /// A list of people currently employed at the company.
-  List<_i2.Employee>? employees;
+  String? phone;
+
+  String? address;
+
+  bool? isActive;
 
   @override
   _i1.Table get table => t;
 
-  Company copyWith({
+  Employee copyWith({
     int? id,
     String? name,
-    DateTime? foundedDate,
-    List<_i2.Employee>? employees,
+    String? email,
+    String? phone,
+    String? address,
+    bool? isActive,
   });
   @override
   Map<String, dynamic> toJson() {
     return {
       if (id != null) 'id': id,
       'name': name,
-      if (foundedDate != null) 'foundedDate': foundedDate?.toJson(),
-      if (employees != null)
-        'employees': employees?.toJson(valueToJson: (v) => v.toJson()),
+      if (email != null) 'email': email,
+      if (phone != null) 'phone': phone,
+      if (address != null) 'address': address,
     };
   }
 
@@ -81,8 +89,10 @@ abstract class Company extends _i1.TableRow {
     return {
       'id': id,
       'name': name,
-      'foundedDate': foundedDate,
-      'employees': employees,
+      'email': email,
+      'phone': phone,
+      'address': address,
+      'isActive': isActive,
     };
   }
 
@@ -91,9 +101,10 @@ abstract class Company extends _i1.TableRow {
     return {
       if (id != null) 'id': id,
       'name': name,
-      if (foundedDate != null) 'foundedDate': foundedDate?.toJson(),
-      if (employees != null)
-        'employees': employees?.toJson(valueToJson: (v) => v.allToJson()),
+      if (email != null) 'email': email,
+      if (phone != null) 'phone': phone,
+      if (address != null) 'address': address,
+      if (isActive != null) 'isActive': isActive,
     };
   }
 
@@ -110,11 +121,17 @@ abstract class Company extends _i1.TableRow {
       case 'name':
         name = value;
         return;
-      case 'foundedDate':
-        foundedDate = value;
+      case 'email':
+        email = value;
         return;
-      case 'employees':
-        employees = value;
+      case 'phone':
+        phone = value;
+        return;
+      case 'address':
+        address = value;
+        return;
+      case 'isActive':
+        isActive = value;
         return;
       default:
         throw UnimplementedError();
@@ -122,9 +139,9 @@ abstract class Company extends _i1.TableRow {
   }
 
   @Deprecated('Will be removed in 2.0.0. Use: db.find instead.')
-  static Future<List<Company>> find(
+  static Future<List<Employee>> find(
     _i1.Session session, {
-    _i1.WhereExpressionBuilder<CompanyTable>? where,
+    _i1.WhereExpressionBuilder<EmployeeTable>? where,
     int? limit,
     int? offset,
     _i1.Column? orderBy,
@@ -133,8 +150,8 @@ abstract class Company extends _i1.TableRow {
     bool useCache = true,
     _i1.Transaction? transaction,
   }) async {
-    return session.db.find<Company>(
-      where: where != null ? where(Company.t) : null,
+    return session.db.find<Employee>(
+      where: where != null ? where(Employee.t) : null,
       limit: limit,
       offset: offset,
       orderBy: orderBy,
@@ -146,17 +163,17 @@ abstract class Company extends _i1.TableRow {
   }
 
   @Deprecated('Will be removed in 2.0.0. Use: db.findRow instead.')
-  static Future<Company?> findSingleRow(
+  static Future<Employee?> findSingleRow(
     _i1.Session session, {
-    _i1.WhereExpressionBuilder<CompanyTable>? where,
+    _i1.WhereExpressionBuilder<EmployeeTable>? where,
     int? offset,
     _i1.Column? orderBy,
     bool orderDescending = false,
     bool useCache = true,
     _i1.Transaction? transaction,
   }) async {
-    return session.db.findSingleRow<Company>(
-      where: where != null ? where(Company.t) : null,
+    return session.db.findSingleRow<Employee>(
+      where: where != null ? where(Employee.t) : null,
       offset: offset,
       orderBy: orderBy,
       orderDescending: orderDescending,
@@ -166,21 +183,21 @@ abstract class Company extends _i1.TableRow {
   }
 
   @Deprecated('Will be removed in 2.0.0. Use: db.findById instead.')
-  static Future<Company?> findById(
+  static Future<Employee?> findById(
     _i1.Session session,
     int id,
   ) async {
-    return session.db.findById<Company>(id);
+    return session.db.findById<Employee>(id);
   }
 
   @Deprecated('Will be removed in 2.0.0. Use: db.deleteWhere instead.')
   static Future<int> delete(
     _i1.Session session, {
-    required _i1.WhereExpressionBuilder<CompanyTable> where,
+    required _i1.WhereExpressionBuilder<EmployeeTable> where,
     _i1.Transaction? transaction,
   }) async {
-    return session.db.delete<Company>(
-      where: where(Company.t),
+    return session.db.delete<Employee>(
+      where: where(Employee.t),
       transaction: transaction,
     );
   }
@@ -188,7 +205,7 @@ abstract class Company extends _i1.TableRow {
   @Deprecated('Will be removed in 2.0.0. Use: db.deleteRow instead.')
   static Future<bool> deleteRow(
     _i1.Session session,
-    Company row, {
+    Employee row, {
     _i1.Transaction? transaction,
   }) async {
     return session.db.deleteRow(
@@ -200,7 +217,7 @@ abstract class Company extends _i1.TableRow {
   @Deprecated('Will be removed in 2.0.0. Use: db.update instead.')
   static Future<bool> update(
     _i1.Session session,
-    Company row, {
+    Employee row, {
     _i1.Transaction? transaction,
   }) async {
     return session.db.update(
@@ -213,7 +230,7 @@ abstract class Company extends _i1.TableRow {
       'Will be removed in 2.0.0. Use: db.insert instead. Important note: In db.insert, the object you pass in is no longer modified, instead a new copy with the added row is returned which contains the inserted id.')
   static Future<void> insert(
     _i1.Session session,
-    Company row, {
+    Employee row, {
     _i1.Transaction? transaction,
   }) async {
     return session.db.insert(
@@ -225,39 +242,39 @@ abstract class Company extends _i1.TableRow {
   @Deprecated('Will be removed in 2.0.0. Use: db.count instead.')
   static Future<int> count(
     _i1.Session session, {
-    _i1.WhereExpressionBuilder<CompanyTable>? where,
+    _i1.WhereExpressionBuilder<EmployeeTable>? where,
     int? limit,
     bool useCache = true,
     _i1.Transaction? transaction,
   }) async {
-    return session.db.count<Company>(
-      where: where != null ? where(Company.t) : null,
+    return session.db.count<Employee>(
+      where: where != null ? where(Employee.t) : null,
       limit: limit,
       useCache: useCache,
       transaction: transaction,
     );
   }
 
-  static CompanyInclude include() {
-    return CompanyInclude._();
+  static EmployeeInclude include() {
+    return EmployeeInclude._();
   }
 
-  static CompanyIncludeList includeList({
-    _i1.WhereExpressionBuilder<CompanyTable>? where,
+  static EmployeeIncludeList includeList({
+    _i1.WhereExpressionBuilder<EmployeeTable>? where,
     int? limit,
     int? offset,
-    _i1.OrderByBuilder<CompanyTable>? orderBy,
+    _i1.OrderByBuilder<EmployeeTable>? orderBy,
     bool orderDescending = false,
-    _i1.OrderByListBuilder<CompanyTable>? orderByList,
-    CompanyInclude? include,
+    _i1.OrderByListBuilder<EmployeeTable>? orderByList,
+    EmployeeInclude? include,
   }) {
-    return CompanyIncludeList._(
+    return EmployeeIncludeList._(
       where: where,
       limit: limit,
       offset: offset,
-      orderBy: orderBy?.call(Company.t),
+      orderBy: orderBy?.call(Employee.t),
       orderDescending: orderDescending,
-      orderByList: orderByList?.call(Company.t),
+      orderByList: orderByList?.call(Employee.t),
       include: include,
     );
   }
@@ -265,87 +282,104 @@ abstract class Company extends _i1.TableRow {
 
 class _Undefined {}
 
-class _CompanyImpl extends Company {
-  _CompanyImpl({
+class _EmployeeImpl extends Employee {
+  _EmployeeImpl({
     int? id,
     required String name,
-    DateTime? foundedDate,
-    List<_i2.Employee>? employees,
+    String? email,
+    String? phone,
+    String? address,
+    bool? isActive,
   }) : super._(
           id: id,
           name: name,
-          foundedDate: foundedDate,
-          employees: employees,
+          email: email,
+          phone: phone,
+          address: address,
+          isActive: isActive,
         );
 
   @override
-  Company copyWith({
+  Employee copyWith({
     Object? id = _Undefined,
     String? name,
-    Object? foundedDate = _Undefined,
-    Object? employees = _Undefined,
+    Object? email = _Undefined,
+    Object? phone = _Undefined,
+    Object? address = _Undefined,
+    Object? isActive = _Undefined,
   }) {
-    return Company(
+    return Employee(
       id: id is int? ? id : this.id,
       name: name ?? this.name,
-      foundedDate: foundedDate is DateTime? ? foundedDate : this.foundedDate,
-      employees: employees is List<_i2.Employee>?
-          ? employees
-          : this.employees?.clone(),
+      email: email is String? ? email : this.email,
+      phone: phone is String? ? phone : this.phone,
+      address: address is String? ? address : this.address,
+      isActive: isActive is bool? ? isActive : this.isActive,
     );
   }
 }
 
-class CompanyTable extends _i1.Table {
-  CompanyTable({super.tableRelation}) : super(tableName: 'company') {
+class EmployeeTable extends _i1.Table {
+  EmployeeTable({super.tableRelation}) : super(tableName: 'employee') {
     name = _i1.ColumnString(
       'name',
       this,
     );
-    foundedDate = _i1.ColumnDateTime(
-      'foundedDate',
+    email = _i1.ColumnString(
+      'email',
       this,
     );
-    employees = _i1.ColumnSerializable(
-      'employees',
+    phone = _i1.ColumnString(
+      'phone',
+      this,
+    );
+    address = _i1.ColumnString(
+      'address',
+      this,
+    );
+    isActive = _i1.ColumnBool(
+      'isActive',
       this,
     );
   }
 
-  /// The name of the company.
   late final _i1.ColumnString name;
 
-  /// The date the company was founded, if known.
-  late final _i1.ColumnDateTime foundedDate;
+  late final _i1.ColumnString email;
 
-  /// A list of people currently employed at the company.
-  late final _i1.ColumnSerializable employees;
+  late final _i1.ColumnString phone;
+
+  late final _i1.ColumnString address;
+
+  late final _i1.ColumnBool isActive;
 
   @override
   List<_i1.Column> get columns => [
         id,
         name,
-        foundedDate,
-        employees,
+        email,
+        phone,
+        address,
+        isActive,
       ];
 }
 
-@Deprecated('Use CompanyTable.t instead.')
-CompanyTable tCompany = CompanyTable();
+@Deprecated('Use EmployeeTable.t instead.')
+EmployeeTable tEmployee = EmployeeTable();
 
-class CompanyInclude extends _i1.IncludeObject {
-  CompanyInclude._();
+class EmployeeInclude extends _i1.IncludeObject {
+  EmployeeInclude._();
 
   @override
   Map<String, _i1.Include?> get includes => {};
 
   @override
-  _i1.Table get table => Company.t;
+  _i1.Table get table => Employee.t;
 }
 
-class CompanyIncludeList extends _i1.IncludeList {
-  CompanyIncludeList._({
-    _i1.WhereExpressionBuilder<CompanyTable>? where,
+class EmployeeIncludeList extends _i1.IncludeList {
+  EmployeeIncludeList._({
+    _i1.WhereExpressionBuilder<EmployeeTable>? where,
     super.limit,
     super.offset,
     super.orderBy,
@@ -353,33 +387,33 @@ class CompanyIncludeList extends _i1.IncludeList {
     super.orderByList,
     super.include,
   }) {
-    super.where = where?.call(Company.t);
+    super.where = where?.call(Employee.t);
   }
 
   @override
   Map<String, _i1.Include?> get includes => include?.includes ?? {};
 
   @override
-  _i1.Table get table => Company.t;
+  _i1.Table get table => Employee.t;
 }
 
-class CompanyRepository {
-  const CompanyRepository._();
+class EmployeeRepository {
+  const EmployeeRepository._();
 
-  Future<List<Company>> find(
+  Future<List<Employee>> find(
     _i1.Session session, {
-    _i1.WhereExpressionBuilder<CompanyTable>? where,
+    _i1.WhereExpressionBuilder<EmployeeTable>? where,
     int? limit,
     int? offset,
-    _i1.OrderByBuilder<CompanyTable>? orderBy,
+    _i1.OrderByBuilder<EmployeeTable>? orderBy,
     bool orderDescending = false,
-    _i1.OrderByListBuilder<CompanyTable>? orderByList,
+    _i1.OrderByListBuilder<EmployeeTable>? orderByList,
     _i1.Transaction? transaction,
   }) async {
-    return session.dbNext.find<Company>(
-      where: where?.call(Company.t),
-      orderBy: orderBy?.call(Company.t),
-      orderByList: orderByList?.call(Company.t),
+    return session.dbNext.find<Employee>(
+      where: where?.call(Employee.t),
+      orderBy: orderBy?.call(Employee.t),
+      orderByList: orderByList?.call(Employee.t),
       orderDescending: orderDescending,
       limit: limit,
       offset: offset,
@@ -387,90 +421,90 @@ class CompanyRepository {
     );
   }
 
-  Future<Company?> findFirstRow(
+  Future<Employee?> findFirstRow(
     _i1.Session session, {
-    _i1.WhereExpressionBuilder<CompanyTable>? where,
+    _i1.WhereExpressionBuilder<EmployeeTable>? where,
     int? offset,
-    _i1.OrderByBuilder<CompanyTable>? orderBy,
+    _i1.OrderByBuilder<EmployeeTable>? orderBy,
     bool orderDescending = false,
-    _i1.OrderByListBuilder<CompanyTable>? orderByList,
+    _i1.OrderByListBuilder<EmployeeTable>? orderByList,
     _i1.Transaction? transaction,
   }) async {
-    return session.dbNext.findFirstRow<Company>(
-      where: where?.call(Company.t),
-      orderBy: orderBy?.call(Company.t),
-      orderByList: orderByList?.call(Company.t),
+    return session.dbNext.findFirstRow<Employee>(
+      where: where?.call(Employee.t),
+      orderBy: orderBy?.call(Employee.t),
+      orderByList: orderByList?.call(Employee.t),
       orderDescending: orderDescending,
       offset: offset,
       transaction: transaction,
     );
   }
 
-  Future<Company?> findById(
+  Future<Employee?> findById(
     _i1.Session session,
     int id, {
     _i1.Transaction? transaction,
   }) async {
-    return session.dbNext.findById<Company>(
+    return session.dbNext.findById<Employee>(
       id,
       transaction: transaction,
     );
   }
 
-  Future<List<Company>> insert(
+  Future<List<Employee>> insert(
     _i1.Session session,
-    List<Company> rows, {
+    List<Employee> rows, {
     _i1.Transaction? transaction,
   }) async {
-    return session.dbNext.insert<Company>(
+    return session.dbNext.insert<Employee>(
       rows,
       transaction: transaction,
     );
   }
 
-  Future<Company> insertRow(
+  Future<Employee> insertRow(
     _i1.Session session,
-    Company row, {
+    Employee row, {
     _i1.Transaction? transaction,
   }) async {
-    return session.dbNext.insertRow<Company>(
+    return session.dbNext.insertRow<Employee>(
       row,
       transaction: transaction,
     );
   }
 
-  Future<List<Company>> update(
+  Future<List<Employee>> update(
     _i1.Session session,
-    List<Company> rows, {
-    _i1.ColumnSelections<CompanyTable>? columns,
+    List<Employee> rows, {
+    _i1.ColumnSelections<EmployeeTable>? columns,
     _i1.Transaction? transaction,
   }) async {
-    return session.dbNext.update<Company>(
+    return session.dbNext.update<Employee>(
       rows,
-      columns: columns?.call(Company.t),
+      columns: columns?.call(Employee.t),
       transaction: transaction,
     );
   }
 
-  Future<Company> updateRow(
+  Future<Employee> updateRow(
     _i1.Session session,
-    Company row, {
-    _i1.ColumnSelections<CompanyTable>? columns,
+    Employee row, {
+    _i1.ColumnSelections<EmployeeTable>? columns,
     _i1.Transaction? transaction,
   }) async {
-    return session.dbNext.updateRow<Company>(
+    return session.dbNext.updateRow<Employee>(
       row,
-      columns: columns?.call(Company.t),
+      columns: columns?.call(Employee.t),
       transaction: transaction,
     );
   }
 
   Future<List<int>> delete(
     _i1.Session session,
-    List<Company> rows, {
+    List<Employee> rows, {
     _i1.Transaction? transaction,
   }) async {
-    return session.dbNext.delete<Company>(
+    return session.dbNext.delete<Employee>(
       rows,
       transaction: transaction,
     );
@@ -478,10 +512,10 @@ class CompanyRepository {
 
   Future<int> deleteRow(
     _i1.Session session,
-    Company row, {
+    Employee row, {
     _i1.Transaction? transaction,
   }) async {
-    return session.dbNext.deleteRow<Company>(
+    return session.dbNext.deleteRow<Employee>(
       row,
       transaction: transaction,
     );
@@ -489,23 +523,23 @@ class CompanyRepository {
 
   Future<List<int>> deleteWhere(
     _i1.Session session, {
-    required _i1.WhereExpressionBuilder<CompanyTable> where,
+    required _i1.WhereExpressionBuilder<EmployeeTable> where,
     _i1.Transaction? transaction,
   }) async {
-    return session.dbNext.deleteWhere<Company>(
-      where: where(Company.t),
+    return session.dbNext.deleteWhere<Employee>(
+      where: where(Employee.t),
       transaction: transaction,
     );
   }
 
   Future<int> count(
     _i1.Session session, {
-    _i1.WhereExpressionBuilder<CompanyTable>? where,
+    _i1.WhereExpressionBuilder<EmployeeTable>? where,
     int? limit,
     _i1.Transaction? transaction,
   }) async {
-    return session.dbNext.count<Company>(
-      where: where?.call(Company.t),
+    return session.dbNext.count<Employee>(
+      where: where?.call(Employee.t),
       limit: limit,
       transaction: transaction,
     );

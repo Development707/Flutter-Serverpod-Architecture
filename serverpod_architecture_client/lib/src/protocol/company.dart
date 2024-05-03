@@ -9,18 +9,22 @@
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:serverpod_client/serverpod_client.dart' as _i1;
+import 'protocol.dart' as _i2;
 
+/// Information about a company.
 abstract class Company extends _i1.SerializableEntity {
   Company._({
     this.id,
     required this.name,
     this.foundedDate,
+    this.employees,
   });
 
   factory Company({
     int? id,
     required String name,
     DateTime? foundedDate,
+    List<_i2.Employee>? employees,
   }) = _CompanyImpl;
 
   factory Company.fromJson(
@@ -32,6 +36,8 @@ abstract class Company extends _i1.SerializableEntity {
       name: serializationManager.deserialize<String>(jsonSerialization['name']),
       foundedDate: serializationManager
           .deserialize<DateTime?>(jsonSerialization['foundedDate']),
+      employees: serializationManager
+          .deserialize<List<_i2.Employee>?>(jsonSerialization['employees']),
     );
   }
 
@@ -40,14 +46,20 @@ abstract class Company extends _i1.SerializableEntity {
   /// the id will be null.
   int? id;
 
+  /// The name of the company.
   String name;
 
+  /// The date the company was founded, if known.
   DateTime? foundedDate;
+
+  /// A list of people currently employed at the company.
+  List<_i2.Employee>? employees;
 
   Company copyWith({
     int? id,
     String? name,
     DateTime? foundedDate,
+    List<_i2.Employee>? employees,
   });
   @override
   Map<String, dynamic> toJson() {
@@ -55,6 +67,8 @@ abstract class Company extends _i1.SerializableEntity {
       if (id != null) 'id': id,
       'name': name,
       if (foundedDate != null) 'foundedDate': foundedDate?.toJson(),
+      if (employees != null)
+        'employees': employees?.toJson(valueToJson: (v) => v.toJson()),
     };
   }
 }
@@ -66,10 +80,12 @@ class _CompanyImpl extends Company {
     int? id,
     required String name,
     DateTime? foundedDate,
+    List<_i2.Employee>? employees,
   }) : super._(
           id: id,
           name: name,
           foundedDate: foundedDate,
+          employees: employees,
         );
 
   @override
@@ -77,11 +93,15 @@ class _CompanyImpl extends Company {
     Object? id = _Undefined,
     String? name,
     Object? foundedDate = _Undefined,
+    Object? employees = _Undefined,
   }) {
     return Company(
       id: id is int? ? id : this.id,
       name: name ?? this.name,
       foundedDate: foundedDate is DateTime? ? foundedDate : this.foundedDate,
+      employees: employees is List<_i2.Employee>?
+          ? employees
+          : this.employees?.clone(),
     );
   }
 }

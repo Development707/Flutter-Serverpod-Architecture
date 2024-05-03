@@ -1,0 +1,6 @@
+enum: ErrorType
+values:
+  - error
+  - warning
+  - info
+  - debug
