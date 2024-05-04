@@ -1,3 +1,15 @@
+blocking:
+  - getBlockings:
+  - getBlocking:
+  - createBlocking:
+  - updateBlocking:
+  - deleteBlocking:
+cat:
+  - getCats:
+  - getCat:
+  - createCat:
+  - updateCat:
+  - deleteCat:
 company:
   - getAllCompanies:
   - getCompany:
@@ -10,3 +22,9 @@ example:
   - getFreezedCustomClass:
   - doThingy:
   - getRemoteIpAddress:
+post:
+  - createPost:
+  - getPost:
+  - getPosts:
+  - updatePost:
+  - deletePost:

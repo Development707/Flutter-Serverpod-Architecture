@@ -12,21 +12,31 @@ library protocol; // ignore_for_file: no_leading_underscores_for_library_prefixe
 import 'package:serverpod/serverpod.dart' as _i1;
 import 'package:serverpod/protocol.dart' as _i2;
 import 'address.dart' as _i3;
-import 'company.dart' as _i4;
-import 'course.dart' as _i5;
-import 'custom_exception.dart' as _i6;
-import 'employee.dart' as _i7;
-import 'enrollment.dart' as _i8;
-import 'error_type.dart' as _i9;
-import 'example.dart' as _i10;
-import 'student.dart' as _i11;
-import 'user.dart' as _i12;
-import 'protocol.dart' as _i13;
+import 'blocking.dart' as _i4;
+import 'cat.dart' as _i5;
+import 'company.dart' as _i6;
+import 'course.dart' as _i7;
+import 'custom_exception.dart' as _i8;
+import 'employee.dart' as _i9;
+import 'enrollment.dart' as _i10;
+import 'error_type.dart' as _i11;
+import 'example.dart' as _i12;
+import 'member.dart' as _i13;
+import 'post.dart' as _i14;
+import 'student.dart' as _i15;
+import 'user.dart' as _i16;
+import 'protocol.dart' as _i17;
+import 'package:serverpod_architecture_server/src/generated/blocking.dart'
+    as _i18;
+import 'package:serverpod_architecture_server/src/generated/cat.dart' as _i19;
 import 'package:serverpod_architecture_server/src/generated/company.dart'
-    as _i14;
+    as _i20;
+import 'package:serverpod_architecture_server/src/generated/post.dart' as _i21;
 import 'package:serverpod_architecture_shared/serverpod_architecture_shared.dart'
-    as _i15;
+    as _i22;
 export 'address.dart';
+export 'blocking.dart';
+export 'cat.dart';
 export 'company.dart';
 export 'course.dart';
 export 'custom_exception.dart';
@@ -34,6 +44,8 @@ export 'employee.dart';
 export 'enrollment.dart';
 export 'error_type.dart';
 export 'example.dart';
+export 'member.dart';
+export 'post.dart';
 export 'student.dart';
 export 'user.dart';
 
@@ -71,6 +83,143 @@ class Protocol extends _i1.SerializationManagerServer {
       indexes: [
         _i2.IndexDefinition(
           indexName: 'address_pkey',
+          tableSpace: null,
+          elements: [
+            _i2.IndexElementDefinition(
+              type: _i2.IndexElementDefinitionType.column,
+              definition: 'id',
+            )
+          ],
+          type: 'btree',
+          isUnique: true,
+          isPrimary: true,
+        )
+      ],
+      managed: true,
+    ),
+    _i2.TableDefinition(
+      name: 'blocking',
+      dartName: 'Blocking',
+      schema: 'public',
+      module: 'serverpod_architecture',
+      columns: [
+        _i2.ColumnDefinition(
+          name: 'id',
+          columnType: _i2.ColumnType.integer,
+          isNullable: false,
+          dartType: 'int?',
+          columnDefault: 'nextval(\'blocking_id_seq\'::regclass)',
+        ),
+        _i2.ColumnDefinition(
+          name: 'blockedId',
+          columnType: _i2.ColumnType.integer,
+          isNullable: false,
+          dartType: 'int',
+        ),
+        _i2.ColumnDefinition(
+          name: 'blockedById',
+          columnType: _i2.ColumnType.integer,
+          isNullable: false,
+          dartType: 'int',
+        ),
+      ],
+      foreignKeys: [
+        _i2.ForeignKeyDefinition(
+          constraintName: 'blocking_fk_0',
+          columns: ['blockedId'],
+          referenceTable: 'member',
+          referenceTableSchema: 'public',
+          referenceColumns: ['id'],
+          onUpdate: _i2.ForeignKeyAction.noAction,
+          onDelete: _i2.ForeignKeyAction.cascade,
+          matchType: null,
+        ),
+        _i2.ForeignKeyDefinition(
+          constraintName: 'blocking_fk_1',
+          columns: ['blockedById'],
+          referenceTable: 'member',
+          referenceTableSchema: 'public',
+          referenceColumns: ['id'],
+          onUpdate: _i2.ForeignKeyAction.noAction,
+          onDelete: _i2.ForeignKeyAction.cascade,
+          matchType: null,
+        ),
+      ],
+      indexes: [
+        _i2.IndexDefinition(
+          indexName: 'blocking_pkey',
+          tableSpace: null,
+          elements: [
+            _i2.IndexElementDefinition(
+              type: _i2.IndexElementDefinitionType.column,
+              definition: 'id',
+            )
+          ],
+          type: 'btree',
+          isUnique: true,
+          isPrimary: true,
+        ),
+        _i2.IndexDefinition(
+          indexName: 'blocking_blocked_unique_idx',
+          tableSpace: null,
+          elements: [
+            _i2.IndexElementDefinition(
+              type: _i2.IndexElementDefinitionType.column,
+              definition: 'blockedId',
+            ),
+            _i2.IndexElementDefinition(
+              type: _i2.IndexElementDefinitionType.column,
+              definition: 'blockedById',
+            ),
+          ],
+          type: 'btree',
+          isUnique: true,
+          isPrimary: false,
+        ),
+      ],
+      managed: true,
+    ),
+    _i2.TableDefinition(
+      name: 'cat',
+      dartName: 'Cat',
+      schema: 'public',
+      module: 'serverpod_architecture',
+      columns: [
+        _i2.ColumnDefinition(
+          name: 'id',
+          columnType: _i2.ColumnType.integer,
+          isNullable: false,
+          dartType: 'int?',
+          columnDefault: 'nextval(\'cat_id_seq\'::regclass)',
+        ),
+        _i2.ColumnDefinition(
+          name: 'name',
+          columnType: _i2.ColumnType.text,
+          isNullable: false,
+          dartType: 'String',
+        ),
+        _i2.ColumnDefinition(
+          name: 'motherId',
+          columnType: _i2.ColumnType.integer,
+          isNullable: true,
+          dartType: 'int?',
+        ),
+      ],
+      foreignKeys: [
+        _i2.ForeignKeyDefinition(
+          constraintName: 'cat_fk_0',
+          columns: ['motherId'],
+          referenceTable: 'cat',
+          referenceTableSchema: 'public',
+          referenceColumns: ['id'],
+          onUpdate: _i2.ForeignKeyAction.noAction,
+          onDelete: _i2.ForeignKeyAction.setNull,
+          matchType: null,
+        )
+      ],
+      indexes: [
+        _i2.IndexDefinition(
+          indexName: 'cat_pkey',
           tableSpace: null,
           elements: [
             _i2.IndexElementDefinition(
@@ -323,6 +472,112 @@ class Protocol extends _i1.SerializationManagerServer {
       managed: true,
     ),
     _i2.TableDefinition(
+      name: 'member',
+      dartName: 'Member',
+      schema: 'public',
+      module: 'serverpod_architecture',
+      columns: [
+        _i2.ColumnDefinition(
+          name: 'id',
+          columnType: _i2.ColumnType.integer,
+          isNullable: false,
+          dartType: 'int?',
+          columnDefault: 'nextval(\'member_id_seq\'::regclass)',
+        ),
+        _i2.ColumnDefinition(
+          name: 'name',
+          columnType: _i2.ColumnType.text,
+          isNullable: false,
+          dartType: 'String',
+        ),
+      ],
+      foreignKeys: [],
+      indexes: [
+        _i2.IndexDefinition(
+          indexName: 'member_pkey',
+          tableSpace: null,
+          elements: [
+            _i2.IndexElementDefinition(
+              type: _i2.IndexElementDefinitionType.column,
+              definition: 'id',
+            )
+          ],
+          type: 'btree',
+          isUnique: true,
+          isPrimary: true,
+        )
+      ],
+      managed: true,
+    ),
+    _i2.TableDefinition(
+      name: 'post',
+      dartName: 'Post',
+      schema: 'public',
+      module: 'serverpod_architecture',
+      columns: [
+        _i2.ColumnDefinition(
+          name: 'id',
+          columnType: _i2.ColumnType.integer,
+          isNullable: false,
+          dartType: 'int?',
+          columnDefault: 'nextval(\'post_id_seq\'::regclass)',
+        ),
+        _i2.ColumnDefinition(
+          name: 'content',
+          columnType: _i2.ColumnType.text,
+          isNullable: false,
+          dartType: 'String',
+        ),
+        _i2.ColumnDefinition(
+          name: 'nextId',
+          columnType: _i2.ColumnType.integer,
+          isNullable: true,
+          dartType: 'int?',
+        ),
+      ],
+      foreignKeys: [
+        _i2.ForeignKeyDefinition(
+          constraintName: 'post_fk_0',
+          columns: ['nextId'],
+          referenceTable: 'post',
+          referenceTableSchema: 'public',
+          referenceColumns: ['id'],
+          onUpdate: _i2.ForeignKeyAction.noAction,
+          onDelete: _i2.ForeignKeyAction.setNull,
+          matchType: null,
+        )
+      ],
+      indexes: [
+        _i2.IndexDefinition(
+          indexName: 'post_pkey',
+          tableSpace: null,
+          elements: [
+            _i2.IndexElementDefinition(
+              type: _i2.IndexElementDefinitionType.column,
+              definition: 'id',
+            )
+          ],
+          type: 'btree',
+          isUnique: true,
+          isPrimary: true,
+        ),
+        _i2.IndexDefinition(
+          indexName: 'next_unique_idx',
+          tableSpace: null,
+          elements: [
+            _i2.IndexElementDefinition(
+              type: _i2.IndexElementDefinitionType.column,
+              definition: 'nextId',
+            )
+          ],
+          type: 'btree',
+          isUnique: true,
+          isPrimary: false,
+        ),
+      ],
+      managed: true,
+    ),
+    _i2.TableDefinition(
       name: 'student',
       dartName: 'Student',
       schema: 'public',
@@ -437,95 +692,149 @@ class Protocol extends _i1.SerializationManagerServer {
     if (t == _i3.Address) {
       return _i3.Address.fromJson(data, this) as T;
     }
-    if (t == _i4.Company) {
-      return _i4.Company.fromJson(data, this) as T;
+    if (t == _i4.Blocking) {
+      return _i4.Blocking.fromJson(data, this) as T;
     }
-    if (t == _i5.Course) {
-      return _i5.Course.fromJson(data, this) as T;
+    if (t == _i5.Cat) {
+      return _i5.Cat.fromJson(data, this) as T;
     }
-    if (t == _i6.CustomException) {
-      return _i6.CustomException.fromJson(data, this) as T;
+    if (t == _i6.Company) {
+      return _i6.Company.fromJson(data, this) as T;
     }
-    if (t == _i7.Employee) {
-      return _i7.Employee.fromJson(data, this) as T;
+    if (t == _i7.Course) {
+      return _i7.Course.fromJson(data, this) as T;
     }
-    if (t == _i8.Enrollment) {
-      return _i8.Enrollment.fromJson(data, this) as T;
+    if (t == _i8.CustomException) {
+      return _i8.CustomException.fromJson(data, this) as T;
     }
-    if (t == _i9.ErrorType) {
-      return _i9.ErrorType.fromJson(data) as T;
+    if (t == _i9.Employee) {
+      return _i9.Employee.fromJson(data, this) as T;
     }
-    if (t == _i10.Example) {
-      return _i10.Example.fromJson(data, this) as T;
+    if (t == _i10.Enrollment) {
+      return _i10.Enrollment.fromJson(data, this) as T;
     }
-    if (t == _i11.Student) {
-      return _i11.Student.fromJson(data, this) as T;
+    if (t == _i11.ErrorType) {
+      return _i11.ErrorType.fromJson(data) as T;
     }
-    if (t == _i12.User) {
-      return _i12.User.fromJson(data, this) as T;
+    if (t == _i12.Example) {
+      return _i12.Example.fromJson(data, this) as T;
+    }
+    if (t == _i13.Member) {
+      return _i13.Member.fromJson(data, this) as T;
+    }
+    if (t == _i14.Post) {
+      return _i14.Post.fromJson(data, this) as T;
+    }
+    if (t == _i15.Student) {
+      return _i15.Student.fromJson(data, this) as T;
+    }
+    if (t == _i16.User) {
+      return _i16.User.fromJson(data, this) as T;
     }
     if (t == _i1.getType<_i3.Address?>()) {
       return (data != null ? _i3.Address.fromJson(data, this) : null) as T;
     }
-    if (t == _i1.getType<_i4.Company?>()) {
-      return (data != null ? _i4.Company.fromJson(data, this) : null) as T;
+    if (t == _i1.getType<_i4.Blocking?>()) {
+      return (data != null ? _i4.Blocking.fromJson(data, this) : null) as T;
     }
-    if (t == _i1.getType<_i5.Course?>()) {
-      return (data != null ? _i5.Course.fromJson(data, this) : null) as T;
+    if (t == _i1.getType<_i5.Cat?>()) {
+      return (data != null ? _i5.Cat.fromJson(data, this) : null) as T;
     }
-    if (t == _i1.getType<_i6.CustomException?>()) {
-      return (data != null ? _i6.CustomException.fromJson(data, this) : null)
+    if (t == _i1.getType<_i6.Company?>()) {
+      return (data != null ? _i6.Company.fromJson(data, this) : null) as T;
+    }
+    if (t == _i1.getType<_i7.Course?>()) {
+      return (data != null ? _i7.Course.fromJson(data, this) : null) as T;
+    }
+    if (t == _i1.getType<_i8.CustomException?>()) {
+      return (data != null ? _i8.CustomException.fromJson(data, this) : null)
           as T;
     }
-    if (t == _i1.getType<_i7.Employee?>()) {
-      return (data != null ? _i7.Employee.fromJson(data, this) : null) as T;
+    if (t == _i1.getType<_i9.Employee?>()) {
+      return (data != null ? _i9.Employee.fromJson(data, this) : null) as T;
     }
-    if (t == _i1.getType<_i8.Enrollment?>()) {
-      return (data != null ? _i8.Enrollment.fromJson(data, this) : null) as T;
+    if (t == _i1.getType<_i10.Enrollment?>()) {
+      return (data != null ? _i10.Enrollment.fromJson(data, this) : null) as T;
     }
-    if (t == _i1.getType<_i9.ErrorType?>()) {
-      return (data != null ? _i9.ErrorType.fromJson(data) : null) as T;
+    if (t == _i1.getType<_i11.ErrorType?>()) {
+      return (data != null ? _i11.ErrorType.fromJson(data) : null) as T;
     }
-    if (t == _i1.getType<_i10.Example?>()) {
-      return (data != null ? _i10.Example.fromJson(data, this) : null) as T;
+    if (t == _i1.getType<_i12.Example?>()) {
+      return (data != null ? _i12.Example.fromJson(data, this) : null) as T;
     }
-    if (t == _i1.getType<_i11.Student?>()) {
-      return (data != null ? _i11.Student.fromJson(data, this) : null) as T;
+    if (t == _i1.getType<_i13.Member?>()) {
+      return (data != null ? _i13.Member.fromJson(data, this) : null) as T;
     }
-    if (t == _i1.getType<_i12.User?>()) {
-      return (data != null ? _i12.User.fromJson(data, this) : null) as T;
+    if (t == _i1.getType<_i14.Post?>()) {
+      return (data != null ? _i14.Post.fromJson(data, this) : null) as T;
     }
-    if (t == _i1.getType<List<_i13.Employee>?>()) {
+    if (t == _i1.getType<_i15.Student?>()) {
+      return (data != null ? _i15.Student.fromJson(data, this) : null) as T;
+    }
+    if (t == _i1.getType<_i16.User?>()) {
+      return (data != null ? _i16.User.fromJson(data, this) : null) as T;
+    }
+    if (t == _i1.getType<List<_i17.Cat>?>()) {
       return (data != null
-          ? (data as List).map((e) => deserialize<_i13.Employee>(e)).toList()
+          ? (data as List).map((e) => deserialize<_i17.Cat>(e)).toList()
           : null) as dynamic;
     }
-    if (t == _i1.getType<List<_i13.Enrollment>?>()) {
+    if (t == _i1.getType<List<_i17.Employee>?>()) {
       return (data != null
-          ? (data as List).map((e) => deserialize<_i13.Enrollment>(e)).toList()
+          ? (data as List).map((e) => deserialize<_i17.Employee>(e)).toList()
           : null) as dynamic;
     }
-    if (t == _i1.getType<List<_i13.Enrollment>?>()) {
+    if (t == _i1.getType<List<_i17.Enrollment>?>()) {
       return (data != null
-          ? (data as List).map((e) => deserialize<_i13.Enrollment>(e)).toList()
+          ? (data as List).map((e) => deserialize<_i17.Enrollment>(e)).toList()
           : null) as dynamic;
     }
-    if (t == List<_i14.Company>) {
-      return (data as List).map((e) => deserialize<_i14.Company>(e)).toList()
+    if (t == _i1.getType<List<_i17.Blocking>?>()) {
+      return (data != null
+          ? (data as List).map((e) => deserialize<_i17.Blocking>(e)).toList()
+          : null) as dynamic;
+    }
+    if (t == _i1.getType<List<_i17.Blocking>?>()) {
+      return (data != null
+          ? (data as List).map((e) => deserialize<_i17.Blocking>(e)).toList()
+          : null) as dynamic;
+    }
+    if (t == _i1.getType<List<_i17.Enrollment>?>()) {
+      return (data != null
+          ? (data as List).map((e) => deserialize<_i17.Enrollment>(e)).toList()
+          : null) as dynamic;
+    }
+    if (t == List<_i18.Blocking>) {
+      return (data as List).map((e) => deserialize<_i18.Blocking>(e)).toList()
           as dynamic;
     }
-    if (t == _i15.ClassName) {
-      return _i15.ClassName.fromJson(data, this) as T;
+    if (t == List<int>) {
+      return (data as List).map((e) => deserialize<int>(e)).toList() as dynamic;
     }
-    if (t == _i15.FreezedCustomClass) {
-      return _i15.FreezedCustomClass.fromJson(data, this) as T;
+    if (t == List<_i19.Cat>) {
+      return (data as List).map((e) => deserialize<_i19.Cat>(e)).toList()
+          as dynamic;
     }
-    if (t == _i1.getType<_i15.ClassName?>()) {
-      return (data != null ? _i15.ClassName.fromJson(data, this) : null) as T;
+    if (t == List<_i20.Company>) {
+      return (data as List).map((e) => deserialize<_i20.Company>(e)).toList()
+          as dynamic;
     }
-    if (t == _i1.getType<_i15.FreezedCustomClass?>()) {
+    if (t == List<_i21.Post>) {
+      return (data as List).map((e) => deserialize<_i21.Post>(e)).toList()
+          as dynamic;
+    }
+    if (t == _i22.ClassName) {
+      return _i22.ClassName.fromJson(data, this) as T;
+    }
+    if (t == _i22.FreezedCustomClass) {
+      return _i22.FreezedCustomClass.fromJson(data, this) as T;
+    }
+    if (t == _i1.getType<_i22.ClassName?>()) {
+      return (data != null ? _i22.ClassName.fromJson(data, this) : null) as T;
+    }
+    if (t == _i1.getType<_i22.FreezedCustomClass?>()) {
       return (data != null
-          ? _i15.FreezedCustomClass.fromJson(data, this)
+          ? _i22.FreezedCustomClass.fromJson(data, this)
           : null) as T;
     }
     try {
@@ -536,40 +845,52 @@ class Protocol extends _i1.SerializationManagerServer {
 
   @override
   String? getClassNameForObject(Object data) {
-    if (data is _i15.ClassName) {
+    if (data is _i22.ClassName) {
       return 'ClassName';
     }
-    if (data is _i15.FreezedCustomClass) {
+    if (data is _i22.FreezedCustomClass) {
       return 'FreezedCustomClass';
     }
     if (data is _i3.Address) {
       return 'Address';
     }
-    if (data is _i4.Company) {
+    if (data is _i4.Blocking) {
+      return 'Blocking';
+    }
+    if (data is _i5.Cat) {
+      return 'Cat';
+    }
+    if (data is _i6.Company) {
       return 'Company';
     }
-    if (data is _i5.Course) {
+    if (data is _i7.Course) {
       return 'Course';
     }
-    if (data is _i6.CustomException) {
+    if (data is _i8.CustomException) {
       return 'CustomException';
     }
-    if (data is _i7.Employee) {
+    if (data is _i9.Employee) {
       return 'Employee';
     }
-    if (data is _i8.Enrollment) {
+    if (data is _i10.Enrollment) {
       return 'Enrollment';
     }
-    if (data is _i9.ErrorType) {
+    if (data is _i11.ErrorType) {
       return 'ErrorType';
     }
-    if (data is _i10.Example) {
+    if (data is _i12.Example) {
       return 'Example';
     }
-    if (data is _i11.Student) {
+    if (data is _i13.Member) {
+      return 'Member';
+    }
+    if (data is _i14.Post) {
+      return 'Post';
+    }
+    if (data is _i15.Student) {
       return 'Student';
     }
-    if (data is _i12.User) {
+    if (data is _i16.User) {
       return 'User';
     }
     return super.getClassNameForObject(data);
@@ -578,40 +899,52 @@ class Protocol extends _i1.SerializationManagerServer {
   @override
   dynamic deserializeByClassName(Map<String, dynamic> data) {
     if (data['className'] == 'ClassName') {
-      return deserialize<_i15.ClassName>(data['data']);
+      return deserialize<_i22.ClassName>(data['data']);
     }
     if (data['className'] == 'FreezedCustomClass') {
-      return deserialize<_i15.FreezedCustomClass>(data['data']);
+      return deserialize<_i22.FreezedCustomClass>(data['data']);
     }
     if (data['className'] == 'Address') {
       return deserialize<_i3.Address>(data['data']);
     }
+    if (data['className'] == 'Blocking') {
+      return deserialize<_i4.Blocking>(data['data']);
+    }
+    if (data['className'] == 'Cat') {
+      return deserialize<_i5.Cat>(data['data']);
+    }
     if (data['className'] == 'Company') {
-      return deserialize<_i4.Company>(data['data']);
+      return deserialize<_i6.Company>(data['data']);
     }
     if (data['className'] == 'Course') {
-      return deserialize<_i5.Course>(data['data']);
+      return deserialize<_i7.Course>(data['data']);
     }
     if (data['className'] == 'CustomException') {
-      return deserialize<_i6.CustomException>(data['data']);
+      return deserialize<_i8.CustomException>(data['data']);
     }
     if (data['className'] == 'Employee') {
-      return deserialize<_i7.Employee>(data['data']);
+      return deserialize<_i9.Employee>(data['data']);
     }
     if (data['className'] == 'Enrollment') {
-      return deserialize<_i8.Enrollment>(data['data']);
+      return deserialize<_i10.Enrollment>(data['data']);
     }
     if (data['className'] == 'ErrorType') {
-      return deserialize<_i9.ErrorType>(data['data']);
+      return deserialize<_i11.ErrorType>(data['data']);
     }
     if (data['className'] == 'Example') {
-      return deserialize<_i10.Example>(data['data']);
+      return deserialize<_i12.Example>(data['data']);
+    }
+    if (data['className'] == 'Member') {
+      return deserialize<_i13.Member>(data['data']);
+    }
+    if (data['className'] == 'Post') {
+      return deserialize<_i14.Post>(data['data']);
     }
     if (data['className'] == 'Student') {
-      return deserialize<_i11.Student>(data['data']);
+      return deserialize<_i15.Student>(data['data']);
     }
     if (data['className'] == 'User') {
-      return deserialize<_i12.User>(data['data']);
+      return deserialize<_i16.User>(data['data']);
     }
     return super.deserializeByClassName(data);
   }
@@ -627,18 +960,26 @@ class Protocol extends _i1.SerializationManagerServer {
     switch (t) {
       case _i3.Address:
         return _i3.Address.t;
-      case _i4.Company:
-        return _i4.Company.t;
-      case _i5.Course:
-        return _i5.Course.t;
-      case _i7.Employee:
-        return _i7.Employee.t;
-      case _i8.Enrollment:
-        return _i8.Enrollment.t;
-      case _i11.Student:
-        return _i11.Student.t;
-      case _i12.User:
-        return _i12.User.t;
+      case _i4.Blocking:
+        return _i4.Blocking.t;
+      case _i5.Cat:
+        return _i5.Cat.t;
+      case _i6.Company:
+        return _i6.Company.t;
+      case _i7.Course:
+        return _i7.Course.t;
+      case _i9.Employee:
+        return _i9.Employee.t;
+      case _i10.Enrollment:
+        return _i10.Enrollment.t;
+      case _i13.Member:
+        return _i13.Member.t;
+      case _i14.Post:
+        return _i14.Post.t;
+      case _i15.Student:
+        return _i15.Student.t;
+      case _i16.User:
+        return _i16.User.t;
     }
     return null;
   }

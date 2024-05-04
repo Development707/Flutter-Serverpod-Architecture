@@ -11,21 +11,31 @@ library protocol; // ignore_for_file: no_leading_underscores_for_library_prefixe
 
 import 'package:serverpod_client/serverpod_client.dart' as _i1;
 import 'address.dart' as _i2;
-import 'company.dart' as _i3;
-import 'course.dart' as _i4;
-import 'custom_exception.dart' as _i5;
-import 'employee.dart' as _i6;
-import 'enrollment.dart' as _i7;
-import 'error_type.dart' as _i8;
-import 'example.dart' as _i9;
-import 'student.dart' as _i10;
-import 'user.dart' as _i11;
-import 'protocol.dart' as _i12;
+import 'blocking.dart' as _i3;
+import 'cat.dart' as _i4;
+import 'company.dart' as _i5;
+import 'course.dart' as _i6;
+import 'custom_exception.dart' as _i7;
+import 'employee.dart' as _i8;
+import 'enrollment.dart' as _i9;
+import 'error_type.dart' as _i10;
+import 'example.dart' as _i11;
+import 'member.dart' as _i12;
+import 'post.dart' as _i13;
+import 'student.dart' as _i14;
+import 'user.dart' as _i15;
+import 'protocol.dart' as _i16;
+import 'package:serverpod_architecture_client/src/protocol/blocking.dart'
+    as _i17;
+import 'package:serverpod_architecture_client/src/protocol/cat.dart' as _i18;
 import 'package:serverpod_architecture_client/src/protocol/company.dart'
-    as _i13;
+    as _i19;
+import 'package:serverpod_architecture_client/src/protocol/post.dart' as _i20;
 import 'package:serverpod_architecture_shared/serverpod_architecture_shared.dart'
-    as _i14;
+    as _i21;
 export 'address.dart';
+export 'blocking.dart';
+export 'cat.dart';
 export 'company.dart';
 export 'course.dart';
 export 'custom_exception.dart';
@@ -33,6 +43,8 @@ export 'employee.dart';
 export 'enrollment.dart';
 export 'error_type.dart';
 export 'example.dart';
+export 'member.dart';
+export 'post.dart';
 export 'student.dart';
 export 'user.dart';
 export 'client.dart';
@@ -58,95 +70,149 @@ class Protocol extends _i1.SerializationManager {
     if (t == _i2.Address) {
       return _i2.Address.fromJson(data, this) as T;
     }
-    if (t == _i3.Company) {
-      return _i3.Company.fromJson(data, this) as T;
+    if (t == _i3.Blocking) {
+      return _i3.Blocking.fromJson(data, this) as T;
     }
-    if (t == _i4.Course) {
-      return _i4.Course.fromJson(data, this) as T;
+    if (t == _i4.Cat) {
+      return _i4.Cat.fromJson(data, this) as T;
     }
-    if (t == _i5.CustomException) {
-      return _i5.CustomException.fromJson(data, this) as T;
+    if (t == _i5.Company) {
+      return _i5.Company.fromJson(data, this) as T;
     }
-    if (t == _i6.Employee) {
-      return _i6.Employee.fromJson(data, this) as T;
+    if (t == _i6.Course) {
+      return _i6.Course.fromJson(data, this) as T;
     }
-    if (t == _i7.Enrollment) {
-      return _i7.Enrollment.fromJson(data, this) as T;
+    if (t == _i7.CustomException) {
+      return _i7.CustomException.fromJson(data, this) as T;
     }
-    if (t == _i8.ErrorType) {
-      return _i8.ErrorType.fromJson(data) as T;
+    if (t == _i8.Employee) {
+      return _i8.Employee.fromJson(data, this) as T;
     }
-    if (t == _i9.Example) {
-      return _i9.Example.fromJson(data, this) as T;
+    if (t == _i9.Enrollment) {
+      return _i9.Enrollment.fromJson(data, this) as T;
     }
-    if (t == _i10.Student) {
-      return _i10.Student.fromJson(data, this) as T;
+    if (t == _i10.ErrorType) {
+      return _i10.ErrorType.fromJson(data) as T;
     }
-    if (t == _i11.User) {
-      return _i11.User.fromJson(data, this) as T;
+    if (t == _i11.Example) {
+      return _i11.Example.fromJson(data, this) as T;
+    }
+    if (t == _i12.Member) {
+      return _i12.Member.fromJson(data, this) as T;
+    }
+    if (t == _i13.Post) {
+      return _i13.Post.fromJson(data, this) as T;
+    }
+    if (t == _i14.Student) {
+      return _i14.Student.fromJson(data, this) as T;
+    }
+    if (t == _i15.User) {
+      return _i15.User.fromJson(data, this) as T;
     }
     if (t == _i1.getType<_i2.Address?>()) {
       return (data != null ? _i2.Address.fromJson(data, this) : null) as T;
     }
-    if (t == _i1.getType<_i3.Company?>()) {
-      return (data != null ? _i3.Company.fromJson(data, this) : null) as T;
+    if (t == _i1.getType<_i3.Blocking?>()) {
+      return (data != null ? _i3.Blocking.fromJson(data, this) : null) as T;
     }
-    if (t == _i1.getType<_i4.Course?>()) {
-      return (data != null ? _i4.Course.fromJson(data, this) : null) as T;
+    if (t == _i1.getType<_i4.Cat?>()) {
+      return (data != null ? _i4.Cat.fromJson(data, this) : null) as T;
     }
-    if (t == _i1.getType<_i5.CustomException?>()) {
-      return (data != null ? _i5.CustomException.fromJson(data, this) : null)
+    if (t == _i1.getType<_i5.Company?>()) {
+      return (data != null ? _i5.Company.fromJson(data, this) : null) as T;
+    }
+    if (t == _i1.getType<_i6.Course?>()) {
+      return (data != null ? _i6.Course.fromJson(data, this) : null) as T;
+    }
+    if (t == _i1.getType<_i7.CustomException?>()) {
+      return (data != null ? _i7.CustomException.fromJson(data, this) : null)
           as T;
     }
-    if (t == _i1.getType<_i6.Employee?>()) {
-      return (data != null ? _i6.Employee.fromJson(data, this) : null) as T;
+    if (t == _i1.getType<_i8.Employee?>()) {
+      return (data != null ? _i8.Employee.fromJson(data, this) : null) as T;
     }
-    if (t == _i1.getType<_i7.Enrollment?>()) {
-      return (data != null ? _i7.Enrollment.fromJson(data, this) : null) as T;
+    if (t == _i1.getType<_i9.Enrollment?>()) {
+      return (data != null ? _i9.Enrollment.fromJson(data, this) : null) as T;
     }
-    if (t == _i1.getType<_i8.ErrorType?>()) {
-      return (data != null ? _i8.ErrorType.fromJson(data) : null) as T;
+    if (t == _i1.getType<_i10.ErrorType?>()) {
+      return (data != null ? _i10.ErrorType.fromJson(data) : null) as T;
     }
-    if (t == _i1.getType<_i9.Example?>()) {
-      return (data != null ? _i9.Example.fromJson(data, this) : null) as T;
+    if (t == _i1.getType<_i11.Example?>()) {
+      return (data != null ? _i11.Example.fromJson(data, this) : null) as T;
     }
-    if (t == _i1.getType<_i10.Student?>()) {
-      return (data != null ? _i10.Student.fromJson(data, this) : null) as T;
+    if (t == _i1.getType<_i12.Member?>()) {
+      return (data != null ? _i12.Member.fromJson(data, this) : null) as T;
     }
-    if (t == _i1.getType<_i11.User?>()) {
-      return (data != null ? _i11.User.fromJson(data, this) : null) as T;
+    if (t == _i1.getType<_i13.Post?>()) {
+      return (data != null ? _i13.Post.fromJson(data, this) : null) as T;
     }
-    if (t == _i1.getType<List<_i12.Employee>?>()) {
+    if (t == _i1.getType<_i14.Student?>()) {
+      return (data != null ? _i14.Student.fromJson(data, this) : null) as T;
+    }
+    if (t == _i1.getType<_i15.User?>()) {
+      return (data != null ? _i15.User.fromJson(data, this) : null) as T;
+    }
+    if (t == _i1.getType<List<_i16.Cat>?>()) {
       return (data != null
-          ? (data as List).map((e) => deserialize<_i12.Employee>(e)).toList()
+          ? (data as List).map((e) => deserialize<_i16.Cat>(e)).toList()
           : null) as dynamic;
     }
-    if (t == _i1.getType<List<_i12.Enrollment>?>()) {
+    if (t == _i1.getType<List<_i16.Employee>?>()) {
       return (data != null
-          ? (data as List).map((e) => deserialize<_i12.Enrollment>(e)).toList()
+          ? (data as List).map((e) => deserialize<_i16.Employee>(e)).toList()
           : null) as dynamic;
     }
-    if (t == _i1.getType<List<_i12.Enrollment>?>()) {
+    if (t == _i1.getType<List<_i16.Enrollment>?>()) {
       return (data != null
-          ? (data as List).map((e) => deserialize<_i12.Enrollment>(e)).toList()
+          ? (data as List).map((e) => deserialize<_i16.Enrollment>(e)).toList()
           : null) as dynamic;
     }
-    if (t == List<_i13.Company>) {
-      return (data as List).map((e) => deserialize<_i13.Company>(e)).toList()
+    if (t == _i1.getType<List<_i16.Blocking>?>()) {
+      return (data != null
+          ? (data as List).map((e) => deserialize<_i16.Blocking>(e)).toList()
+          : null) as dynamic;
+    }
+    if (t == _i1.getType<List<_i16.Blocking>?>()) {
+      return (data != null
+          ? (data as List).map((e) => deserialize<_i16.Blocking>(e)).toList()
+          : null) as dynamic;
+    }
+    if (t == _i1.getType<List<_i16.Enrollment>?>()) {
+      return (data != null
+          ? (data as List).map((e) => deserialize<_i16.Enrollment>(e)).toList()
+          : null) as dynamic;
+    }
+    if (t == List<_i17.Blocking>) {
+      return (data as List).map((e) => deserialize<_i17.Blocking>(e)).toList()
           as dynamic;
     }
-    if (t == _i14.ClassName) {
-      return _i14.ClassName.fromJson(data, this) as T;
+    if (t == List<int>) {
+      return (data as List).map((e) => deserialize<int>(e)).toList() as dynamic;
     }
-    if (t == _i14.FreezedCustomClass) {
-      return _i14.FreezedCustomClass.fromJson(data, this) as T;
+    if (t == List<_i18.Cat>) {
+      return (data as List).map((e) => deserialize<_i18.Cat>(e)).toList()
+          as dynamic;
     }
-    if (t == _i1.getType<_i14.ClassName?>()) {
-      return (data != null ? _i14.ClassName.fromJson(data, this) : null) as T;
+    if (t == List<_i19.Company>) {
+      return (data as List).map((e) => deserialize<_i19.Company>(e)).toList()
+          as dynamic;
     }
-    if (t == _i1.getType<_i14.FreezedCustomClass?>()) {
+    if (t == List<_i20.Post>) {
+      return (data as List).map((e) => deserialize<_i20.Post>(e)).toList()
+          as dynamic;
+    }
+    if (t == _i21.ClassName) {
+      return _i21.ClassName.fromJson(data, this) as T;
+    }
+    if (t == _i21.FreezedCustomClass) {
+      return _i21.FreezedCustomClass.fromJson(data, this) as T;
+    }
+    if (t == _i1.getType<_i21.ClassName?>()) {
+      return (data != null ? _i21.ClassName.fromJson(data, this) : null) as T;
+    }
+    if (t == _i1.getType<_i21.FreezedCustomClass?>()) {
       return (data != null
-          ? _i14.FreezedCustomClass.fromJson(data, this)
+          ? _i21.FreezedCustomClass.fromJson(data, this)
           : null) as T;
     }
     return super.deserialize<T>(data, t);
@@ -154,40 +220,52 @@ class Protocol extends _i1.SerializationManager {
 
   @override
   String? getClassNameForObject(Object data) {
-    if (data is _i14.ClassName) {
+    if (data is _i21.ClassName) {
       return 'ClassName';
     }
-    if (data is _i14.FreezedCustomClass) {
+    if (data is _i21.FreezedCustomClass) {
       return 'FreezedCustomClass';
     }
     if (data is _i2.Address) {
       return 'Address';
     }
-    if (data is _i3.Company) {
+    if (data is _i3.Blocking) {
+      return 'Blocking';
+    }
+    if (data is _i4.Cat) {
+      return 'Cat';
+    }
+    if (data is _i5.Company) {
       return 'Company';
     }
-    if (data is _i4.Course) {
+    if (data is _i6.Course) {
       return 'Course';
     }
-    if (data is _i5.CustomException) {
+    if (data is _i7.CustomException) {
       return 'CustomException';
     }
-    if (data is _i6.Employee) {
+    if (data is _i8.Employee) {
       return 'Employee';
     }
-    if (data is _i7.Enrollment) {
+    if (data is _i9.Enrollment) {
       return 'Enrollment';
     }
-    if (data is _i8.ErrorType) {
+    if (data is _i10.ErrorType) {
       return 'ErrorType';
     }
-    if (data is _i9.Example) {
+    if (data is _i11.Example) {
       return 'Example';
     }
-    if (data is _i10.Student) {
+    if (data is _i12.Member) {
+      return 'Member';
+    }
+    if (data is _i13.Post) {
+      return 'Post';
+    }
+    if (data is _i14.Student) {
       return 'Student';
     }
-    if (data is _i11.User) {
+    if (data is _i15.User) {
       return 'User';
     }
     return super.getClassNameForObject(data);
@@ -196,40 +274,52 @@ class Protocol extends _i1.SerializationManager {
   @override
   dynamic deserializeByClassName(Map<String, dynamic> data) {
     if (data['className'] == 'ClassName') {
-      return deserialize<_i14.ClassName>(data['data']);
+      return deserialize<_i21.ClassName>(data['data']);
     }
     if (data['className'] == 'FreezedCustomClass') {
-      return deserialize<_i14.FreezedCustomClass>(data['data']);
+      return deserialize<_i21.FreezedCustomClass>(data['data']);
     }
     if (data['className'] == 'Address') {
       return deserialize<_i2.Address>(data['data']);
     }
+    if (data['className'] == 'Blocking') {
+      return deserialize<_i3.Blocking>(data['data']);
+    }
+    if (data['className'] == 'Cat') {
+      return deserialize<_i4.Cat>(data['data']);
+    }
     if (data['className'] == 'Company') {
-      return deserialize<_i3.Company>(data['data']);
+      return deserialize<_i5.Company>(data['data']);
     }
     if (data['className'] == 'Course') {
-      return deserialize<_i4.Course>(data['data']);
+      return deserialize<_i6.Course>(data['data']);
     }
     if (data['className'] == 'CustomException') {
-      return deserialize<_i5.CustomException>(data['data']);
+      return deserialize<_i7.CustomException>(data['data']);
     }
     if (data['className'] == 'Employee') {
-      return deserialize<_i6.Employee>(data['data']);
+      return deserialize<_i8.Employee>(data['data']);
     }
     if (data['className'] == 'Enrollment') {
-      return deserialize<_i7.Enrollment>(data['data']);
+      return deserialize<_i9.Enrollment>(data['data']);
     }
     if (data['className'] == 'ErrorType') {
-      return deserialize<_i8.ErrorType>(data['data']);
+      return deserialize<_i10.ErrorType>(data['data']);
     }
     if (data['className'] == 'Example') {
-      return deserialize<_i9.Example>(data['data']);
+      return deserialize<_i11.Example>(data['data']);
+    }
+    if (data['className'] == 'Member') {
+      return deserialize<_i12.Member>(data['data']);
+    }
+    if (data['className'] == 'Post') {
+      return deserialize<_i13.Post>(data['data']);
     }
     if (data['className'] == 'Student') {
-      return deserialize<_i10.Student>(data['data']);
+      return deserialize<_i14.Student>(data['data']);
     }
     if (data['className'] == 'User') {
-      return deserialize<_i11.User>(data['data']);
+      return deserialize<_i15.User>(data['data']);
     }
     return super.deserializeByClassName(data);
   }
