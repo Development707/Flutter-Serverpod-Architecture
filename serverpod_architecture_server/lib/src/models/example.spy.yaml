@@ -11,7 +11,7 @@
 class: Example
 
 # Add the table key, if this class represents a row in the database.
-#table: example
+table: example
 
 # The fields (and columns if connected to the database) of the class. Supported types are 
 # `bool`, `int`, `double`, `String`, `UuidValue`, `Duration`, `DateTime`, `ByteData`, 
@@ -21,3 +21,4 @@ class: Example
 fields:
   name: String
   data: int
+  parentId: int?, relation(parent=example, onUpdate=SetNull, onDelete=NoAction)
