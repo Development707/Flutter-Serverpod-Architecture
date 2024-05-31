@@ -26,7 +26,7 @@ abstract class Company extends _i1.TableRow
     int? id,
     required String name,
     DateTime? foundedDate,
-    List<_i2.Employee>? employees,
+    List<_i2.User>? employees,
   }) = _CompanyImpl;
 
   factory Company.fromJson(Map<String, dynamic> jsonSerialization) {
@@ -38,7 +38,7 @@ abstract class Company extends _i1.TableRow
           : _i1.DateTimeJsonExtension.fromJson(
               jsonSerialization['foundedDate']),
       employees: (jsonSerialization['employees'] as List?)
-          ?.map((e) => _i2.Employee.fromJson((e as Map<String, dynamic>)))
+          ?.map((e) => _i2.User.fromJson((e as Map<String, dynamic>)))
           .toList(),
     );
   }
@@ -54,7 +54,7 @@ abstract class Company extends _i1.TableRow
   DateTime? foundedDate;
 
   /// A list of people currently employed at the company.
-  List<_i2.Employee>? employees;
+  List<_i2.User>? employees;
 
   @override
   _i1.Table get table => t;
@@ -63,7 +63,7 @@ abstract class Company extends _i1.TableRow
     int? id,
     String? name,
     DateTime? foundedDate,
-    List<_i2.Employee>? employees,
+    List<_i2.User>? employees,
   });
   @override
   Map<String, dynamic> toJson() {
@@ -88,7 +88,7 @@ abstract class Company extends _i1.TableRow
     };
   }
 
-  static CompanyInclude include({_i2.EmployeeIncludeList? employees}) {
+  static CompanyInclude include({_i2.UserIncludeList? employees}) {
     return CompanyInclude._(employees: employees);
   }
 
@@ -125,7 +125,7 @@ class _CompanyImpl extends Company {
     int? id,
     required String name,
     DateTime? foundedDate,
-    List<_i2.Employee>? employees,
+    List<_i2.User>? employees,
   }) : super._(
           id: id,
           name: name,
@@ -144,9 +144,8 @@ class _CompanyImpl extends Company {
       id: id is int? ? id : this.id,
       name: name ?? this.name,
       foundedDate: foundedDate is DateTime? ? foundedDate : this.foundedDate,
-      employees: employees is List<_i2.Employee>?
-          ? employees
-          : this.employees?.clone(),
+      employees:
+          employees is List<_i2.User>? ? employees : this.employees?.clone(),
     );
   }
 }
@@ -163,37 +162,37 @@ class CompanyTable extends _i1.Table {
   late final _i1.ColumnString name;
 
   /// A list of people currently employed at the company.
-  _i2.EmployeeTable? ___employees;
+  _i2.UserTable? ___employees;
 
   /// A list of people currently employed at the company.
-  _i1.ManyRelation<_i2.EmployeeTable>? _employees;
+  _i1.ManyRelation<_i2.UserTable>? _employees;
 
-  _i2.EmployeeTable get __employees {
+  _i2.UserTable get __employees {
     if (___employees != null) return ___employees!;
     ___employees = _i1.createRelationTable(
       relationFieldName: '__employees',
       field: Company.t.id,
-      foreignField: _i2.Employee.t.companyId,
+      foreignField: _i2.User.t.companyId,
       tableRelation: tableRelation,
       createTable: (foreignTableRelation) =>
-          _i2.EmployeeTable(tableRelation: foreignTableRelation),
+          _i2.UserTable(tableRelation: foreignTableRelation),
     );
     return ___employees!;
   }
 
-  _i1.ManyRelation<_i2.EmployeeTable> get employees {
+  _i1.ManyRelation<_i2.UserTable> get employees {
     if (_employees != null) return _employees!;
     var relationTable = _i1.createRelationTable(
       relationFieldName: 'employees',
       field: Company.t.id,
-      foreignField: _i2.Employee.t.companyId,
+      foreignField: _i2.User.t.companyId,
       tableRelation: tableRelation,
       createTable: (foreignTableRelation) =>
-          _i2.EmployeeTable(tableRelation: foreignTableRelation),
+          _i2.UserTable(tableRelation: foreignTableRelation),
     );
-    _employees = _i1.ManyRelation<_i2.EmployeeTable>(
+    _employees = _i1.ManyRelation<_i2.UserTable>(
       tableWithRelations: relationTable,
-      table: _i2.EmployeeTable(
+      table: _i2.UserTable(
           tableRelation: relationTable.tableRelation!.lastRelation),
     );
     return _employees!;
@@ -215,11 +214,11 @@ class CompanyTable extends _i1.Table {
 }
 
 class CompanyInclude extends _i1.IncludeObject {
-  CompanyInclude._({_i2.EmployeeIncludeList? employees}) {
+  CompanyInclude._({_i2.UserIncludeList? employees}) {
     _employees = employees;
   }
 
-  _i2.EmployeeIncludeList? _employees;
+  _i2.UserIncludeList? _employees;
 
   @override
   Map<String, _i1.Include?> get includes => {'employees': _employees};
@@ -417,20 +416,19 @@ class CompanyAttachRepository {
   Future<void> employees(
     _i1.Session session,
     Company company,
-    List<_i2.Employee> employee,
+    List<_i2.User> user,
   ) async {
-    if (employee.any((e) => e.id == null)) {
-      throw ArgumentError.notNull('employee.id');
+    if (user.any((e) => e.id == null)) {
+      throw ArgumentError.notNull('user.id');
     }
     if (company.id == null) {
       throw ArgumentError.notNull('company.id');
     }
 
-    var $employee =
-        employee.map((e) => e.copyWith(companyId: company.id)).toList();
-    await session.db.update<_i2.Employee>(
-      $employee,
-      columns: [_i2.Employee.t.companyId],
+    var $user = user.map((e) => e.copyWith(companyId: company.id)).toList();
+    await session.db.update<_i2.User>(
+      $user,
+      columns: [_i2.User.t.companyId],
     );
   }
 }
@@ -441,19 +439,19 @@ class CompanyAttachRowRepository {
   Future<void> employees(
     _i1.Session session,
     Company company,
-    _i2.Employee employee,
+    _i2.User user,
   ) async {
-    if (employee.id == null) {
-      throw ArgumentError.notNull('employee.id');
+    if (user.id == null) {
+      throw ArgumentError.notNull('user.id');
     }
     if (company.id == null) {
       throw ArgumentError.notNull('company.id');
     }
 
-    var $employee = employee.copyWith(companyId: company.id);
-    await session.db.updateRow<_i2.Employee>(
-      $employee,
-      columns: [_i2.Employee.t.companyId],
+    var $user = user.copyWith(companyId: company.id);
+    await session.db.updateRow<_i2.User>(
+      $user,
+      columns: [_i2.User.t.companyId],
     );
   }
 }
@@ -463,16 +461,16 @@ class CompanyDetachRepository {
 
   Future<void> employees(
     _i1.Session session,
-    List<_i2.Employee> employee,
+    List<_i2.User> user,
   ) async {
-    if (employee.any((e) => e.id == null)) {
-      throw ArgumentError.notNull('employee.id');
+    if (user.any((e) => e.id == null)) {
+      throw ArgumentError.notNull('user.id');
     }
 
-    var $employee = employee.map((e) => e.copyWith(companyId: null)).toList();
-    await session.db.update<_i2.Employee>(
-      $employee,
-      columns: [_i2.Employee.t.companyId],
+    var $user = user.map((e) => e.copyWith(companyId: null)).toList();
+    await session.db.update<_i2.User>(
+      $user,
+      columns: [_i2.User.t.companyId],
     );
   }
 }
@@ -482,16 +480,16 @@ class CompanyDetachRowRepository {
 
   Future<void> employees(
     _i1.Session session,
-    _i2.Employee employee,
+    _i2.User user,
   ) async {
-    if (employee.id == null) {
-      throw ArgumentError.notNull('employee.id');
+    if (user.id == null) {
+      throw ArgumentError.notNull('user.id');
     }
 
-    var $employee = employee.copyWith(companyId: null);
-    await session.db.updateRow<_i2.Employee>(
-      $employee,
-      columns: [_i2.Employee.t.companyId],
+    var $user = user.copyWith(companyId: null);
+    await session.db.updateRow<_i2.User>(
+      $user,
+      columns: [_i2.User.t.companyId],
     );
   }
 }

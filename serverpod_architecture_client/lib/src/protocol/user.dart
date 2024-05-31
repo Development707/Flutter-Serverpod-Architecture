@@ -9,22 +9,35 @@
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:serverpod_client/serverpod_client.dart' as _i1;
+import 'protocol.dart' as _i2;
 
 abstract class User implements _i1.SerializableModel {
   User._({
     this.id,
     required this.addressId,
+    required this.age,
+    required this.companyId,
+    this.company,
   });
 
   factory User({
     int? id,
     required int addressId,
+    required int age,
+    required int companyId,
+    _i2.Company? company,
   }) = _UserImpl;
 
   factory User.fromJson(Map<String, dynamic> jsonSerialization) {
     return User(
       id: jsonSerialization['id'] as int?,
       addressId: jsonSerialization['addressId'] as int,
+      age: jsonSerialization['age'] as int,
+      companyId: jsonSerialization['companyId'] as int,
+      company: jsonSerialization['company'] == null
+          ? null
+          : _i2.Company.fromJson(
+              (jsonSerialization['company'] as Map<String, dynamic>)),
     );
   }
 
@@ -35,15 +48,27 @@ abstract class User implements _i1.SerializableModel {
 
   int addressId;
 
+  int age;
+
+  int companyId;
+
+  _i2.Company? company;
+
   User copyWith({
     int? id,
     int? addressId,
+    int? age,
+    int? companyId,
+    _i2.Company? company,
   });
   @override
   Map<String, dynamic> toJson() {
     return {
       if (id != null) 'id': id,
       'addressId': addressId,
+      'age': age,
+      'companyId': companyId,
+      if (company != null) 'company': company?.toJson(),
     };
   }
 
@@ -59,19 +84,31 @@ class _UserImpl extends User {
   _UserImpl({
     int? id,
     required int addressId,
+    required int age,
+    required int companyId,
+    _i2.Company? company,
   }) : super._(
           id: id,
           addressId: addressId,
+          age: age,
+          companyId: companyId,
+          company: company,
         );
 
   @override
   User copyWith({
     Object? id = _Undefined,
     int? addressId,
+    int? age,
+    int? companyId,
+    Object? company = _Undefined,
   }) {
     return User(
       id: id is int? ? id : this.id,
       addressId: addressId ?? this.addressId,
+      age: age ?? this.age,
+      companyId: companyId ?? this.companyId,
+      company: company is _i2.Company? ? company : this.company?.copyWith(),
     );
   }
 }

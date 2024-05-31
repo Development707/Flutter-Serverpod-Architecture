@@ -24,7 +24,7 @@ abstract class Company implements _i1.SerializableModel {
     int? id,
     required String name,
     DateTime? foundedDate,
-    List<_i2.Employee>? employees,
+    List<_i2.User>? employees,
   }) = _CompanyImpl;
 
   factory Company.fromJson(Map<String, dynamic> jsonSerialization) {
@@ -36,7 +36,7 @@ abstract class Company implements _i1.SerializableModel {
           : _i1.DateTimeJsonExtension.fromJson(
               jsonSerialization['foundedDate']),
       employees: (jsonSerialization['employees'] as List?)
-          ?.map((e) => _i2.Employee.fromJson((e as Map<String, dynamic>)))
+          ?.map((e) => _i2.User.fromJson((e as Map<String, dynamic>)))
           .toList(),
     );
   }
@@ -53,13 +53,13 @@ abstract class Company implements _i1.SerializableModel {
   DateTime? foundedDate;
 
   /// A list of people currently employed at the company.
-  List<_i2.Employee>? employees;
+  List<_i2.User>? employees;
 
   Company copyWith({
     int? id,
     String? name,
     DateTime? foundedDate,
-    List<_i2.Employee>? employees,
+    List<_i2.User>? employees,
   });
   @override
   Map<String, dynamic> toJson() {
@@ -85,7 +85,7 @@ class _CompanyImpl extends Company {
     int? id,
     required String name,
     DateTime? foundedDate,
-    List<_i2.Employee>? employees,
+    List<_i2.User>? employees,
   }) : super._(
           id: id,
           name: name,
@@ -104,9 +104,8 @@ class _CompanyImpl extends Company {
       id: id is int? ? id : this.id,
       name: name ?? this.name,
       foundedDate: foundedDate is DateTime? ? foundedDate : this.foundedDate,
-      employees: employees is List<_i2.Employee>?
-          ? employees
-          : this.employees?.clone(),
+      employees:
+          employees is List<_i2.User>? ? employees : this.employees?.clone(),
     );
   }
 }
