@@ -37,8 +37,8 @@ class EndpointBlocking extends _i1.EndpointRef {
       );
 
   /// Retrieves a `Blocking` by its id.
-  _i2.Future<List<int>> getBlocking(int id) =>
-      caller.callServerEndpoint<List<int>>(
+  _i2.Future<_i3.Blocking?> getBlocking(int id) =>
+      caller.callServerEndpoint<_i3.Blocking?>(
         'blocking',
         'getBlocking',
         {'id': id},
@@ -178,8 +178,8 @@ class EndpointCompany extends _i1.EndpointRef {
         {'company': company},
       );
 
-  _i2.Future<int> deleteCompany(_i5.Company company) =>
-      caller.callServerEndpoint<int>(
+  _i2.Future<_i5.Company> deleteCompany(_i5.Company company) =>
+      caller.callServerEndpoint<_i5.Company>(
         'company',
         'deleteCompany',
         {'company': company},
@@ -305,6 +305,12 @@ class Client extends _i1.ServerpodClient {
     _i1.AuthenticationKeyManager? authenticationKeyManager,
     Duration? streamingConnectionTimeout,
     Duration? connectionTimeout,
+    Function(
+      _i1.MethodCallContext,
+      Object,
+      StackTrace,
+    )? onFailedCall,
+    Function(_i1.MethodCallContext)? onSucceededCall,
   }) : super(
           host,
           _i9.Protocol(),
@@ -312,6 +318,8 @@ class Client extends _i1.ServerpodClient {
           authenticationKeyManager: authenticationKeyManager,
           streamingConnectionTimeout: streamingConnectionTimeout,
           connectionTimeout: connectionTimeout,
+          onFailedCall: onFailedCall,
+          onSucceededCall: onSucceededCall,
         ) {
     blocking = EndpointBlocking(this);
     cat = EndpointCat(this);

@@ -10,7 +10,7 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:serverpod_client/serverpod_client.dart' as _i1;
 
-abstract class User extends _i1.SerializableEntity {
+abstract class User implements _i1.SerializableModel {
   User._({
     this.id,
     required this.addressId,
@@ -21,14 +21,10 @@ abstract class User extends _i1.SerializableEntity {
     required int addressId,
   }) = _UserImpl;
 
-  factory User.fromJson(
-    Map<String, dynamic> jsonSerialization,
-    _i1.SerializationManager serializationManager,
-  ) {
+  factory User.fromJson(Map<String, dynamic> jsonSerialization) {
     return User(
-      id: serializationManager.deserialize<int?>(jsonSerialization['id']),
-      addressId:
-          serializationManager.deserialize<int>(jsonSerialization['addressId']),
+      id: jsonSerialization['id'] as int?,
+      addressId: jsonSerialization['addressId'] as int,
     );
   }
 
@@ -49,6 +45,11 @@ abstract class User extends _i1.SerializableEntity {
       if (id != null) 'id': id,
       'addressId': addressId,
     };
+  }
+
+  @override
+  String toString() {
+    return _i1.SerializationManager.encode(this);
   }
 }
 

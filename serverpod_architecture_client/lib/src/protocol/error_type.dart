@@ -10,13 +10,13 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:serverpod_client/serverpod_client.dart' as _i1;
 
-enum ErrorType with _i1.SerializableEntity {
+enum ErrorType implements _i1.SerializableModel {
   error,
   warning,
   info,
   debug;
 
-  static ErrorType? fromJson(int index) {
+  static ErrorType fromJson(int index) {
     switch (index) {
       case 0:
         return error;
@@ -27,10 +27,13 @@ enum ErrorType with _i1.SerializableEntity {
       case 3:
         return debug;
       default:
-        return null;
+        throw ArgumentError(
+            'Value "$index" cannot be converted to "ErrorType"');
     }
   }
 
   @override
   int toJson() => index;
+  @override
+  String toString() => name;
 }

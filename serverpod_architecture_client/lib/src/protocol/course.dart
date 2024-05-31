@@ -11,7 +11,7 @@
 import 'package:serverpod_client/serverpod_client.dart' as _i1;
 import 'protocol.dart' as _i2;
 
-abstract class Course extends _i1.SerializableEntity {
+abstract class Course implements _i1.SerializableModel {
   Course._({
     this.id,
     required this.name,
@@ -24,15 +24,13 @@ abstract class Course extends _i1.SerializableEntity {
     List<_i2.Enrollment>? enrollments,
   }) = _CourseImpl;
 
-  factory Course.fromJson(
-    Map<String, dynamic> jsonSerialization,
-    _i1.SerializationManager serializationManager,
-  ) {
+  factory Course.fromJson(Map<String, dynamic> jsonSerialization) {
     return Course(
-      id: serializationManager.deserialize<int?>(jsonSerialization['id']),
-      name: serializationManager.deserialize<String>(jsonSerialization['name']),
-      enrollments: serializationManager
-          .deserialize<List<_i2.Enrollment>?>(jsonSerialization['enrollments']),
+      id: jsonSerialization['id'] as int?,
+      name: jsonSerialization['name'] as String,
+      enrollments: (jsonSerialization['enrollments'] as List?)
+          ?.map((e) => _i2.Enrollment.fromJson((e as Map<String, dynamic>)))
+          .toList(),
     );
   }
 
@@ -58,6 +56,11 @@ abstract class Course extends _i1.SerializableEntity {
       if (enrollments != null)
         'enrollments': enrollments?.toJson(valueToJson: (v) => v.toJson()),
     };
+  }
+
+  @override
+  String toString() {
+    return _i1.SerializationManager.encode(this);
   }
 }
 

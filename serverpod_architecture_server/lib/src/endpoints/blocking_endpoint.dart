@@ -10,11 +10,8 @@ class BlockingEndpoint extends Endpoint {
   }
 
   /// Retrieves a `Blocking` by its id.
-  Future<List<int>> getBlocking(Session session, int id) {
-    return Blocking.db.deleteWhere(
-      session,
-      where: (t) => t.id.equals(id),
-    );
+  Future<Blocking?> getBlocking(Session session, int id) {
+    return Blocking.db.findById(session, id);
   }
 
   /// Creates a new `Blocking`.

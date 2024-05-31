@@ -54,8 +54,6 @@ class Protocol extends _i1.SerializationManager {
 
   factory Protocol() => _instance;
 
-  static final Map<Type, _i1.constructor> customConstructors = {};
-
   static final Protocol _instance = Protocol._();
 
   @override
@@ -64,93 +62,89 @@ class Protocol extends _i1.SerializationManager {
     Type? t,
   ]) {
     t ??= T;
-    if (customConstructors.containsKey(t)) {
-      return customConstructors[t]!(data, this) as T;
-    }
     if (t == _i2.Address) {
-      return _i2.Address.fromJson(data, this) as T;
+      return _i2.Address.fromJson(data) as T;
     }
     if (t == _i3.Blocking) {
-      return _i3.Blocking.fromJson(data, this) as T;
+      return _i3.Blocking.fromJson(data) as T;
     }
     if (t == _i4.Cat) {
-      return _i4.Cat.fromJson(data, this) as T;
+      return _i4.Cat.fromJson(data) as T;
     }
     if (t == _i5.Company) {
-      return _i5.Company.fromJson(data, this) as T;
+      return _i5.Company.fromJson(data) as T;
     }
     if (t == _i6.Course) {
-      return _i6.Course.fromJson(data, this) as T;
+      return _i6.Course.fromJson(data) as T;
     }
     if (t == _i7.CustomException) {
-      return _i7.CustomException.fromJson(data, this) as T;
+      return _i7.CustomException.fromJson(data) as T;
     }
     if (t == _i8.Employee) {
-      return _i8.Employee.fromJson(data, this) as T;
+      return _i8.Employee.fromJson(data) as T;
     }
     if (t == _i9.Enrollment) {
-      return _i9.Enrollment.fromJson(data, this) as T;
+      return _i9.Enrollment.fromJson(data) as T;
     }
     if (t == _i10.ErrorType) {
       return _i10.ErrorType.fromJson(data) as T;
     }
     if (t == _i11.Example) {
-      return _i11.Example.fromJson(data, this) as T;
+      return _i11.Example.fromJson(data) as T;
     }
     if (t == _i12.Member) {
-      return _i12.Member.fromJson(data, this) as T;
+      return _i12.Member.fromJson(data) as T;
     }
     if (t == _i13.Post) {
-      return _i13.Post.fromJson(data, this) as T;
+      return _i13.Post.fromJson(data) as T;
     }
     if (t == _i14.Student) {
-      return _i14.Student.fromJson(data, this) as T;
+      return _i14.Student.fromJson(data) as T;
     }
     if (t == _i15.User) {
-      return _i15.User.fromJson(data, this) as T;
+      return _i15.User.fromJson(data) as T;
     }
     if (t == _i1.getType<_i2.Address?>()) {
-      return (data != null ? _i2.Address.fromJson(data, this) : null) as T;
+      return (data != null ? _i2.Address.fromJson(data) : null) as T;
     }
     if (t == _i1.getType<_i3.Blocking?>()) {
-      return (data != null ? _i3.Blocking.fromJson(data, this) : null) as T;
+      return (data != null ? _i3.Blocking.fromJson(data) : null) as T;
     }
     if (t == _i1.getType<_i4.Cat?>()) {
-      return (data != null ? _i4.Cat.fromJson(data, this) : null) as T;
+      return (data != null ? _i4.Cat.fromJson(data) : null) as T;
     }
     if (t == _i1.getType<_i5.Company?>()) {
-      return (data != null ? _i5.Company.fromJson(data, this) : null) as T;
+      return (data != null ? _i5.Company.fromJson(data) : null) as T;
     }
     if (t == _i1.getType<_i6.Course?>()) {
-      return (data != null ? _i6.Course.fromJson(data, this) : null) as T;
+      return (data != null ? _i6.Course.fromJson(data) : null) as T;
     }
     if (t == _i1.getType<_i7.CustomException?>()) {
-      return (data != null ? _i7.CustomException.fromJson(data, this) : null)
-          as T;
+      return (data != null ? _i7.CustomException.fromJson(data) : null) as T;
     }
     if (t == _i1.getType<_i8.Employee?>()) {
-      return (data != null ? _i8.Employee.fromJson(data, this) : null) as T;
+      return (data != null ? _i8.Employee.fromJson(data) : null) as T;
     }
     if (t == _i1.getType<_i9.Enrollment?>()) {
-      return (data != null ? _i9.Enrollment.fromJson(data, this) : null) as T;
+      return (data != null ? _i9.Enrollment.fromJson(data) : null) as T;
     }
     if (t == _i1.getType<_i10.ErrorType?>()) {
       return (data != null ? _i10.ErrorType.fromJson(data) : null) as T;
     }
     if (t == _i1.getType<_i11.Example?>()) {
-      return (data != null ? _i11.Example.fromJson(data, this) : null) as T;
+      return (data != null ? _i11.Example.fromJson(data) : null) as T;
     }
     if (t == _i1.getType<_i12.Member?>()) {
-      return (data != null ? _i12.Member.fromJson(data, this) : null) as T;
+      return (data != null ? _i12.Member.fromJson(data) : null) as T;
     }
     if (t == _i1.getType<_i13.Post?>()) {
-      return (data != null ? _i13.Post.fromJson(data, this) : null) as T;
+      return (data != null ? _i13.Post.fromJson(data) : null) as T;
     }
     if (t == _i1.getType<_i14.Student?>()) {
-      return (data != null ? _i14.Student.fromJson(data, this) : null) as T;
+      return (data != null ? _i14.Student.fromJson(data) : null) as T;
     }
     if (t == _i1.getType<_i15.User?>()) {
-      return (data != null ? _i15.User.fromJson(data, this) : null) as T;
+      return (data != null ? _i15.User.fromJson(data) : null) as T;
     }
     if (t == _i1.getType<List<_i16.Cat>?>()) {
       return (data != null
@@ -186,9 +180,6 @@ class Protocol extends _i1.SerializationManager {
       return (data as List).map((e) => deserialize<_i17.Blocking>(e)).toList()
           as dynamic;
     }
-    if (t == List<int>) {
-      return (data as List).map((e) => deserialize<int>(e)).toList() as dynamic;
-    }
     if (t == List<_i18.Cat>) {
       return (data as List).map((e) => deserialize<_i18.Cat>(e)).toList()
           as dynamic;
@@ -202,18 +193,17 @@ class Protocol extends _i1.SerializationManager {
           as dynamic;
     }
     if (t == _i21.ClassName) {
-      return _i21.ClassName.fromJson(data, this) as T;
+      return _i21.ClassName.fromJson(data) as T;
     }
     if (t == _i21.FreezedCustomClass) {
-      return _i21.FreezedCustomClass.fromJson(data, this) as T;
+      return _i21.FreezedCustomClass.fromJson(data) as T;
     }
     if (t == _i1.getType<_i21.ClassName?>()) {
-      return (data != null ? _i21.ClassName.fromJson(data, this) : null) as T;
+      return (data != null ? _i21.ClassName.fromJson(data) : null) as T;
     }
     if (t == _i1.getType<_i21.FreezedCustomClass?>()) {
-      return (data != null
-          ? _i21.FreezedCustomClass.fromJson(data, this)
-          : null) as T;
+      return (data != null ? _i21.FreezedCustomClass.fromJson(data) : null)
+          as T;
     }
     return super.deserialize<T>(data, t);
   }

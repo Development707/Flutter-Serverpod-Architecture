@@ -12,7 +12,7 @@ import 'package:serverpod_client/serverpod_client.dart' as _i1;
 import 'protocol.dart' as _i2;
 
 /// Information about a company.
-abstract class Company extends _i1.SerializableEntity {
+abstract class Company implements _i1.SerializableModel {
   Company._({
     this.id,
     required this.name,
@@ -27,17 +27,17 @@ abstract class Company extends _i1.SerializableEntity {
     List<_i2.Employee>? employees,
   }) = _CompanyImpl;
 
-  factory Company.fromJson(
-    Map<String, dynamic> jsonSerialization,
-    _i1.SerializationManager serializationManager,
-  ) {
+  factory Company.fromJson(Map<String, dynamic> jsonSerialization) {
     return Company(
-      id: serializationManager.deserialize<int?>(jsonSerialization['id']),
-      name: serializationManager.deserialize<String>(jsonSerialization['name']),
-      foundedDate: serializationManager
-          .deserialize<DateTime?>(jsonSerialization['foundedDate']),
-      employees: serializationManager
-          .deserialize<List<_i2.Employee>?>(jsonSerialization['employees']),
+      id: jsonSerialization['id'] as int?,
+      name: jsonSerialization['name'] as String,
+      foundedDate: jsonSerialization['foundedDate'] == null
+          ? null
+          : _i1.DateTimeJsonExtension.fromJson(
+              jsonSerialization['foundedDate']),
+      employees: (jsonSerialization['employees'] as List?)
+          ?.map((e) => _i2.Employee.fromJson((e as Map<String, dynamic>)))
+          .toList(),
     );
   }
 
@@ -70,6 +70,11 @@ abstract class Company extends _i1.SerializableEntity {
       if (employees != null)
         'employees': employees?.toJson(valueToJson: (v) => v.toJson()),
     };
+  }
+
+  @override
+  String toString() {
+    return _i1.SerializationManager.encode(this);
   }
 }
 

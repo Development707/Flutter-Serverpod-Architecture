@@ -1,5 +1,3 @@
-import 'package:serverpod_serialization/serverpod_serialization.dart';
-
 class ClassName {
   String name;
   ClassName(this.name);
@@ -12,7 +10,6 @@ class ClassName {
 
   factory ClassName.fromJson(
     Map<String, dynamic> jsonSerialization,
-    SerializationManager serializationManager,
   ) {
     return ClassName(
       jsonSerialization['name'],

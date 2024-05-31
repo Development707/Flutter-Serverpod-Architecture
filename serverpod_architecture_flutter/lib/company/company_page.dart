@@ -103,6 +103,6 @@ class _CompanyPageState extends State<CompanyPage> {
           companies.remove(company);
         });
 
-        return value;
+        return value.id!;
       });
 }

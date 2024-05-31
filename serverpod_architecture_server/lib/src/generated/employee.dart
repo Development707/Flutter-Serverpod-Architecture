@@ -11,7 +11,8 @@
 import 'package:serverpod/serverpod.dart' as _i1;
 import 'protocol.dart' as _i2;
 
-abstract class Employee extends _i1.TableRow {
+abstract class Employee extends _i1.TableRow
+    implements _i1.ProtocolSerialization {
   Employee._({
     int? id,
     required this.companyId,
@@ -34,25 +35,19 @@ abstract class Employee extends _i1.TableRow {
     bool? isActive,
   }) = _EmployeeImpl;
 
-  factory Employee.fromJson(
-    Map<String, dynamic> jsonSerialization,
-    _i1.SerializationManager serializationManager,
-  ) {
+  factory Employee.fromJson(Map<String, dynamic> jsonSerialization) {
     return Employee(
-      id: serializationManager.deserialize<int?>(jsonSerialization['id']),
-      companyId:
-          serializationManager.deserialize<int>(jsonSerialization['companyId']),
-      company: serializationManager
-          .deserialize<_i2.Company?>(jsonSerialization['company']),
-      name: serializationManager.deserialize<String>(jsonSerialization['name']),
-      email:
-          serializationManager.deserialize<String?>(jsonSerialization['email']),
-      phone:
-          serializationManager.deserialize<String?>(jsonSerialization['phone']),
-      address: serializationManager
-          .deserialize<String?>(jsonSerialization['address']),
-      isActive: serializationManager
-          .deserialize<bool?>(jsonSerialization['isActive']),
+      id: jsonSerialization['id'] as int?,
+      companyId: jsonSerialization['companyId'] as int,
+      company: jsonSerialization['company'] == null
+          ? null
+          : _i2.Company.fromJson(
+              (jsonSerialization['company'] as Map<String, dynamic>)),
+      name: jsonSerialization['name'] as String,
+      email: jsonSerialization['email'] as String?,
+      phone: jsonSerialization['phone'] as String?,
+      address: jsonSerialization['address'] as String?,
+      isActive: jsonSerialization['isActive'] as bool?,
     );
   }
 
@@ -97,193 +92,21 @@ abstract class Employee extends _i1.TableRow {
       if (email != null) 'email': email,
       if (phone != null) 'phone': phone,
       if (address != null) 'address': address,
-    };
-  }
-
-  @override
-  @Deprecated('Will be removed in 2.0.0')
-  Map<String, dynamic> toJsonForDatabase() {
-    return {
-      'id': id,
-      'companyId': companyId,
-      'name': name,
-      'email': email,
-      'phone': phone,
-      'address': address,
-      'isActive': isActive,
-    };
-  }
-
-  @override
-  Map<String, dynamic> allToJson() {
-    return {
-      if (id != null) 'id': id,
-      'companyId': companyId,
-      if (company != null) 'company': company?.allToJson(),
-      'name': name,
-      if (email != null) 'email': email,
-      if (phone != null) 'phone': phone,
-      if (address != null) 'address': address,
       if (isActive != null) 'isActive': isActive,
     };
   }
 
   @override
-  @Deprecated('Will be removed in 2.0.0')
-  void setColumn(
-    String columnName,
-    value,
-  ) {
-    switch (columnName) {
-      case 'id':
-        id = value;
-        return;
-      case 'companyId':
-        companyId = value;
-        return;
-      case 'name':
-        name = value;
-        return;
-      case 'email':
-        email = value;
-        return;
-      case 'phone':
-        phone = value;
-        return;
-      case 'address':
-        address = value;
-        return;
-      case 'isActive':
-        isActive = value;
-        return;
-      default:
-        throw UnimplementedError();
-    }
-  }
-
-  @Deprecated('Will be removed in 2.0.0. Use: db.find instead.')
-  static Future<List<Employee>> find(
-    _i1.Session session, {
-    _i1.WhereExpressionBuilder<EmployeeTable>? where,
-    int? limit,
-    int? offset,
-    _i1.Column? orderBy,
-    List<_i1.Order>? orderByList,
-    bool orderDescending = false,
-    bool useCache = true,
-    _i1.Transaction? transaction,
-    EmployeeInclude? include,
-  }) async {
-    return session.db.find<Employee>(
-      where: where != null ? where(Employee.t) : null,
-      limit: limit,
-      offset: offset,
-      orderBy: orderBy,
-      orderByList: orderByList,
-      orderDescending: orderDescending,
-      useCache: useCache,
-      transaction: transaction,
-      include: include,
-    );
-  }
-
-  @Deprecated('Will be removed in 2.0.0. Use: db.findRow instead.')
-  static Future<Employee?> findSingleRow(
-    _i1.Session session, {
-    _i1.WhereExpressionBuilder<EmployeeTable>? where,
-    int? offset,
-    _i1.Column? orderBy,
-    bool orderDescending = false,
-    bool useCache = true,
-    _i1.Transaction? transaction,
-    EmployeeInclude? include,
-  }) async {
-    return session.db.findSingleRow<Employee>(
-      where: where != null ? where(Employee.t) : null,
-      offset: offset,
-      orderBy: orderBy,
-      orderDescending: orderDescending,
-      useCache: useCache,
-      transaction: transaction,
-      include: include,
-    );
-  }
-
-  @Deprecated('Will be removed in 2.0.0. Use: db.findById instead.')
-  static Future<Employee?> findById(
-    _i1.Session session,
-    int id, {
-    EmployeeInclude? include,
-  }) async {
-    return session.db.findById<Employee>(
-      id,
-      include: include,
-    );
-  }
-
-  @Deprecated('Will be removed in 2.0.0. Use: db.deleteWhere instead.')
-  static Future<int> delete(
-    _i1.Session session, {
-    required _i1.WhereExpressionBuilder<EmployeeTable> where,
-    _i1.Transaction? transaction,
-  }) async {
-    return session.db.delete<Employee>(
-      where: where(Employee.t),
-      transaction: transaction,
-    );
-  }
-
-  @Deprecated('Will be removed in 2.0.0. Use: db.deleteRow instead.')
-  static Future<bool> deleteRow(
-    _i1.Session session,
-    Employee row, {
-    _i1.Transaction? transaction,
-  }) async {
-    return session.db.deleteRow(
-      row,
-      transaction: transaction,
-    );
-  }
-
-  @Deprecated('Will be removed in 2.0.0. Use: db.update instead.')
-  static Future<bool> update(
-    _i1.Session session,
-    Employee row, {
-    _i1.Transaction? transaction,
-  }) async {
-    return session.db.update(
-      row,
-      transaction: transaction,
-    );
-  }
-
-  @Deprecated(
-      'Will be removed in 2.0.0. Use: db.insert instead. Important note: In db.insert, the object you pass in is no longer modified, instead a new copy with the added row is returned which contains the inserted id.')
-  static Future<void> insert(
-    _i1.Session session,
-    Employee row, {
-    _i1.Transaction? transaction,
-  }) async {
-    return session.db.insert(
-      row,
-      transaction: transaction,
-    );
-  }
-
-  @Deprecated('Will be removed in 2.0.0. Use: db.count instead.')
-  static Future<int> count(
-    _i1.Session session, {
-    _i1.WhereExpressionBuilder<EmployeeTable>? where,
-    int? limit,
-    bool useCache = true,
-    _i1.Transaction? transaction,
-  }) async {
-    return session.db.count<Employee>(
-      where: where != null ? where(Employee.t) : null,
-      limit: limit,
-      useCache: useCache,
-      transaction: transaction,
-    );
+  Map<String, dynamic> toJsonForProtocol() {
+    return {
+      if (id != null) 'id': id,
+      'companyId': companyId,
+      if (company != null) 'company': company?.toJsonForProtocol(),
+      'name': name,
+      if (email != null) 'email': email,
+      if (phone != null) 'phone': phone,
+      if (address != null) 'address': address,
+    };
   }
 
   static EmployeeInclude include({_i2.CompanyInclude? company}) {
@@ -308,6 +131,11 @@ abstract class Employee extends _i1.TableRow {
       orderByList: orderByList?.call(Employee.t),
       include: include,
     );
+  }
+
+  @override
+  String toString() {
+    return _i1.SerializationManager.encode(this);
   }
 }
 
@@ -433,9 +261,6 @@ class EmployeeTable extends _i1.Table {
   }
 }
 
-@Deprecated('Use EmployeeTable.t instead.')
-EmployeeTable tEmployee = EmployeeTable();
-
 class EmployeeInclude extends _i1.IncludeObject {
   EmployeeInclude._({_i2.CompanyInclude? company}) {
     _company = company;
@@ -486,7 +311,7 @@ class EmployeeRepository {
     _i1.Transaction? transaction,
     EmployeeInclude? include,
   }) async {
-    return session.dbNext.find<Employee>(
+    return session.db.find<Employee>(
       where: where?.call(Employee.t),
       orderBy: orderBy?.call(Employee.t),
       orderByList: orderByList?.call(Employee.t),
@@ -508,7 +333,7 @@ class EmployeeRepository {
     _i1.Transaction? transaction,
     EmployeeInclude? include,
   }) async {
-    return session.dbNext.findFirstRow<Employee>(
+    return session.db.findFirstRow<Employee>(
       where: where?.call(Employee.t),
       orderBy: orderBy?.call(Employee.t),
       orderByList: orderByList?.call(Employee.t),
@@ -525,7 +350,7 @@ class EmployeeRepository {
     _i1.Transaction? transaction,
     EmployeeInclude? include,
   }) async {
-    return session.dbNext.findById<Employee>(
+    return session.db.findById<Employee>(
       id,
       transaction: transaction,
       include: include,
@@ -537,7 +362,7 @@ class EmployeeRepository {
     List<Employee> rows, {
     _i1.Transaction? transaction,
   }) async {
-    return session.dbNext.insert<Employee>(
+    return session.db.insert<Employee>(
       rows,
       transaction: transaction,
     );
@@ -548,7 +373,7 @@ class EmployeeRepository {
     Employee row, {
     _i1.Transaction? transaction,
   }) async {
-    return session.dbNext.insertRow<Employee>(
+    return session.db.insertRow<Employee>(
       row,
       transaction: transaction,
     );
@@ -560,7 +385,7 @@ class EmployeeRepository {
     _i1.ColumnSelections<EmployeeTable>? columns,
     _i1.Transaction? transaction,
   }) async {
-    return session.dbNext.update<Employee>(
+    return session.db.update<Employee>(
       rows,
       columns: columns?.call(Employee.t),
       transaction: transaction,
@@ -573,41 +398,41 @@ class EmployeeRepository {
     _i1.ColumnSelections<EmployeeTable>? columns,
     _i1.Transaction? transaction,
   }) async {
-    return session.dbNext.updateRow<Employee>(
+    return session.db.updateRow<Employee>(
       row,
       columns: columns?.call(Employee.t),
       transaction: transaction,
     );
   }
 
-  Future<List<int>> delete(
+  Future<List<Employee>> delete(
     _i1.Session session,
     List<Employee> rows, {
     _i1.Transaction? transaction,
   }) async {
-    return session.dbNext.delete<Employee>(
+    return session.db.delete<Employee>(
       rows,
       transaction: transaction,
     );
   }
 
-  Future<int> deleteRow(
+  Future<Employee> deleteRow(
     _i1.Session session,
     Employee row, {
     _i1.Transaction? transaction,
   }) async {
-    return session.dbNext.deleteRow<Employee>(
+    return session.db.deleteRow<Employee>(
       row,
       transaction: transaction,
     );
   }
 
-  Future<List<int>> deleteWhere(
+  Future<List<Employee>> deleteWhere(
     _i1.Session session, {
     required _i1.WhereExpressionBuilder<EmployeeTable> where,
     _i1.Transaction? transaction,
   }) async {
-    return session.dbNext.deleteWhere<Employee>(
+    return session.db.deleteWhere<Employee>(
       where: where(Employee.t),
       transaction: transaction,
     );
@@ -619,7 +444,7 @@ class EmployeeRepository {
     int? limit,
     _i1.Transaction? transaction,
   }) async {
-    return session.dbNext.count<Employee>(
+    return session.db.count<Employee>(
       where: where?.call(Employee.t),
       limit: limit,
       transaction: transaction,
@@ -643,7 +468,7 @@ class EmployeeAttachRowRepository {
     }
 
     var $employee = employee.copyWith(companyId: company.id);
-    await session.dbNext.updateRow<Employee>(
+    await session.db.updateRow<Employee>(
       $employee,
       columns: [Employee.t.companyId],
     );

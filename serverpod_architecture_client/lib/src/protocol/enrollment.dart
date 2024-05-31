@@ -11,7 +11,7 @@
 import 'package:serverpod_client/serverpod_client.dart' as _i1;
 import 'protocol.dart' as _i2;
 
-abstract class Enrollment extends _i1.SerializableEntity {
+abstract class Enrollment implements _i1.SerializableModel {
   Enrollment._({
     this.id,
     required this.studentId,
@@ -28,20 +28,19 @@ abstract class Enrollment extends _i1.SerializableEntity {
     _i2.Course? course,
   }) = _EnrollmentImpl;
 
-  factory Enrollment.fromJson(
-    Map<String, dynamic> jsonSerialization,
-    _i1.SerializationManager serializationManager,
-  ) {
+  factory Enrollment.fromJson(Map<String, dynamic> jsonSerialization) {
     return Enrollment(
-      id: serializationManager.deserialize<int?>(jsonSerialization['id']),
-      studentId:
-          serializationManager.deserialize<int>(jsonSerialization['studentId']),
-      student: serializationManager
-          .deserialize<_i2.Student?>(jsonSerialization['student']),
-      courseId:
-          serializationManager.deserialize<int>(jsonSerialization['courseId']),
-      course: serializationManager
-          .deserialize<_i2.Course?>(jsonSerialization['course']),
+      id: jsonSerialization['id'] as int?,
+      studentId: jsonSerialization['studentId'] as int,
+      student: jsonSerialization['student'] == null
+          ? null
+          : _i2.Student.fromJson(
+              (jsonSerialization['student'] as Map<String, dynamic>)),
+      courseId: jsonSerialization['courseId'] as int,
+      course: jsonSerialization['course'] == null
+          ? null
+          : _i2.Course.fromJson(
+              (jsonSerialization['course'] as Map<String, dynamic>)),
     );
   }
 
@@ -74,6 +73,11 @@ abstract class Enrollment extends _i1.SerializableEntity {
       'courseId': courseId,
       if (course != null) 'course': course?.toJson(),
     };
+  }
+
+  @override
+  String toString() {
+    return _i1.SerializationManager.encode(this);
   }
 }
 

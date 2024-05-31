@@ -19,7 +19,7 @@ class CompanyEndpoint extends Endpoint {
     return Company.db.updateRow(session, company);
   }
 
-  Future<int> deleteCompany(Session session, Company company) async {
+  Future<Company> deleteCompany(Session session, Company company) async {
     return Company.db.deleteRow(session, company);
   }
 }

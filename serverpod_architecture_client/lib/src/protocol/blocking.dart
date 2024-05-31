@@ -11,7 +11,7 @@
 import 'package:serverpod_client/serverpod_client.dart' as _i1;
 import 'protocol.dart' as _i2;
 
-abstract class Blocking extends _i1.SerializableEntity {
+abstract class Blocking implements _i1.SerializableModel {
   Blocking._({
     this.id,
     required this.blockedId,
@@ -28,20 +28,19 @@ abstract class Blocking extends _i1.SerializableEntity {
     _i2.Member? blockedBy,
   }) = _BlockingImpl;
 
-  factory Blocking.fromJson(
-    Map<String, dynamic> jsonSerialization,
-    _i1.SerializationManager serializationManager,
-  ) {
+  factory Blocking.fromJson(Map<String, dynamic> jsonSerialization) {
     return Blocking(
-      id: serializationManager.deserialize<int?>(jsonSerialization['id']),
-      blockedId:
-          serializationManager.deserialize<int>(jsonSerialization['blockedId']),
-      blocked: serializationManager
-          .deserialize<_i2.Member?>(jsonSerialization['blocked']),
-      blockedById: serializationManager
-          .deserialize<int>(jsonSerialization['blockedById']),
-      blockedBy: serializationManager
-          .deserialize<_i2.Member?>(jsonSerialization['blockedBy']),
+      id: jsonSerialization['id'] as int?,
+      blockedId: jsonSerialization['blockedId'] as int,
+      blocked: jsonSerialization['blocked'] == null
+          ? null
+          : _i2.Member.fromJson(
+              (jsonSerialization['blocked'] as Map<String, dynamic>)),
+      blockedById: jsonSerialization['blockedById'] as int,
+      blockedBy: jsonSerialization['blockedBy'] == null
+          ? null
+          : _i2.Member.fromJson(
+              (jsonSerialization['blockedBy'] as Map<String, dynamic>)),
     );
   }
 
@@ -74,6 +73,11 @@ abstract class Blocking extends _i1.SerializableEntity {
       'blockedById': blockedById,
       if (blockedBy != null) 'blockedBy': blockedBy?.toJson(),
     };
+  }
+
+  @override
+  String toString() {
+    return _i1.SerializationManager.encode(this);
   }
 }
 

@@ -54,8 +54,6 @@ class Protocol extends _i1.SerializationManagerServer {
 
   factory Protocol() => _instance;
 
-  static final Map<Type, _i1.constructor> customConstructors = {};
-
   static final Protocol _instance = Protocol._();
 
   static final List<_i2.TableDefinition> targetTableDefinitions = [
@@ -67,7 +65,7 @@ class Protocol extends _i1.SerializationManagerServer {
       columns: [
         _i2.ColumnDefinition(
           name: 'id',
-          columnType: _i2.ColumnType.integer,
+          columnType: _i2.ColumnType.bigint,
           isNullable: false,
           dartType: 'int?',
           columnDefault: 'nextval(\'address_id_seq\'::regclass)',
@@ -105,20 +103,20 @@ class Protocol extends _i1.SerializationManagerServer {
       columns: [
         _i2.ColumnDefinition(
           name: 'id',
-          columnType: _i2.ColumnType.integer,
+          columnType: _i2.ColumnType.bigint,
           isNullable: false,
           dartType: 'int?',
           columnDefault: 'nextval(\'blocking_id_seq\'::regclass)',
         ),
         _i2.ColumnDefinition(
           name: 'blockedId',
-          columnType: _i2.ColumnType.integer,
+          columnType: _i2.ColumnType.bigint,
           isNullable: false,
           dartType: 'int',
         ),
         _i2.ColumnDefinition(
           name: 'blockedById',
-          columnType: _i2.ColumnType.integer,
+          columnType: _i2.ColumnType.bigint,
           isNullable: false,
           dartType: 'int',
         ),
@@ -187,7 +185,7 @@ class Protocol extends _i1.SerializationManagerServer {
       columns: [
         _i2.ColumnDefinition(
           name: 'id',
-          columnType: _i2.ColumnType.integer,
+          columnType: _i2.ColumnType.bigint,
           isNullable: false,
           dartType: 'int?',
           columnDefault: 'nextval(\'cat_id_seq\'::regclass)',
@@ -200,7 +198,7 @@ class Protocol extends _i1.SerializationManagerServer {
         ),
         _i2.ColumnDefinition(
           name: 'motherId',
-          columnType: _i2.ColumnType.integer,
+          columnType: _i2.ColumnType.bigint,
           isNullable: true,
           dartType: 'int?',
         ),
@@ -242,7 +240,7 @@ class Protocol extends _i1.SerializationManagerServer {
       columns: [
         _i2.ColumnDefinition(
           name: 'id',
-          columnType: _i2.ColumnType.integer,
+          columnType: _i2.ColumnType.bigint,
           isNullable: false,
           dartType: 'int?',
           columnDefault: 'nextval(\'company_id_seq\'::regclass)',
@@ -280,7 +278,7 @@ class Protocol extends _i1.SerializationManagerServer {
       columns: [
         _i2.ColumnDefinition(
           name: 'id',
-          columnType: _i2.ColumnType.integer,
+          columnType: _i2.ColumnType.bigint,
           isNullable: false,
           dartType: 'int?',
           columnDefault: 'nextval(\'course_id_seq\'::regclass)',
@@ -318,14 +316,14 @@ class Protocol extends _i1.SerializationManagerServer {
       columns: [
         _i2.ColumnDefinition(
           name: 'id',
-          columnType: _i2.ColumnType.integer,
+          columnType: _i2.ColumnType.bigint,
           isNullable: false,
           dartType: 'int?',
           columnDefault: 'nextval(\'employee_id_seq\'::regclass)',
         ),
         _i2.ColumnDefinition(
           name: 'companyId',
-          columnType: _i2.ColumnType.integer,
+          columnType: _i2.ColumnType.bigint,
           isNullable: false,
           dartType: 'int',
         ),
@@ -397,20 +395,20 @@ class Protocol extends _i1.SerializationManagerServer {
       columns: [
         _i2.ColumnDefinition(
           name: 'id',
-          columnType: _i2.ColumnType.integer,
+          columnType: _i2.ColumnType.bigint,
           isNullable: false,
           dartType: 'int?',
           columnDefault: 'nextval(\'enrollment_id_seq\'::regclass)',
         ),
         _i2.ColumnDefinition(
           name: 'studentId',
-          columnType: _i2.ColumnType.integer,
+          columnType: _i2.ColumnType.bigint,
           isNullable: false,
           dartType: 'int',
         ),
         _i2.ColumnDefinition(
           name: 'courseId',
-          columnType: _i2.ColumnType.integer,
+          columnType: _i2.ColumnType.bigint,
           isNullable: false,
           dartType: 'int',
         ),
@@ -479,7 +477,7 @@ class Protocol extends _i1.SerializationManagerServer {
       columns: [
         _i2.ColumnDefinition(
           name: 'id',
-          columnType: _i2.ColumnType.integer,
+          columnType: _i2.ColumnType.bigint,
           isNullable: false,
           dartType: 'int?',
           columnDefault: 'nextval(\'example_id_seq\'::regclass)',
@@ -492,13 +490,13 @@ class Protocol extends _i1.SerializationManagerServer {
         ),
         _i2.ColumnDefinition(
           name: 'data',
-          columnType: _i2.ColumnType.integer,
+          columnType: _i2.ColumnType.bigint,
           isNullable: false,
           dartType: 'int',
         ),
         _i2.ColumnDefinition(
           name: 'parentId',
-          columnType: _i2.ColumnType.integer,
+          columnType: _i2.ColumnType.bigint,
           isNullable: true,
           dartType: 'int?',
         ),
@@ -540,7 +538,7 @@ class Protocol extends _i1.SerializationManagerServer {
       columns: [
         _i2.ColumnDefinition(
           name: 'id',
-          columnType: _i2.ColumnType.integer,
+          columnType: _i2.ColumnType.bigint,
           isNullable: false,
           dartType: 'int?',
           columnDefault: 'nextval(\'member_id_seq\'::regclass)',
@@ -578,7 +576,7 @@ class Protocol extends _i1.SerializationManagerServer {
       columns: [
         _i2.ColumnDefinition(
           name: 'id',
-          columnType: _i2.ColumnType.integer,
+          columnType: _i2.ColumnType.bigint,
           isNullable: false,
           dartType: 'int?',
           columnDefault: 'nextval(\'post_id_seq\'::regclass)',
@@ -591,7 +589,7 @@ class Protocol extends _i1.SerializationManagerServer {
         ),
         _i2.ColumnDefinition(
           name: 'nextId',
-          columnType: _i2.ColumnType.integer,
+          columnType: _i2.ColumnType.bigint,
           isNullable: true,
           dartType: 'int?',
         ),
@@ -646,7 +644,7 @@ class Protocol extends _i1.SerializationManagerServer {
       columns: [
         _i2.ColumnDefinition(
           name: 'id',
-          columnType: _i2.ColumnType.integer,
+          columnType: _i2.ColumnType.bigint,
           isNullable: false,
           dartType: 'int?',
           columnDefault: 'nextval(\'student_id_seq\'::regclass)',
@@ -684,14 +682,14 @@ class Protocol extends _i1.SerializationManagerServer {
       columns: [
         _i2.ColumnDefinition(
           name: 'id',
-          columnType: _i2.ColumnType.integer,
+          columnType: _i2.ColumnType.bigint,
           isNullable: false,
           dartType: 'int?',
           columnDefault: 'nextval(\'user_id_seq\'::regclass)',
         ),
         _i2.ColumnDefinition(
           name: 'addressId',
-          columnType: _i2.ColumnType.integer,
+          columnType: _i2.ColumnType.bigint,
           isNullable: false,
           dartType: 'int',
         ),
@@ -747,93 +745,89 @@ class Protocol extends _i1.SerializationManagerServer {
     Type? t,
   ]) {
     t ??= T;
-    if (customConstructors.containsKey(t)) {
-      return customConstructors[t]!(data, this) as T;
-    }
     if (t == _i3.Address) {
-      return _i3.Address.fromJson(data, this) as T;
+      return _i3.Address.fromJson(data) as T;
     }
     if (t == _i4.Blocking) {
-      return _i4.Blocking.fromJson(data, this) as T;
+      return _i4.Blocking.fromJson(data) as T;
     }
     if (t == _i5.Cat) {
-      return _i5.Cat.fromJson(data, this) as T;
+      return _i5.Cat.fromJson(data) as T;
     }
     if (t == _i6.Company) {
-      return _i6.Company.fromJson(data, this) as T;
+      return _i6.Company.fromJson(data) as T;
     }
     if (t == _i7.Course) {
-      return _i7.Course.fromJson(data, this) as T;
+      return _i7.Course.fromJson(data) as T;
     }
     if (t == _i8.CustomException) {
-      return _i8.CustomException.fromJson(data, this) as T;
+      return _i8.CustomException.fromJson(data) as T;
     }
     if (t == _i9.Employee) {
-      return _i9.Employee.fromJson(data, this) as T;
+      return _i9.Employee.fromJson(data) as T;
     }
     if (t == _i10.Enrollment) {
-      return _i10.Enrollment.fromJson(data, this) as T;
+      return _i10.Enrollment.fromJson(data) as T;
     }
     if (t == _i11.ErrorType) {
       return _i11.ErrorType.fromJson(data) as T;
     }
     if (t == _i12.Example) {
-      return _i12.Example.fromJson(data, this) as T;
+      return _i12.Example.fromJson(data) as T;
     }
     if (t == _i13.Member) {
-      return _i13.Member.fromJson(data, this) as T;
+      return _i13.Member.fromJson(data) as T;
     }
     if (t == _i14.Post) {
-      return _i14.Post.fromJson(data, this) as T;
+      return _i14.Post.fromJson(data) as T;
     }
     if (t == _i15.Student) {
-      return _i15.Student.fromJson(data, this) as T;
+      return _i15.Student.fromJson(data) as T;
     }
     if (t == _i16.User) {
-      return _i16.User.fromJson(data, this) as T;
+      return _i16.User.fromJson(data) as T;
     }
     if (t == _i1.getType<_i3.Address?>()) {
-      return (data != null ? _i3.Address.fromJson(data, this) : null) as T;
+      return (data != null ? _i3.Address.fromJson(data) : null) as T;
     }
     if (t == _i1.getType<_i4.Blocking?>()) {
-      return (data != null ? _i4.Blocking.fromJson(data, this) : null) as T;
+      return (data != null ? _i4.Blocking.fromJson(data) : null) as T;
     }
     if (t == _i1.getType<_i5.Cat?>()) {
-      return (data != null ? _i5.Cat.fromJson(data, this) : null) as T;
+      return (data != null ? _i5.Cat.fromJson(data) : null) as T;
     }
     if (t == _i1.getType<_i6.Company?>()) {
-      return (data != null ? _i6.Company.fromJson(data, this) : null) as T;
+      return (data != null ? _i6.Company.fromJson(data) : null) as T;
     }
     if (t == _i1.getType<_i7.Course?>()) {
-      return (data != null ? _i7.Course.fromJson(data, this) : null) as T;
+      return (data != null ? _i7.Course.fromJson(data) : null) as T;
     }
     if (t == _i1.getType<_i8.CustomException?>()) {
-      return (data != null ? _i8.CustomException.fromJson(data, this) : null)
-          as T;
+      return (data != null ? _i8.CustomException.fromJson(data) : null) as T;
     }
     if (t == _i1.getType<_i9.Employee?>()) {
-      return (data != null ? _i9.Employee.fromJson(data, this) : null) as T;
+      return (data != null ? _i9.Employee.fromJson(data) : null) as T;
     }
     if (t == _i1.getType<_i10.Enrollment?>()) {
-      return (data != null ? _i10.Enrollment.fromJson(data, this) : null) as T;
+      return (data != null ? _i10.Enrollment.fromJson(data) : null) as T;
     }
     if (t == _i1.getType<_i11.ErrorType?>()) {
       return (data != null ? _i11.ErrorType.fromJson(data) : null) as T;
     }
     if (t == _i1.getType<_i12.Example?>()) {
-      return (data != null ? _i12.Example.fromJson(data, this) : null) as T;
+      return (data != null ? _i12.Example.fromJson(data) : null) as T;
     }
     if (t == _i1.getType<_i13.Member?>()) {
-      return (data != null ? _i13.Member.fromJson(data, this) : null) as T;
+      return (data != null ? _i13.Member.fromJson(data) : null) as T;
     }
     if (t == _i1.getType<_i14.Post?>()) {
-      return (data != null ? _i14.Post.fromJson(data, this) : null) as T;
+      return (data != null ? _i14.Post.fromJson(data) : null) as T;
     }
     if (t == _i1.getType<_i15.Student?>()) {
-      return (data != null ? _i15.Student.fromJson(data, this) : null) as T;
+      return (data != null ? _i15.Student.fromJson(data) : null) as T;
     }
     if (t == _i1.getType<_i16.User?>()) {
-      return (data != null ? _i16.User.fromJson(data, this) : null) as T;
+      return (data != null ? _i16.User.fromJson(data) : null) as T;
     }
     if (t == _i1.getType<List<_i17.Cat>?>()) {
       return (data != null
@@ -869,9 +863,6 @@ class Protocol extends _i1.SerializationManagerServer {
       return (data as List).map((e) => deserialize<_i18.Blocking>(e)).toList()
           as dynamic;
     }
-    if (t == List<int>) {
-      return (data as List).map((e) => deserialize<int>(e)).toList() as dynamic;
-    }
     if (t == List<_i19.Cat>) {
       return (data as List).map((e) => deserialize<_i19.Cat>(e)).toList()
           as dynamic;
@@ -885,22 +876,21 @@ class Protocol extends _i1.SerializationManagerServer {
           as dynamic;
     }
     if (t == _i22.ClassName) {
-      return _i22.ClassName.fromJson(data, this) as T;
+      return _i22.ClassName.fromJson(data) as T;
     }
     if (t == _i22.FreezedCustomClass) {
-      return _i22.FreezedCustomClass.fromJson(data, this) as T;
+      return _i22.FreezedCustomClass.fromJson(data) as T;
     }
     if (t == _i1.getType<_i22.ClassName?>()) {
-      return (data != null ? _i22.ClassName.fromJson(data, this) : null) as T;
+      return (data != null ? _i22.ClassName.fromJson(data) : null) as T;
     }
     if (t == _i1.getType<_i22.FreezedCustomClass?>()) {
-      return (data != null
-          ? _i22.FreezedCustomClass.fromJson(data, this)
-          : null) as T;
+      return (data != null ? _i22.FreezedCustomClass.fromJson(data) : null)
+          as T;
     }
     try {
       return _i2.Protocol().deserialize<T>(data, t);
-    } catch (_) {}
+    } on _i1.DeserializationTypeNotFoundException catch (_) {}
     return super.deserialize<T>(data, t);
   }
 

@@ -11,7 +11,7 @@
 import 'package:serverpod_client/serverpod_client.dart' as _i1;
 import 'protocol.dart' as _i2;
 
-abstract class Cat extends _i1.SerializableEntity {
+abstract class Cat implements _i1.SerializableModel {
   Cat._({
     this.id,
     required this.name,
@@ -28,19 +28,18 @@ abstract class Cat extends _i1.SerializableEntity {
     List<_i2.Cat>? kittens,
   }) = _CatImpl;
 
-  factory Cat.fromJson(
-    Map<String, dynamic> jsonSerialization,
-    _i1.SerializationManager serializationManager,
-  ) {
+  factory Cat.fromJson(Map<String, dynamic> jsonSerialization) {
     return Cat(
-      id: serializationManager.deserialize<int?>(jsonSerialization['id']),
-      name: serializationManager.deserialize<String>(jsonSerialization['name']),
-      motherId:
-          serializationManager.deserialize<int?>(jsonSerialization['motherId']),
-      mother: serializationManager
-          .deserialize<_i2.Cat?>(jsonSerialization['mother']),
-      kittens: serializationManager
-          .deserialize<List<_i2.Cat>?>(jsonSerialization['kittens']),
+      id: jsonSerialization['id'] as int?,
+      name: jsonSerialization['name'] as String,
+      motherId: jsonSerialization['motherId'] as int?,
+      mother: jsonSerialization['mother'] == null
+          ? null
+          : _i2.Cat.fromJson(
+              (jsonSerialization['mother'] as Map<String, dynamic>)),
+      kittens: (jsonSerialization['kittens'] as List?)
+          ?.map((e) => _i2.Cat.fromJson((e as Map<String, dynamic>)))
+          .toList(),
     );
   }
 
@@ -74,6 +73,11 @@ abstract class Cat extends _i1.SerializableEntity {
       if (kittens != null)
         'kittens': kittens?.toJson(valueToJson: (v) => v.toJson()),
     };
+  }
+
+  @override
+  String toString() {
+    return _i1.SerializationManager.encode(this);
   }
 }
 

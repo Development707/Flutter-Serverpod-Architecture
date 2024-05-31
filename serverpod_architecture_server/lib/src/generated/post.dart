@@ -11,7 +11,7 @@
 import 'package:serverpod/serverpod.dart' as _i1;
 import 'protocol.dart' as _i2;
 
-abstract class Post extends _i1.TableRow {
+abstract class Post extends _i1.TableRow implements _i1.ProtocolSerialization {
   Post._({
     int? id,
     required this.content,
@@ -28,20 +28,19 @@ abstract class Post extends _i1.TableRow {
     _i2.Post? next,
   }) = _PostImpl;
 
-  factory Post.fromJson(
-    Map<String, dynamic> jsonSerialization,
-    _i1.SerializationManager serializationManager,
-  ) {
+  factory Post.fromJson(Map<String, dynamic> jsonSerialization) {
     return Post(
-      id: serializationManager.deserialize<int?>(jsonSerialization['id']),
-      content: serializationManager
-          .deserialize<String>(jsonSerialization['content']),
-      previous: serializationManager
-          .deserialize<_i2.Post?>(jsonSerialization['previous']),
-      nextId:
-          serializationManager.deserialize<int?>(jsonSerialization['nextId']),
-      next: serializationManager
-          .deserialize<_i2.Post?>(jsonSerialization['next']),
+      id: jsonSerialization['id'] as int?,
+      content: jsonSerialization['content'] as String,
+      previous: jsonSerialization['previous'] == null
+          ? null
+          : _i2.Post.fromJson(
+              (jsonSerialization['previous'] as Map<String, dynamic>)),
+      nextId: jsonSerialization['nextId'] as int?,
+      next: jsonSerialization['next'] == null
+          ? null
+          : _i2.Post.fromJson(
+              (jsonSerialization['next'] as Map<String, dynamic>)),
     );
   }
 
@@ -79,170 +78,14 @@ abstract class Post extends _i1.TableRow {
   }
 
   @override
-  @Deprecated('Will be removed in 2.0.0')
-  Map<String, dynamic> toJsonForDatabase() {
-    return {
-      'id': id,
-      'content': content,
-      'nextId': nextId,
-    };
-  }
-
-  @override
-  Map<String, dynamic> allToJson() {
+  Map<String, dynamic> toJsonForProtocol() {
     return {
       if (id != null) 'id': id,
       'content': content,
-      if (previous != null) 'previous': previous?.allToJson(),
+      if (previous != null) 'previous': previous?.toJsonForProtocol(),
       if (nextId != null) 'nextId': nextId,
-      if (next != null) 'next': next?.allToJson(),
+      if (next != null) 'next': next?.toJsonForProtocol(),
     };
-  }
-
-  @override
-  @Deprecated('Will be removed in 2.0.0')
-  void setColumn(
-    String columnName,
-    value,
-  ) {
-    switch (columnName) {
-      case 'id':
-        id = value;
-        return;
-      case 'content':
-        content = value;
-        return;
-      case 'nextId':
-        nextId = value;
-        return;
-      default:
-        throw UnimplementedError();
-    }
-  }
-
-  @Deprecated('Will be removed in 2.0.0. Use: db.find instead.')
-  static Future<List<Post>> find(
-    _i1.Session session, {
-    _i1.WhereExpressionBuilder<PostTable>? where,
-    int? limit,
-    int? offset,
-    _i1.Column? orderBy,
-    List<_i1.Order>? orderByList,
-    bool orderDescending = false,
-    bool useCache = true,
-    _i1.Transaction? transaction,
-    PostInclude? include,
-  }) async {
-    return session.db.find<Post>(
-      where: where != null ? where(Post.t) : null,
-      limit: limit,
-      offset: offset,
-      orderBy: orderBy,
-      orderByList: orderByList,
-      orderDescending: orderDescending,
-      useCache: useCache,
-      transaction: transaction,
-      include: include,
-    );
-  }
-
-  @Deprecated('Will be removed in 2.0.0. Use: db.findRow instead.')
-  static Future<Post?> findSingleRow(
-    _i1.Session session, {
-    _i1.WhereExpressionBuilder<PostTable>? where,
-    int? offset,
-    _i1.Column? orderBy,
-    bool orderDescending = false,
-    bool useCache = true,
-    _i1.Transaction? transaction,
-    PostInclude? include,
-  }) async {
-    return session.db.findSingleRow<Post>(
-      where: where != null ? where(Post.t) : null,
-      offset: offset,
-      orderBy: orderBy,
-      orderDescending: orderDescending,
-      useCache: useCache,
-      transaction: transaction,
-      include: include,
-    );
-  }
-
-  @Deprecated('Will be removed in 2.0.0. Use: db.findById instead.')
-  static Future<Post?> findById(
-    _i1.Session session,
-    int id, {
-    PostInclude? include,
-  }) async {
-    return session.db.findById<Post>(
-      id,
-      include: include,
-    );
-  }
-
-  @Deprecated('Will be removed in 2.0.0. Use: db.deleteWhere instead.')
-  static Future<int> delete(
-    _i1.Session session, {
-    required _i1.WhereExpressionBuilder<PostTable> where,
-    _i1.Transaction? transaction,
-  }) async {
-    return session.db.delete<Post>(
-      where: where(Post.t),
-      transaction: transaction,
-    );
-  }
-
-  @Deprecated('Will be removed in 2.0.0. Use: db.deleteRow instead.')
-  static Future<bool> deleteRow(
-    _i1.Session session,
-    Post row, {
-    _i1.Transaction? transaction,
-  }) async {
-    return session.db.deleteRow(
-      row,
-      transaction: transaction,
-    );
-  }
-
-  @Deprecated('Will be removed in 2.0.0. Use: db.update instead.')
-  static Future<bool> update(
-    _i1.Session session,
-    Post row, {
-    _i1.Transaction? transaction,
-  }) async {
-    return session.db.update(
-      row,
-      transaction: transaction,
-    );
-  }
-
-  @Deprecated(
-      'Will be removed in 2.0.0. Use: db.insert instead. Important note: In db.insert, the object you pass in is no longer modified, instead a new copy with the added row is returned which contains the inserted id.')
-  static Future<void> insert(
-    _i1.Session session,
-    Post row, {
-    _i1.Transaction? transaction,
-  }) async {
-    return session.db.insert(
-      row,
-      transaction: transaction,
-    );
-  }
-
-  @Deprecated('Will be removed in 2.0.0. Use: db.count instead.')
-  static Future<int> count(
-    _i1.Session session, {
-    _i1.WhereExpressionBuilder<PostTable>? where,
-    int? limit,
-    bool useCache = true,
-    _i1.Transaction? transaction,
-  }) async {
-    return session.db.count<Post>(
-      where: where != null ? where(Post.t) : null,
-      limit: limit,
-      useCache: useCache,
-      transaction: transaction,
-    );
   }
 
   static PostInclude include({
@@ -273,6 +116,11 @@ abstract class Post extends _i1.TableRow {
       orderByList: orderByList?.call(Post.t),
       include: include,
     );
+  }
+
+  @override
+  String toString() {
+    return _i1.SerializationManager.encode(this);
   }
 }
 
@@ -376,9 +224,6 @@ class PostTable extends _i1.Table {
   }
 }
 
-@Deprecated('Use PostTable.t instead.')
-PostTable tPost = PostTable();
-
 class PostInclude extends _i1.IncludeObject {
   PostInclude._({
     _i2.PostInclude? previous,
@@ -440,7 +285,7 @@ class PostRepository {
     _i1.Transaction? transaction,
     PostInclude? include,
   }) async {
-    return session.dbNext.find<Post>(
+    return session.db.find<Post>(
       where: where?.call(Post.t),
       orderBy: orderBy?.call(Post.t),
       orderByList: orderByList?.call(Post.t),
@@ -462,7 +307,7 @@ class PostRepository {
     _i1.Transaction? transaction,
     PostInclude? include,
   }) async {
-    return session.dbNext.findFirstRow<Post>(
+    return session.db.findFirstRow<Post>(
       where: where?.call(Post.t),
       orderBy: orderBy?.call(Post.t),
       orderByList: orderByList?.call(Post.t),
@@ -479,7 +324,7 @@ class PostRepository {
     _i1.Transaction? transaction,
     PostInclude? include,
   }) async {
-    return session.dbNext.findById<Post>(
+    return session.db.findById<Post>(
       id,
       transaction: transaction,
       include: include,
@@ -491,7 +336,7 @@ class PostRepository {
     List<Post> rows, {
     _i1.Transaction? transaction,
   }) async {
-    return session.dbNext.insert<Post>(
+    return session.db.insert<Post>(
       rows,
       transaction: transaction,
     );
@@ -502,7 +347,7 @@ class PostRepository {
     Post row, {
     _i1.Transaction? transaction,
   }) async {
-    return session.dbNext.insertRow<Post>(
+    return session.db.insertRow<Post>(
       row,
       transaction: transaction,
     );
@@ -514,7 +359,7 @@ class PostRepository {
     _i1.ColumnSelections<PostTable>? columns,
     _i1.Transaction? transaction,
   }) async {
-    return session.dbNext.update<Post>(
+    return session.db.update<Post>(
       rows,
       columns: columns?.call(Post.t),
       transaction: transaction,
@@ -527,41 +372,41 @@ class PostRepository {
     _i1.ColumnSelections<PostTable>? columns,
     _i1.Transaction? transaction,
   }) async {
-    return session.dbNext.updateRow<Post>(
+    return session.db.updateRow<Post>(
       row,
       columns: columns?.call(Post.t),
       transaction: transaction,
     );
   }
 
-  Future<List<int>> delete(
+  Future<List<Post>> delete(
     _i1.Session session,
     List<Post> rows, {
     _i1.Transaction? transaction,
   }) async {
-    return session.dbNext.delete<Post>(
+    return session.db.delete<Post>(
       rows,
       transaction: transaction,
     );
   }
 
-  Future<int> deleteRow(
+  Future<Post> deleteRow(
     _i1.Session session,
     Post row, {
     _i1.Transaction? transaction,
   }) async {
-    return session.dbNext.deleteRow<Post>(
+    return session.db.deleteRow<Post>(
       row,
       transaction: transaction,
     );
   }
 
-  Future<List<int>> deleteWhere(
+  Future<List<Post>> deleteWhere(
     _i1.Session session, {
     required _i1.WhereExpressionBuilder<PostTable> where,
     _i1.Transaction? transaction,
   }) async {
-    return session.dbNext.deleteWhere<Post>(
+    return session.db.deleteWhere<Post>(
       where: where(Post.t),
       transaction: transaction,
     );
@@ -573,7 +418,7 @@ class PostRepository {
     int? limit,
     _i1.Transaction? transaction,
   }) async {
-    return session.dbNext.count<Post>(
+    return session.db.count<Post>(
       where: where?.call(Post.t),
       limit: limit,
       transaction: transaction,
@@ -597,7 +442,7 @@ class PostAttachRowRepository {
     }
 
     var $previous = previous.copyWith(nextId: post.id);
-    await session.dbNext.updateRow<_i2.Post>(
+    await session.db.updateRow<_i2.Post>(
       $previous,
       columns: [_i2.Post.t.nextId],
     );
@@ -616,7 +461,7 @@ class PostAttachRowRepository {
     }
 
     var $post = post.copyWith(nextId: next.id);
-    await session.dbNext.updateRow<Post>(
+    await session.db.updateRow<Post>(
       $post,
       columns: [Post.t.nextId],
     );
@@ -643,7 +488,7 @@ class PostDetachRowRepository {
     }
 
     var $$previous = $previous.copyWith(nextId: null);
-    await session.dbNext.updateRow<_i2.Post>(
+    await session.db.updateRow<_i2.Post>(
       $$previous,
       columns: [_i2.Post.t.nextId],
     );
@@ -658,7 +503,7 @@ class PostDetachRowRepository {
     }
 
     var $post = post.copyWith(nextId: null);
-    await session.dbNext.updateRow<Post>(
+    await session.db.updateRow<Post>(
       $post,
       columns: [Post.t.nextId],
     );

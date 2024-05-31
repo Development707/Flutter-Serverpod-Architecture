@@ -8,8 +8,8 @@ environment:
   sdk: ">=3.0.0 <4.0.0"
 
 dependencies:
-  serverpod: 1.2.6
-  serverpod_serialization: 1.2.6
+  serverpod: 2.0.0
+  serverpod_serialization: 2.0.0
   serverpod_architecture_shared:
     path: ../serverpod_architecture_shared
 

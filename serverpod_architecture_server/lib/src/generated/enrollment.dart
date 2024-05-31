@@ -11,7 +11,8 @@
 import 'package:serverpod/serverpod.dart' as _i1;
 import 'protocol.dart' as _i2;
 
-abstract class Enrollment extends _i1.TableRow {
+abstract class Enrollment extends _i1.TableRow
+    implements _i1.ProtocolSerialization {
   Enrollment._({
     int? id,
     required this.studentId,
@@ -28,20 +29,19 @@ abstract class Enrollment extends _i1.TableRow {
     _i2.Course? course,
   }) = _EnrollmentImpl;
 
-  factory Enrollment.fromJson(
-    Map<String, dynamic> jsonSerialization,
-    _i1.SerializationManager serializationManager,
-  ) {
+  factory Enrollment.fromJson(Map<String, dynamic> jsonSerialization) {
     return Enrollment(
-      id: serializationManager.deserialize<int?>(jsonSerialization['id']),
-      studentId:
-          serializationManager.deserialize<int>(jsonSerialization['studentId']),
-      student: serializationManager
-          .deserialize<_i2.Student?>(jsonSerialization['student']),
-      courseId:
-          serializationManager.deserialize<int>(jsonSerialization['courseId']),
-      course: serializationManager
-          .deserialize<_i2.Course?>(jsonSerialization['course']),
+      id: jsonSerialization['id'] as int?,
+      studentId: jsonSerialization['studentId'] as int,
+      student: jsonSerialization['student'] == null
+          ? null
+          : _i2.Student.fromJson(
+              (jsonSerialization['student'] as Map<String, dynamic>)),
+      courseId: jsonSerialization['courseId'] as int,
+      course: jsonSerialization['course'] == null
+          ? null
+          : _i2.Course.fromJson(
+              (jsonSerialization['course'] as Map<String, dynamic>)),
     );
   }
 
@@ -79,170 +79,14 @@ abstract class Enrollment extends _i1.TableRow {
   }
 
   @override
-  @Deprecated('Will be removed in 2.0.0')
-  Map<String, dynamic> toJsonForDatabase() {
-    return {
-      'id': id,
-      'studentId': studentId,
-      'courseId': courseId,
-    };
-  }
-
-  @override
-  Map<String, dynamic> allToJson() {
+  Map<String, dynamic> toJsonForProtocol() {
     return {
       if (id != null) 'id': id,
       'studentId': studentId,
-      if (student != null) 'student': student?.allToJson(),
+      if (student != null) 'student': student?.toJsonForProtocol(),
       'courseId': courseId,
-      if (course != null) 'course': course?.allToJson(),
+      if (course != null) 'course': course?.toJsonForProtocol(),
     };
-  }
-
-  @override
-  @Deprecated('Will be removed in 2.0.0')
-  void setColumn(
-    String columnName,
-    value,
-  ) {
-    switch (columnName) {
-      case 'id':
-        id = value;
-        return;
-      case 'studentId':
-        studentId = value;
-        return;
-      case 'courseId':
-        courseId = value;
-        return;
-      default:
-        throw UnimplementedError();
-    }
-  }
-
-  @Deprecated('Will be removed in 2.0.0. Use: db.find instead.')
-  static Future<List<Enrollment>> find(
-    _i1.Session session, {
-    _i1.WhereExpressionBuilder<EnrollmentTable>? where,
-    int? limit,
-    int? offset,
-    _i1.Column? orderBy,
-    List<_i1.Order>? orderByList,
-    bool orderDescending = false,
-    bool useCache = true,
-    _i1.Transaction? transaction,
-    EnrollmentInclude? include,
-  }) async {
-    return session.db.find<Enrollment>(
-      where: where != null ? where(Enrollment.t) : null,
-      limit: limit,
-      offset: offset,
-      orderBy: orderBy,
-      orderByList: orderByList,
-      orderDescending: orderDescending,
-      useCache: useCache,
-      transaction: transaction,
-      include: include,
-    );
-  }
-
-  @Deprecated('Will be removed in 2.0.0. Use: db.findRow instead.')
-  static Future<Enrollment?> findSingleRow(
-    _i1.Session session, {
-    _i1.WhereExpressionBuilder<EnrollmentTable>? where,
-    int? offset,
-    _i1.Column? orderBy,
-    bool orderDescending = false,
-    bool useCache = true,
-    _i1.Transaction? transaction,
-    EnrollmentInclude? include,
-  }) async {
-    return session.db.findSingleRow<Enrollment>(
-      where: where != null ? where(Enrollment.t) : null,
-      offset: offset,
-      orderBy: orderBy,
-      orderDescending: orderDescending,
-      useCache: useCache,
-      transaction: transaction,
-      include: include,
-    );
-  }
-
-  @Deprecated('Will be removed in 2.0.0. Use: db.findById instead.')
-  static Future<Enrollment?> findById(
-    _i1.Session session,
-    int id, {
-    EnrollmentInclude? include,
-  }) async {
-    return session.db.findById<Enrollment>(
-      id,
-      include: include,
-    );
-  }
-
-  @Deprecated('Will be removed in 2.0.0. Use: db.deleteWhere instead.')
-  static Future<int> delete(
-    _i1.Session session, {
-    required _i1.WhereExpressionBuilder<EnrollmentTable> where,
-    _i1.Transaction? transaction,
-  }) async {
-    return session.db.delete<Enrollment>(
-      where: where(Enrollment.t),
-      transaction: transaction,
-    );
-  }
-
-  @Deprecated('Will be removed in 2.0.0. Use: db.deleteRow instead.')
-  static Future<bool> deleteRow(
-    _i1.Session session,
-    Enrollment row, {
-    _i1.Transaction? transaction,
-  }) async {
-    return session.db.deleteRow(
-      row,
-      transaction: transaction,
-    );
-  }
-
-  @Deprecated('Will be removed in 2.0.0. Use: db.update instead.')
-  static Future<bool> update(
-    _i1.Session session,
-    Enrollment row, {
-    _i1.Transaction? transaction,
-  }) async {
-    return session.db.update(
-      row,
-      transaction: transaction,
-    );
-  }
-
-  @Deprecated(
-      'Will be removed in 2.0.0. Use: db.insert instead. Important note: In db.insert, the object you pass in is no longer modified, instead a new copy with the added row is returned which contains the inserted id.')
-  static Future<void> insert(
-    _i1.Session session,
-    Enrollment row, {
-    _i1.Transaction? transaction,
-  }) async {
-    return session.db.insert(
-      row,
-      transaction: transaction,
-    );
-  }
-
-  @Deprecated('Will be removed in 2.0.0. Use: db.count instead.')
-  static Future<int> count(
-    _i1.Session session, {
-    _i1.WhereExpressionBuilder<EnrollmentTable>? where,
-    int? limit,
-    bool useCache = true,
-    _i1.Transaction? transaction,
-  }) async {
-    return session.db.count<Enrollment>(
-      where: where != null ? where(Enrollment.t) : null,
-      limit: limit,
-      useCache: useCache,
-      transaction: transaction,
-    );
   }
 
   static EnrollmentInclude include({
@@ -273,6 +117,11 @@ abstract class Enrollment extends _i1.TableRow {
       orderByList: orderByList?.call(Enrollment.t),
       include: include,
     );
+  }
+
+  @override
+  String toString() {
+    return _i1.SerializationManager.encode(this);
   }
 }
 
@@ -376,9 +225,6 @@ class EnrollmentTable extends _i1.Table {
   }
 }
 
-@Deprecated('Use EnrollmentTable.t instead.')
-EnrollmentTable tEnrollment = EnrollmentTable();
-
 class EnrollmentInclude extends _i1.IncludeObject {
   EnrollmentInclude._({
     _i2.StudentInclude? student,
@@ -438,7 +284,7 @@ class EnrollmentRepository {
     _i1.Transaction? transaction,
     EnrollmentInclude? include,
   }) async {
-    return session.dbNext.find<Enrollment>(
+    return session.db.find<Enrollment>(
       where: where?.call(Enrollment.t),
       orderBy: orderBy?.call(Enrollment.t),
       orderByList: orderByList?.call(Enrollment.t),
@@ -460,7 +306,7 @@ class EnrollmentRepository {
     _i1.Transaction? transaction,
     EnrollmentInclude? include,
   }) async {
-    return session.dbNext.findFirstRow<Enrollment>(
+    return session.db.findFirstRow<Enrollment>(
       where: where?.call(Enrollment.t),
       orderBy: orderBy?.call(Enrollment.t),
       orderByList: orderByList?.call(Enrollment.t),
@@ -477,7 +323,7 @@ class EnrollmentRepository {
     _i1.Transaction? transaction,
     EnrollmentInclude? include,
   }) async {
-    return session.dbNext.findById<Enrollment>(
+    return session.db.findById<Enrollment>(
       id,
       transaction: transaction,
       include: include,
@@ -489,7 +335,7 @@ class EnrollmentRepository {
     List<Enrollment> rows, {
     _i1.Transaction? transaction,
   }) async {
-    return session.dbNext.insert<Enrollment>(
+    return session.db.insert<Enrollment>(
       rows,
       transaction: transaction,
     );
@@ -500,7 +346,7 @@ class EnrollmentRepository {
     Enrollment row, {
     _i1.Transaction? transaction,
   }) async {
-    return session.dbNext.insertRow<Enrollment>(
+    return session.db.insertRow<Enrollment>(
       row,
       transaction: transaction,
     );
@@ -512,7 +358,7 @@ class EnrollmentRepository {
     _i1.ColumnSelections<EnrollmentTable>? columns,
     _i1.Transaction? transaction,
   }) async {
-    return session.dbNext.update<Enrollment>(
+    return session.db.update<Enrollment>(
       rows,
       columns: columns?.call(Enrollment.t),
       transaction: transaction,
@@ -525,41 +371,41 @@ class EnrollmentRepository {
     _i1.ColumnSelections<EnrollmentTable>? columns,
     _i1.Transaction? transaction,
   }) async {
-    return session.dbNext.updateRow<Enrollment>(
+    return session.db.updateRow<Enrollment>(
       row,
       columns: columns?.call(Enrollment.t),
       transaction: transaction,
     );
   }
 
-  Future<List<int>> delete(
+  Future<List<Enrollment>> delete(
     _i1.Session session,
     List<Enrollment> rows, {
     _i1.Transaction? transaction,
   }) async {
-    return session.dbNext.delete<Enrollment>(
+    return session.db.delete<Enrollment>(
       rows,
       transaction: transaction,
     );
   }
 
-  Future<int> deleteRow(
+  Future<Enrollment> deleteRow(
     _i1.Session session,
     Enrollment row, {
     _i1.Transaction? transaction,
   }) async {
-    return session.dbNext.deleteRow<Enrollment>(
+    return session.db.deleteRow<Enrollment>(
       row,
       transaction: transaction,
     );
   }
 
-  Future<List<int>> deleteWhere(
+  Future<List<Enrollment>> deleteWhere(
     _i1.Session session, {
     required _i1.WhereExpressionBuilder<EnrollmentTable> where,
     _i1.Transaction? transaction,
   }) async {
-    return session.dbNext.deleteWhere<Enrollment>(
+    return session.db.deleteWhere<Enrollment>(
       where: where(Enrollment.t),
       transaction: transaction,
     );
@@ -571,7 +417,7 @@ class EnrollmentRepository {
     int? limit,
     _i1.Transaction? transaction,
   }) async {
-    return session.dbNext.count<Enrollment>(
+    return session.db.count<Enrollment>(
       where: where?.call(Enrollment.t),
       limit: limit,
       transaction: transaction,
@@ -595,7 +441,7 @@ class EnrollmentAttachRowRepository {
     }
 
     var $enrollment = enrollment.copyWith(studentId: student.id);
-    await session.dbNext.updateRow<Enrollment>(
+    await session.db.updateRow<Enrollment>(
       $enrollment,
       columns: [Enrollment.t.studentId],
     );
@@ -614,7 +460,7 @@ class EnrollmentAttachRowRepository {
     }
 
     var $enrollment = enrollment.copyWith(courseId: course.id);
-    await session.dbNext.updateRow<Enrollment>(
+    await session.db.updateRow<Enrollment>(
       $enrollment,
       columns: [Enrollment.t.courseId],
     );

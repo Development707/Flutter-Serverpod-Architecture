@@ -24,7 +24,7 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  serverpod_flutter: 1.2.6
+  serverpod_flutter: 2.0.0
   serverpod_architecture_client:
     path: ../serverpod_architecture_client
   serverpod_architecture_shared:

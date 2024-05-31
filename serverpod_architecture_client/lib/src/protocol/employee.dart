@@ -11,7 +11,7 @@
 import 'package:serverpod_client/serverpod_client.dart' as _i1;
 import 'protocol.dart' as _i2;
 
-abstract class Employee extends _i1.SerializableEntity {
+abstract class Employee implements _i1.SerializableModel {
   Employee._({
     this.id,
     required this.companyId,
@@ -32,23 +32,18 @@ abstract class Employee extends _i1.SerializableEntity {
     String? address,
   }) = _EmployeeImpl;
 
-  factory Employee.fromJson(
-    Map<String, dynamic> jsonSerialization,
-    _i1.SerializationManager serializationManager,
-  ) {
+  factory Employee.fromJson(Map<String, dynamic> jsonSerialization) {
     return Employee(
-      id: serializationManager.deserialize<int?>(jsonSerialization['id']),
-      companyId:
-          serializationManager.deserialize<int>(jsonSerialization['companyId']),
-      company: serializationManager
-          .deserialize<_i2.Company?>(jsonSerialization['company']),
-      name: serializationManager.deserialize<String>(jsonSerialization['name']),
-      email:
-          serializationManager.deserialize<String?>(jsonSerialization['email']),
-      phone:
-          serializationManager.deserialize<String?>(jsonSerialization['phone']),
-      address: serializationManager
-          .deserialize<String?>(jsonSerialization['address']),
+      id: jsonSerialization['id'] as int?,
+      companyId: jsonSerialization['companyId'] as int,
+      company: jsonSerialization['company'] == null
+          ? null
+          : _i2.Company.fromJson(
+              (jsonSerialization['company'] as Map<String, dynamic>)),
+      name: jsonSerialization['name'] as String,
+      email: jsonSerialization['email'] as String?,
+      phone: jsonSerialization['phone'] as String?,
+      address: jsonSerialization['address'] as String?,
     );
   }
 
@@ -89,6 +84,11 @@ abstract class Employee extends _i1.SerializableEntity {
       if (phone != null) 'phone': phone,
       if (address != null) 'address': address,
     };
+  }
+
+  @override
+  String toString() {
+    return _i1.SerializationManager.encode(this);
   }
 }
 
