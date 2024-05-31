@@ -10,3 +10,8 @@ fields:
 
   ### A list of people currently employed at the company.
   employees: List<User>?, relation(name=company_employee)
+indexes:
+  company_name_idx:
+    fields: name
+    type: brin # Default is `btree`
+    # unique: true # Making fields unique
