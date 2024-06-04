@@ -32,6 +32,15 @@
             "problemMatcher": []
         },
         {
+            "label": "server: serverpod create-repair-migration",
+            "type": "shell",
+            "command": "serverpod create-repair-migration",
+            "options": {
+                "cwd": "serverpod_architecture_server"
+            },
+            "problemMatcher": []
+        },
+        {
             "label": "server: serverpod generate",
             "type": "shell",
             "command": "serverpod generate",

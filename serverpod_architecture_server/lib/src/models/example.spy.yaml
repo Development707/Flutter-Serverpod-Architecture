@@ -13,6 +13,9 @@ class: Example
 # Add the table key, if this class represents a row in the database.
 table: example
 
+# Opt out of migrations
+managedMigration: false
+
 # The fields (and columns if connected to the database) of the class. Supported types are 
 # `bool`, `int`, `double`, `String`, `UuidValue`, `Duration`, `DateTime`, `ByteData`, 
 # and other serializable classes, exceptions and enums. 
