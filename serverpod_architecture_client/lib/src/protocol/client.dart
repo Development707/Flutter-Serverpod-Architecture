@@ -354,6 +354,27 @@ class EndpointPost extends _i1.EndpointRef {
 }
 
 /// {@category Endpoint}
+class EndpointRawAccess extends _i1.EndpointRef {
+  EndpointRawAccess(_i1.EndpointCaller caller) : super(caller);
+
+  @override
+  String get name => 'rawAccess';
+
+  _i2.Future<Iterable<_i5.Company>> unsafeQuery() =>
+      caller.callServerEndpoint<Iterable<_i5.Company>>(
+        'rawAccess',
+        'unsafeQuery',
+        {},
+      );
+
+  _i2.Future<int> unsafeExecute(String name) => caller.callServerEndpoint<int>(
+        'rawAccess',
+        'unsafeExecute',
+        {'name': name},
+      );
+}
+
+/// {@category Endpoint}
 class EndpointRelationQueries extends _i1.EndpointRef {
   EndpointRelationQueries(_i1.EndpointCaller caller) : super(caller);
 
@@ -725,6 +746,7 @@ class Client extends _i1.ServerpodClient {
     example = EndpointExample(this);
     pagination = EndpointPagination(this);
     post = EndpointPost(this);
+    rawAccess = EndpointRawAccess(this);
     relationQueries = EndpointRelationQueries(this);
     sort = EndpointSort(this);
     user = EndpointUser(this);
@@ -742,6 +764,8 @@ class Client extends _i1.ServerpodClient {
 
   late final EndpointPost post;
 
+  late final EndpointRawAccess rawAccess;
+
   late final EndpointRelationQueries relationQueries;
 
   late final EndpointSort sort;
@@ -756,6 +780,7 @@ class Client extends _i1.ServerpodClient {
         'example': example,
         'pagination': pagination,
         'post': post,
+        'rawAccess': rawAccess,
         'relationQueries': relationQueries,
         'sort': sort,
         'user': user,

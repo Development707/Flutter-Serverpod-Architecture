@@ -33,6 +33,9 @@ post:
   - getPosts:
   - updatePost:
   - deletePost:
+rawAccess:
+  - unsafeQuery:
+  - unsafeExecute:
 relationQueries:
   - include:
   - nestedInclude:

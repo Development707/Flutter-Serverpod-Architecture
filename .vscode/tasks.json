@@ -23,6 +23,15 @@
             "problemMatcher": []
         },
         {
+            "label": "server: serverpod create-migration --force",
+            "type": "shell",
+            "command": "serverpod create-migration --force",
+            "options": {
+                "cwd": "serverpod_architecture_server"
+            },
+            "problemMatcher": []
+        },
+        {
             "label": "server: serverpod generate",
             "type": "shell",
             "command": "serverpod generate",
