@@ -4,6 +4,9 @@ blocking:
   - createBlocking:
   - updateBlocking:
   - deleteBlocking:
+caching:
+  - getUserData:
+  - getUserDataMiss:
 cat:
   - getCats:
   - getCat:

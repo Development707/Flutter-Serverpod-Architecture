@@ -1,0 +1,6 @@
+class: UserData
+table: user_data
+fields:
+  name: String
+  age: int
+  address: Address?

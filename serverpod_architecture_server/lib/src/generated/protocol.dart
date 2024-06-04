@@ -26,16 +26,17 @@ import 'order.dart' as _i14;
 import 'post.dart' as _i15;
 import 'student.dart' as _i16;
 import 'user.dart' as _i17;
-import 'protocol.dart' as _i18;
+import 'user_data_spy.dart' as _i18;
+import 'protocol.dart' as _i19;
 import 'package:serverpod_architecture_server/src/generated/blocking.dart'
-    as _i19;
-import 'package:serverpod_architecture_server/src/generated/cat.dart' as _i20;
+    as _i20;
+import 'package:serverpod_architecture_server/src/generated/cat.dart' as _i21;
 import 'package:serverpod_architecture_server/src/generated/company.dart'
-    as _i21;
-import 'package:serverpod_architecture_server/src/generated/post.dart' as _i22;
-import 'package:serverpod_architecture_server/src/generated/user.dart' as _i23;
+    as _i22;
+import 'package:serverpod_architecture_server/src/generated/post.dart' as _i23;
+import 'package:serverpod_architecture_server/src/generated/user.dart' as _i24;
 import 'package:serverpod_architecture_shared/serverpod_architecture_shared.dart'
-    as _i24;
+    as _i25;
 export 'address.dart';
 export 'blocking.dart';
 export 'cat.dart';
@@ -51,6 +52,7 @@ export 'order.dart';
 export 'post.dart';
 export 'student.dart';
 export 'user.dart';
+export 'user_data_spy.dart';
 
 class Protocol extends _i1.SerializationManagerServer {
   Protocol._();
@@ -581,7 +583,7 @@ class Protocol extends _i1.SerializationManagerServer {
           isPrimary: true,
         )
       ],
-      managed: true,
+      managed: false,
     ),
     _i2.TableDefinition(
       name: 'member',
@@ -900,6 +902,56 @@ class Protocol extends _i1.SerializationManagerServer {
       ],
       managed: true,
     ),
+    _i2.TableDefinition(
+      name: 'user_data',
+      dartName: 'UserData',
+      schema: 'public',
+      module: 'serverpod_architecture',
+      columns: [
+        _i2.ColumnDefinition(
+          name: 'id',
+          columnType: _i2.ColumnType.bigint,
+          isNullable: false,
+          dartType: 'int?',
+          columnDefault: 'nextval(\'user_data_id_seq\'::regclass)',
+        ),
+        _i2.ColumnDefinition(
+          name: 'name',
+          columnType: _i2.ColumnType.text,
+          isNullable: false,
+          dartType: 'String',
+        ),
+        _i2.ColumnDefinition(
+          name: 'age',
+          columnType: _i2.ColumnType.bigint,
+          isNullable: false,
+          dartType: 'int',
+        ),
+        _i2.ColumnDefinition(
+          name: 'address',
+          columnType: _i2.ColumnType.json,
+          isNullable: true,
+          dartType: 'protocol:Address?',
+        ),
+      ],
+      foreignKeys: [],
+      indexes: [
+        _i2.IndexDefinition(
+          indexName: 'user_data_pkey',
+          tableSpace: null,
+          elements: [
+            _i2.IndexElementDefinition(
+              type: _i2.IndexElementDefinitionType.column,
+              definition: 'id',
+            )
+          ],
+          type: 'btree',
+          isUnique: true,
+          isPrimary: true,
+        )
+      ],
+      managed: true,
+    ),
     ..._i2.Protocol.targetTableDefinitions,
   ];
 
@@ -954,6 +1006,9 @@ class Protocol extends _i1.SerializationManagerServer {
     if (t == _i17.User) {
       return _i17.User.fromJson(data) as T;
     }
+    if (t == _i18.UserData) {
+      return _i18.UserData.fromJson(data) as T;
+    }
     if (t == _i1.getType<_i3.Address?>()) {
       return (data != null ? _i3.Address.fromJson(data) : null) as T;
     }
@@ -999,90 +1054,93 @@ class Protocol extends _i1.SerializationManagerServer {
     if (t == _i1.getType<_i17.User?>()) {
       return (data != null ? _i17.User.fromJson(data) : null) as T;
     }
-    if (t == _i1.getType<List<_i18.Cat>?>()) {
+    if (t == _i1.getType<_i18.UserData?>()) {
+      return (data != null ? _i18.UserData.fromJson(data) : null) as T;
+    }
+    if (t == _i1.getType<List<_i19.Cat>?>()) {
       return (data != null
-          ? (data as List).map((e) => deserialize<_i18.Cat>(e)).toList()
+          ? (data as List).map((e) => deserialize<_i19.Cat>(e)).toList()
           : null) as dynamic;
     }
-    if (t == _i1.getType<List<_i18.User>?>()) {
+    if (t == _i1.getType<List<_i19.User>?>()) {
       return (data != null
-          ? (data as List).map((e) => deserialize<_i18.User>(e)).toList()
+          ? (data as List).map((e) => deserialize<_i19.User>(e)).toList()
           : null) as dynamic;
     }
-    if (t == _i1.getType<List<_i18.Employee>?>()) {
+    if (t == _i1.getType<List<_i19.Employee>?>()) {
       return (data != null
-          ? (data as List).map((e) => deserialize<_i18.Employee>(e)).toList()
+          ? (data as List).map((e) => deserialize<_i19.Employee>(e)).toList()
           : null) as dynamic;
     }
-    if (t == _i1.getType<List<_i18.Order>?>()) {
+    if (t == _i1.getType<List<_i19.Order>?>()) {
       return (data != null
-          ? (data as List).map((e) => deserialize<_i18.Order>(e)).toList()
+          ? (data as List).map((e) => deserialize<_i19.Order>(e)).toList()
           : null) as dynamic;
     }
-    if (t == _i1.getType<List<_i18.Enrollment>?>()) {
+    if (t == _i1.getType<List<_i19.Enrollment>?>()) {
       return (data != null
-          ? (data as List).map((e) => deserialize<_i18.Enrollment>(e)).toList()
+          ? (data as List).map((e) => deserialize<_i19.Enrollment>(e)).toList()
           : null) as dynamic;
     }
-    if (t == _i1.getType<List<_i18.Blocking>?>()) {
+    if (t == _i1.getType<List<_i19.Blocking>?>()) {
       return (data != null
-          ? (data as List).map((e) => deserialize<_i18.Blocking>(e)).toList()
+          ? (data as List).map((e) => deserialize<_i19.Blocking>(e)).toList()
           : null) as dynamic;
     }
-    if (t == _i1.getType<List<_i18.Blocking>?>()) {
+    if (t == _i1.getType<List<_i19.Blocking>?>()) {
       return (data != null
-          ? (data as List).map((e) => deserialize<_i18.Blocking>(e)).toList()
+          ? (data as List).map((e) => deserialize<_i19.Blocking>(e)).toList()
           : null) as dynamic;
     }
-    if (t == _i1.getType<List<_i18.Enrollment>?>()) {
+    if (t == _i1.getType<List<_i19.Enrollment>?>()) {
       return (data != null
-          ? (data as List).map((e) => deserialize<_i18.Enrollment>(e)).toList()
+          ? (data as List).map((e) => deserialize<_i19.Enrollment>(e)).toList()
           : null) as dynamic;
     }
-    if (t == _i1.getType<List<_i18.Order>?>()) {
+    if (t == _i1.getType<List<_i19.Order>?>()) {
       return (data != null
-          ? (data as List).map((e) => deserialize<_i18.Order>(e)).toList()
+          ? (data as List).map((e) => deserialize<_i19.Order>(e)).toList()
           : null) as dynamic;
     }
-    if (t == List<_i19.Blocking>) {
-      return (data as List).map((e) => deserialize<_i19.Blocking>(e)).toList()
+    if (t == List<_i20.Blocking>) {
+      return (data as List).map((e) => deserialize<_i20.Blocking>(e)).toList()
           as dynamic;
     }
-    if (t == List<_i20.Cat>) {
-      return (data as List).map((e) => deserialize<_i20.Cat>(e)).toList()
+    if (t == List<_i21.Cat>) {
+      return (data as List).map((e) => deserialize<_i21.Cat>(e)).toList()
           as dynamic;
     }
-    if (t == List<_i21.Company>) {
-      return (data as List).map((e) => deserialize<_i21.Company>(e)).toList()
+    if (t == List<_i22.Company>) {
+      return (data as List).map((e) => deserialize<_i22.Company>(e)).toList()
           as dynamic;
     }
     if (t == Map<String, dynamic>) {
       return (data as Map).map((k, v) =>
           MapEntry(deserialize<String>(k), deserialize<dynamic>(v))) as dynamic;
     }
-    if (t == List<_i22.Post>) {
-      return (data as List).map((e) => deserialize<_i22.Post>(e)).toList()
+    if (t == List<_i23.Post>) {
+      return (data as List).map((e) => deserialize<_i23.Post>(e)).toList()
           as dynamic;
     }
-    if (t == List<_i23.User>) {
-      return (data as List).map((e) => deserialize<_i23.User>(e)).toList()
+    if (t == List<_i24.User>) {
+      return (data as List).map((e) => deserialize<_i24.User>(e)).toList()
           as dynamic;
     }
     if (t == Set<String>) {
       return (data as List).map((e) => deserialize<String>(e)).toSet()
           as dynamic;
     }
-    if (t == _i24.ClassName) {
-      return _i24.ClassName.fromJson(data) as T;
+    if (t == _i25.ClassName) {
+      return _i25.ClassName.fromJson(data) as T;
     }
-    if (t == _i24.FreezedCustomClass) {
-      return _i24.FreezedCustomClass.fromJson(data) as T;
+    if (t == _i25.FreezedCustomClass) {
+      return _i25.FreezedCustomClass.fromJson(data) as T;
     }
-    if (t == _i1.getType<_i24.ClassName?>()) {
-      return (data != null ? _i24.ClassName.fromJson(data) : null) as T;
+    if (t == _i1.getType<_i25.ClassName?>()) {
+      return (data != null ? _i25.ClassName.fromJson(data) : null) as T;
     }
-    if (t == _i1.getType<_i24.FreezedCustomClass?>()) {
-      return (data != null ? _i24.FreezedCustomClass.fromJson(data) : null)
+    if (t == _i1.getType<_i25.FreezedCustomClass?>()) {
+      return (data != null ? _i25.FreezedCustomClass.fromJson(data) : null)
           as T;
     }
     try {
@@ -1093,10 +1151,10 @@ class Protocol extends _i1.SerializationManagerServer {
 
   @override
   String? getClassNameForObject(Object data) {
-    if (data is _i24.ClassName) {
+    if (data is _i25.ClassName) {
       return 'ClassName';
     }
-    if (data is _i24.FreezedCustomClass) {
+    if (data is _i25.FreezedCustomClass) {
       return 'FreezedCustomClass';
     }
     if (data is _i3.Address) {
@@ -1144,16 +1202,19 @@ class Protocol extends _i1.SerializationManagerServer {
     if (data is _i17.User) {
       return 'User';
     }
+    if (data is _i18.UserData) {
+      return 'UserData';
+    }
     return super.getClassNameForObject(data);
   }
 
   @override
   dynamic deserializeByClassName(Map<String, dynamic> data) {
     if (data['className'] == 'ClassName') {
-      return deserialize<_i24.ClassName>(data['data']);
+      return deserialize<_i25.ClassName>(data['data']);
     }
     if (data['className'] == 'FreezedCustomClass') {
-      return deserialize<_i24.FreezedCustomClass>(data['data']);
+      return deserialize<_i25.FreezedCustomClass>(data['data']);
     }
     if (data['className'] == 'Address') {
       return deserialize<_i3.Address>(data['data']);
@@ -1200,6 +1261,9 @@ class Protocol extends _i1.SerializationManagerServer {
     if (data['className'] == 'User') {
       return deserialize<_i17.User>(data['data']);
     }
+    if (data['className'] == 'UserData') {
+      return deserialize<_i18.UserData>(data['data']);
+    }
     return super.deserializeByClassName(data);
   }
 
@@ -1238,6 +1302,8 @@ class Protocol extends _i1.SerializationManagerServer {
         return _i16.Student.t;
       case _i17.User:
         return _i17.User.t;
+      case _i18.UserData:
+        return _i18.UserData.t;
     }
     return null;
   }
