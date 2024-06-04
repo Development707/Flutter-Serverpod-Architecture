@@ -40,6 +40,12 @@ relationQueries:
   - bulkAttachRows:
   - detachSingleRow:
   - bulkDetachRows:
+sort:
+  - orderBy:
+  - orderDescending:
+  - orderByList:
+  - sort:
+  - sortCount:
 user:
   - find:
   - equal:

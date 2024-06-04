@@ -5,3 +5,4 @@ fields:
   price: double
   itemType: String
   user: User?, relation(name=user_orders)
+  company: Company?, relation(name=company_orders)

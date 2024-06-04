@@ -17,6 +17,7 @@ abstract class Employee extends _i1.TableRow
     int? id,
     required this.name,
     this.email,
+    this.role,
     this.addressId,
     this.address,
     required this.companyId,
@@ -27,6 +28,7 @@ abstract class Employee extends _i1.TableRow
     int? id,
     required String name,
     String? email,
+    String? role,
     int? addressId,
     _i2.Address? address,
     required int companyId,
@@ -38,6 +40,7 @@ abstract class Employee extends _i1.TableRow
       id: jsonSerialization['id'] as int?,
       name: jsonSerialization['name'] as String,
       email: jsonSerialization['email'] as String?,
+      role: jsonSerialization['role'] as String?,
       addressId: jsonSerialization['addressId'] as int?,
       address: jsonSerialization['address'] == null
           ? null
@@ -59,6 +62,8 @@ abstract class Employee extends _i1.TableRow
 
   String? email;
 
+  String? role;
+
   int? addressId;
 
   _i2.Address? address;
@@ -74,6 +79,7 @@ abstract class Employee extends _i1.TableRow
     int? id,
     String? name,
     String? email,
+    String? role,
     int? addressId,
     _i2.Address? address,
     int? companyId,
@@ -85,6 +91,7 @@ abstract class Employee extends _i1.TableRow
       if (id != null) 'id': id,
       'name': name,
       if (email != null) 'email': email,
+      if (role != null) 'role': role,
       if (addressId != null) 'addressId': addressId,
       if (address != null) 'address': address?.toJson(),
       'companyId': companyId,
@@ -98,6 +105,7 @@ abstract class Employee extends _i1.TableRow
       if (id != null) 'id': id,
       'name': name,
       if (email != null) 'email': email,
+      if (role != null) 'role': role,
       if (addressId != null) 'addressId': addressId,
       if (address != null) 'address': address?.toJsonForProtocol(),
       'companyId': companyId,
@@ -148,6 +156,7 @@ class _EmployeeImpl extends Employee {
     int? id,
     required String name,
     String? email,
+    String? role,
     int? addressId,
     _i2.Address? address,
     required int companyId,
@@ -156,6 +165,7 @@ class _EmployeeImpl extends Employee {
           id: id,
           name: name,
           email: email,
+          role: role,
           addressId: addressId,
           address: address,
           companyId: companyId,
@@ -167,6 +177,7 @@ class _EmployeeImpl extends Employee {
     Object? id = _Undefined,
     String? name,
     Object? email = _Undefined,
+    Object? role = _Undefined,
     Object? addressId = _Undefined,
     Object? address = _Undefined,
     int? companyId,
@@ -176,6 +187,7 @@ class _EmployeeImpl extends Employee {
       id: id is int? ? id : this.id,
       name: name ?? this.name,
       email: email is String? ? email : this.email,
+      role: role is String? ? role : this.role,
       addressId: addressId is int? ? addressId : this.addressId,
       address: address is _i2.Address? ? address : this.address?.copyWith(),
       companyId: companyId ?? this.companyId,
@@ -194,6 +206,10 @@ class EmployeeTable extends _i1.Table {
       'email',
       this,
     );
+    role = _i1.ColumnString(
+      'role',
+      this,
+    );
     addressId = _i1.ColumnInt(
       'addressId',
       this,
@@ -207,6 +223,8 @@ class EmployeeTable extends _i1.Table {
   late final _i1.ColumnString name;
 
   late final _i1.ColumnString email;
+
+  late final _i1.ColumnString role;
 
   late final _i1.ColumnInt addressId;
 
@@ -247,6 +265,7 @@ class EmployeeTable extends _i1.Table {
         id,
         name,
         email,
+        role,
         addressId,
         companyId,
       ];

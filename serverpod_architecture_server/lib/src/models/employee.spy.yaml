@@ -3,5 +3,6 @@ table: employee
 fields:
   name: String
   email: String?
+  role: String?
   address: Address?, relation(optional, onUpdate=Cascade, onDelete=NoAction)
   company: Company?, relation(name=company_workers, onUpdate=Cascade, onDelete=SetNull)

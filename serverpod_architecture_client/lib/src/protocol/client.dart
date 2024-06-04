@@ -416,6 +416,54 @@ class EndpointRelationQueries extends _i1.EndpointRef {
 }
 
 /// {@category Endpoint}
+class EndpointSort extends _i1.EndpointRef {
+  EndpointSort(_i1.EndpointCaller caller) : super(caller);
+
+  @override
+  String get name => 'sort';
+
+  /// orderBy
+  _i2.Future<List<_i5.Company>> orderBy() =>
+      caller.callServerEndpoint<List<_i5.Company>>(
+        'sort',
+        'orderBy',
+        {},
+      );
+
+  /// orderDescending
+  _i2.Future<List<_i5.Company>> orderDescending() =>
+      caller.callServerEndpoint<List<_i5.Company>>(
+        'sort',
+        'orderDescending',
+        {},
+      );
+
+  /// orderByList
+  _i2.Future<List<_i5.Company>> orderByList() =>
+      caller.callServerEndpoint<List<_i5.Company>>(
+        'sort',
+        'orderByList',
+        {},
+      );
+
+  /// Sort on relations
+  _i2.Future<List<_i5.Company>> sort() =>
+      caller.callServerEndpoint<List<_i5.Company>>(
+        'sort',
+        'sort',
+        {},
+      );
+
+  /// Sort count sub-field
+  _i2.Future<List<_i5.Company>> sortCount() =>
+      caller.callServerEndpoint<List<_i5.Company>>(
+        'sort',
+        'sortCount',
+        {},
+      );
+}
+
+/// {@category Endpoint}
 class EndpointUser extends _i1.EndpointRef {
   EndpointUser(_i1.EndpointCaller caller) : super(caller);
 
@@ -611,6 +659,7 @@ class Client extends _i1.ServerpodClient {
     example = EndpointExample(this);
     post = EndpointPost(this);
     relationQueries = EndpointRelationQueries(this);
+    sort = EndpointSort(this);
     user = EndpointUser(this);
   }
 
@@ -626,6 +675,8 @@ class Client extends _i1.ServerpodClient {
 
   late final EndpointRelationQueries relationQueries;
 
+  late final EndpointSort sort;
+
   late final EndpointUser user;
 
   @override
@@ -636,6 +687,7 @@ class Client extends _i1.ServerpodClient {
         'example': example,
         'post': post,
         'relationQueries': relationQueries,
+        'sort': sort,
         'user': user,
       };
 

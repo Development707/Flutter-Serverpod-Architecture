@@ -15,13 +15,14 @@ import '../endpoints/company_endpoint.dart' as _i4;
 import '../endpoints/example_endpoint.dart' as _i5;
 import '../endpoints/post_endpoint.dart' as _i6;
 import '../endpoints/relation_queries_endpoint.dart' as _i7;
-import '../endpoints/user_endpoint.dart' as _i8;
+import '../endpoints/sort_endpoint.dart' as _i8;
+import '../endpoints/user_endpoint.dart' as _i9;
 import 'package:serverpod_architecture_server/src/generated/blocking.dart'
-    as _i9;
-import 'package:serverpod_architecture_server/src/generated/cat.dart' as _i10;
+    as _i10;
+import 'package:serverpod_architecture_server/src/generated/cat.dart' as _i11;
 import 'package:serverpod_architecture_server/src/generated/company.dart'
-    as _i11;
-import 'package:serverpod_architecture_server/src/generated/post.dart' as _i12;
+    as _i12;
+import 'package:serverpod_architecture_server/src/generated/post.dart' as _i13;
 
 class Endpoints extends _i1.EndpointDispatch {
   @override
@@ -63,7 +64,13 @@ class Endpoints extends _i1.EndpointDispatch {
           'relationQueries',
           null,
         ),
-      'user': _i8.UserEndpoint()
+      'sort': _i8.SortEndpoint()
+        ..initialize(
+          server,
+          'sort',
+          null,
+        ),
+      'user': _i9.UserEndpoint()
         ..initialize(
           server,
           'user',
@@ -107,7 +114,7 @@ class Endpoints extends _i1.EndpointDispatch {
           params: {
             'blocking': _i1.ParameterDescription(
               name: 'blocking',
-              type: _i1.getType<_i9.Blocking>(),
+              type: _i1.getType<_i10.Blocking>(),
               nullable: false,
             )
           },
@@ -125,7 +132,7 @@ class Endpoints extends _i1.EndpointDispatch {
           params: {
             'blocking': _i1.ParameterDescription(
               name: 'blocking',
-              type: _i1.getType<_i9.Blocking>(),
+              type: _i1.getType<_i10.Blocking>(),
               nullable: false,
             )
           },
@@ -143,7 +150,7 @@ class Endpoints extends _i1.EndpointDispatch {
           params: {
             'blocking': _i1.ParameterDescription(
               name: 'blocking',
-              type: _i1.getType<_i9.Blocking>(),
+              type: _i1.getType<_i10.Blocking>(),
               nullable: false,
             )
           },
@@ -194,7 +201,7 @@ class Endpoints extends _i1.EndpointDispatch {
           params: {
             'cat': _i1.ParameterDescription(
               name: 'cat',
-              type: _i1.getType<_i10.Cat>(),
+              type: _i1.getType<_i11.Cat>(),
               nullable: false,
             )
           },
@@ -212,7 +219,7 @@ class Endpoints extends _i1.EndpointDispatch {
           params: {
             'cat': _i1.ParameterDescription(
               name: 'cat',
-              type: _i1.getType<_i10.Cat>(),
+              type: _i1.getType<_i11.Cat>(),
               nullable: false,
             )
           },
@@ -230,7 +237,7 @@ class Endpoints extends _i1.EndpointDispatch {
           params: {
             'cat': _i1.ParameterDescription(
               name: 'cat',
-              type: _i1.getType<_i10.Cat>(),
+              type: _i1.getType<_i11.Cat>(),
               nullable: false,
             )
           },
@@ -282,7 +289,7 @@ class Endpoints extends _i1.EndpointDispatch {
           params: {
             'company': _i1.ParameterDescription(
               name: 'company',
-              type: _i1.getType<_i11.Company>(),
+              type: _i1.getType<_i12.Company>(),
               nullable: false,
             )
           },
@@ -300,7 +307,7 @@ class Endpoints extends _i1.EndpointDispatch {
           params: {
             'company': _i1.ParameterDescription(
               name: 'company',
-              type: _i1.getType<_i11.Company>(),
+              type: _i1.getType<_i12.Company>(),
               nullable: false,
             )
           },
@@ -318,7 +325,7 @@ class Endpoints extends _i1.EndpointDispatch {
           params: {
             'company': _i1.ParameterDescription(
               name: 'company',
-              type: _i1.getType<_i11.Company>(),
+              type: _i1.getType<_i12.Company>(),
               nullable: false,
             )
           },
@@ -405,7 +412,7 @@ class Endpoints extends _i1.EndpointDispatch {
           params: {
             'post': _i1.ParameterDescription(
               name: 'post',
-              type: _i1.getType<_i12.Post>(),
+              type: _i1.getType<_i13.Post>(),
               nullable: false,
             )
           },
@@ -450,7 +457,7 @@ class Endpoints extends _i1.EndpointDispatch {
           params: {
             'post': _i1.ParameterDescription(
               name: 'post',
-              type: _i1.getType<_i12.Post>(),
+              type: _i1.getType<_i13.Post>(),
               nullable: false,
             )
           },
@@ -468,7 +475,7 @@ class Endpoints extends _i1.EndpointDispatch {
           params: {
             'post': _i1.ParameterDescription(
               name: 'post',
-              type: _i1.getType<_i12.Post>(),
+              type: _i1.getType<_i13.Post>(),
               nullable: false,
             )
           },
@@ -710,6 +717,57 @@ class Endpoints extends _i1.EndpointDispatch {
         ),
       },
     );
+    connectors['sort'] = _i1.EndpointConnector(
+      name: 'sort',
+      endpoint: endpoints['sort']!,
+      methodConnectors: {
+        'orderBy': _i1.MethodConnector(
+          name: 'orderBy',
+          params: {},
+          call: (
+            _i1.Session session,
+            Map<String, dynamic> params,
+          ) async =>
+              (endpoints['sort'] as _i8.SortEndpoint).orderBy(session),
+        ),
+        'orderDescending': _i1.MethodConnector(
+          name: 'orderDescending',
+          params: {},
+          call: (
+            _i1.Session session,
+            Map<String, dynamic> params,
+          ) async =>
+              (endpoints['sort'] as _i8.SortEndpoint).orderDescending(session),
+        ),
+        'orderByList': _i1.MethodConnector(
+          name: 'orderByList',
+          params: {},
+          call: (
+            _i1.Session session,
+            Map<String, dynamic> params,
+          ) async =>
+              (endpoints['sort'] as _i8.SortEndpoint).orderByList(session),
+        ),
+        'sort': _i1.MethodConnector(
+          name: 'sort',
+          params: {},
+          call: (
+            _i1.Session session,
+            Map<String, dynamic> params,
+          ) async =>
+              (endpoints['sort'] as _i8.SortEndpoint).sort(session),
+        ),
+        'sortCount': _i1.MethodConnector(
+          name: 'sortCount',
+          params: {},
+          call: (
+            _i1.Session session,
+            Map<String, dynamic> params,
+          ) async =>
+              (endpoints['sort'] as _i8.SortEndpoint).sortCount(session),
+        ),
+      },
+    );
     connectors['user'] = _i1.EndpointConnector(
       name: 'user',
       endpoint: endpoints['user']!,
@@ -721,7 +779,7 @@ class Endpoints extends _i1.EndpointDispatch {
             _i1.Session session,
             Map<String, dynamic> params,
           ) async =>
-              (endpoints['user'] as _i8.UserEndpoint).find(session),
+              (endpoints['user'] as _i9.UserEndpoint).find(session),
         ),
         'equal': _i1.MethodConnector(
           name: 'equal',
@@ -736,7 +794,7 @@ class Endpoints extends _i1.EndpointDispatch {
             _i1.Session session,
             Map<String, dynamic> params,
           ) async =>
-              (endpoints['user'] as _i8.UserEndpoint).equal(
+              (endpoints['user'] as _i9.UserEndpoint).equal(
             session,
             params['value'],
           ),
@@ -754,7 +812,7 @@ class Endpoints extends _i1.EndpointDispatch {
             _i1.Session session,
             Map<String, dynamic> params,
           ) async =>
-              (endpoints['user'] as _i8.UserEndpoint).notEqual(
+              (endpoints['user'] as _i9.UserEndpoint).notEqual(
             session,
             params['value'],
           ),
@@ -772,7 +830,7 @@ class Endpoints extends _i1.EndpointDispatch {
             _i1.Session session,
             Map<String, dynamic> params,
           ) async =>
-              (endpoints['user'] as _i8.UserEndpoint).operators(
+              (endpoints['user'] as _i9.UserEndpoint).operators(
             session,
             params['value'],
           ),
@@ -795,7 +853,7 @@ class Endpoints extends _i1.EndpointDispatch {
             _i1.Session session,
             Map<String, dynamic> params,
           ) async =>
-              (endpoints['user'] as _i8.UserEndpoint).between(
+              (endpoints['user'] as _i9.UserEndpoint).between(
             session,
             params['min'],
             params['max'],
@@ -819,7 +877,7 @@ class Endpoints extends _i1.EndpointDispatch {
             _i1.Session session,
             Map<String, dynamic> params,
           ) async =>
-              (endpoints['user'] as _i8.UserEndpoint).notBetween(
+              (endpoints['user'] as _i9.UserEndpoint).notBetween(
             session,
             params['min'],
             params['max'],
@@ -838,7 +896,7 @@ class Endpoints extends _i1.EndpointDispatch {
             _i1.Session session,
             Map<String, dynamic> params,
           ) async =>
-              (endpoints['user'] as _i8.UserEndpoint).inSet(
+              (endpoints['user'] as _i9.UserEndpoint).inSet(
             session,
             params['values'],
           ),
@@ -856,7 +914,7 @@ class Endpoints extends _i1.EndpointDispatch {
             _i1.Session session,
             Map<String, dynamic> params,
           ) async =>
-              (endpoints['user'] as _i8.UserEndpoint).notInSet(
+              (endpoints['user'] as _i9.UserEndpoint).notInSet(
             session,
             params['values'],
           ),
@@ -874,7 +932,7 @@ class Endpoints extends _i1.EndpointDispatch {
             _i1.Session session,
             Map<String, dynamic> params,
           ) async =>
-              (endpoints['user'] as _i8.UserEndpoint).like(
+              (endpoints['user'] as _i9.UserEndpoint).like(
             session,
             params['value'],
           ),
@@ -892,7 +950,7 @@ class Endpoints extends _i1.EndpointDispatch {
             _i1.Session session,
             Map<String, dynamic> params,
           ) async =>
-              (endpoints['user'] as _i8.UserEndpoint).notLike(
+              (endpoints['user'] as _i9.UserEndpoint).notLike(
             session,
             params['value'],
           ),
@@ -910,7 +968,7 @@ class Endpoints extends _i1.EndpointDispatch {
             _i1.Session session,
             Map<String, dynamic> params,
           ) async =>
-              (endpoints['user'] as _i8.UserEndpoint).iLike(
+              (endpoints['user'] as _i9.UserEndpoint).iLike(
             session,
             params['value'],
           ),
@@ -928,7 +986,7 @@ class Endpoints extends _i1.EndpointDispatch {
             _i1.Session session,
             Map<String, dynamic> params,
           ) async =>
-              (endpoints['user'] as _i8.UserEndpoint).notILike(
+              (endpoints['user'] as _i9.UserEndpoint).notILike(
             session,
             params['value'],
           ),
@@ -946,7 +1004,7 @@ class Endpoints extends _i1.EndpointDispatch {
             _i1.Session session,
             Map<String, dynamic> params,
           ) async =>
-              (endpoints['user'] as _i8.UserEndpoint).logicalOperators(
+              (endpoints['user'] as _i9.UserEndpoint).logicalOperators(
             session,
             params['value'],
           ),
@@ -964,7 +1022,7 @@ class Endpoints extends _i1.EndpointDispatch {
             _i1.Session session,
             Map<String, dynamic> params,
           ) async =>
-              (endpoints['user'] as _i8.UserEndpoint).oneToOne(
+              (endpoints['user'] as _i9.UserEndpoint).oneToOne(
             session,
             params['value'],
           ),
@@ -982,7 +1040,7 @@ class Endpoints extends _i1.EndpointDispatch {
             _i1.Session session,
             Map<String, dynamic> params,
           ) async =>
-              (endpoints['user'] as _i8.UserEndpoint).oneToMany(
+              (endpoints['user'] as _i9.UserEndpoint).oneToMany(
             session,
             params['id'],
           ),
@@ -1000,7 +1058,7 @@ class Endpoints extends _i1.EndpointDispatch {
             _i1.Session session,
             Map<String, dynamic> params,
           ) async =>
-              (endpoints['user'] as _i8.UserEndpoint).none(
+              (endpoints['user'] as _i9.UserEndpoint).none(
             session,
             params['id'],
           ),
@@ -1018,7 +1076,7 @@ class Endpoints extends _i1.EndpointDispatch {
             _i1.Session session,
             Map<String, dynamic> params,
           ) async =>
-              (endpoints['user'] as _i8.UserEndpoint).any(
+              (endpoints['user'] as _i9.UserEndpoint).any(
             session,
             params['id'],
           ),
@@ -1036,7 +1094,7 @@ class Endpoints extends _i1.EndpointDispatch {
             _i1.Session session,
             Map<String, dynamic> params,
           ) async =>
-              (endpoints['user'] as _i8.UserEndpoint).every(
+              (endpoints['user'] as _i9.UserEndpoint).every(
             session,
             params['id'],
           ),

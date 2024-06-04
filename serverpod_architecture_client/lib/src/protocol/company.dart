@@ -21,6 +21,9 @@ abstract class Company implements _i1.SerializableModel {
     this.workers,
     this.addressId,
     this.address,
+    this.orders,
+    this.ceoId,
+    this.ceo,
   });
 
   factory Company({
@@ -31,6 +34,9 @@ abstract class Company implements _i1.SerializableModel {
     List<_i2.Employee>? workers,
     int? addressId,
     _i2.Address? address,
+    List<_i2.Order>? orders,
+    int? ceoId,
+    _i2.User? ceo,
   }) = _CompanyImpl;
 
   factory Company.fromJson(Map<String, dynamic> jsonSerialization) {
@@ -52,6 +58,14 @@ abstract class Company implements _i1.SerializableModel {
           ? null
           : _i2.Address.fromJson(
               (jsonSerialization['address'] as Map<String, dynamic>)),
+      orders: (jsonSerialization['orders'] as List?)
+          ?.map((e) => _i2.Order.fromJson((e as Map<String, dynamic>)))
+          .toList(),
+      ceoId: jsonSerialization['ceoId'] as int?,
+      ceo: jsonSerialization['ceo'] == null
+          ? null
+          : _i2.User.fromJson(
+              (jsonSerialization['ceo'] as Map<String, dynamic>)),
     );
   }
 
@@ -75,6 +89,12 @@ abstract class Company implements _i1.SerializableModel {
 
   _i2.Address? address;
 
+  List<_i2.Order>? orders;
+
+  int? ceoId;
+
+  _i2.User? ceo;
+
   Company copyWith({
     int? id,
     String? name,
@@ -83,6 +103,9 @@ abstract class Company implements _i1.SerializableModel {
     List<_i2.Employee>? workers,
     int? addressId,
     _i2.Address? address,
+    List<_i2.Order>? orders,
+    int? ceoId,
+    _i2.User? ceo,
   });
   @override
   Map<String, dynamic> toJson() {
@@ -96,6 +119,10 @@ abstract class Company implements _i1.SerializableModel {
         'workers': workers?.toJson(valueToJson: (v) => v.toJson()),
       if (addressId != null) 'addressId': addressId,
       if (address != null) 'address': address?.toJson(),
+      if (orders != null)
+        'orders': orders?.toJson(valueToJson: (v) => v.toJson()),
+      if (ceoId != null) 'ceoId': ceoId,
+      if (ceo != null) 'ceo': ceo?.toJson(),
     };
   }
 
@@ -116,6 +143,9 @@ class _CompanyImpl extends Company {
     List<_i2.Employee>? workers,
     int? addressId,
     _i2.Address? address,
+    List<_i2.Order>? orders,
+    int? ceoId,
+    _i2.User? ceo,
   }) : super._(
           id: id,
           name: name,
@@ -124,6 +154,9 @@ class _CompanyImpl extends Company {
           workers: workers,
           addressId: addressId,
           address: address,
+          orders: orders,
+          ceoId: ceoId,
+          ceo: ceo,
         );
 
   @override
@@ -135,6 +168,9 @@ class _CompanyImpl extends Company {
     Object? workers = _Undefined,
     Object? addressId = _Undefined,
     Object? address = _Undefined,
+    Object? orders = _Undefined,
+    Object? ceoId = _Undefined,
+    Object? ceo = _Undefined,
   }) {
     return Company(
       id: id is int? ? id : this.id,
@@ -145,6 +181,9 @@ class _CompanyImpl extends Company {
       workers: workers is List<_i2.Employee>? ? workers : this.workers?.clone(),
       addressId: addressId is int? ? addressId : this.addressId,
       address: address is _i2.Address? ? address : this.address?.copyWith(),
+      orders: orders is List<_i2.Order>? ? orders : this.orders?.clone(),
+      ceoId: ceoId is int? ? ceoId : this.ceoId,
+      ceo: ceo is _i2.User? ? ceo : this.ceo?.copyWith(),
     );
   }
 }

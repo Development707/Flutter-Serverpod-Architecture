@@ -13,6 +13,8 @@ fields:
 
   workers: List<Employee>?, relation(name=company_workers)
   address: Address?, relation(optional, onUpdate=Cascade, onDelete=SetNull)
+  orders: List<Order>?, relation(name=company_orders)
+  ceo: User?, relation(optional)
 indexes:
   company_name_idx:
     fields: name

@@ -19,6 +19,8 @@ abstract class Order implements _i1.SerializableModel {
     required this.itemType,
     required this.userId,
     this.user,
+    required this.companyId,
+    this.company,
   });
 
   factory Order({
@@ -28,6 +30,8 @@ abstract class Order implements _i1.SerializableModel {
     required String itemType,
     required int userId,
     _i2.User? user,
+    required int companyId,
+    _i2.Company? company,
   }) = _OrderImpl;
 
   factory Order.fromJson(Map<String, dynamic> jsonSerialization) {
@@ -41,6 +45,11 @@ abstract class Order implements _i1.SerializableModel {
           ? null
           : _i2.User.fromJson(
               (jsonSerialization['user'] as Map<String, dynamic>)),
+      companyId: jsonSerialization['companyId'] as int,
+      company: jsonSerialization['company'] == null
+          ? null
+          : _i2.Company.fromJson(
+              (jsonSerialization['company'] as Map<String, dynamic>)),
     );
   }
 
@@ -59,6 +68,10 @@ abstract class Order implements _i1.SerializableModel {
 
   _i2.User? user;
 
+  int companyId;
+
+  _i2.Company? company;
+
   Order copyWith({
     int? id,
     String? name,
@@ -66,6 +79,8 @@ abstract class Order implements _i1.SerializableModel {
     String? itemType,
     int? userId,
     _i2.User? user,
+    int? companyId,
+    _i2.Company? company,
   });
   @override
   Map<String, dynamic> toJson() {
@@ -76,6 +91,8 @@ abstract class Order implements _i1.SerializableModel {
       'itemType': itemType,
       'userId': userId,
       if (user != null) 'user': user?.toJson(),
+      'companyId': companyId,
+      if (company != null) 'company': company?.toJson(),
     };
   }
 
@@ -95,6 +112,8 @@ class _OrderImpl extends Order {
     required String itemType,
     required int userId,
     _i2.User? user,
+    required int companyId,
+    _i2.Company? company,
   }) : super._(
           id: id,
           name: name,
@@ -102,6 +121,8 @@ class _OrderImpl extends Order {
           itemType: itemType,
           userId: userId,
           user: user,
+          companyId: companyId,
+          company: company,
         );
 
   @override
@@ -112,6 +133,8 @@ class _OrderImpl extends Order {
     String? itemType,
     int? userId,
     Object? user = _Undefined,
+    int? companyId,
+    Object? company = _Undefined,
   }) {
     return Order(
       id: id is int? ? id : this.id,
@@ -120,6 +143,8 @@ class _OrderImpl extends Order {
       itemType: itemType ?? this.itemType,
       userId: userId ?? this.userId,
       user: user is _i2.User? ? user : this.user?.copyWith(),
+      companyId: companyId ?? this.companyId,
+      company: company is _i2.Company? ? company : this.company?.copyWith(),
     );
   }
 }

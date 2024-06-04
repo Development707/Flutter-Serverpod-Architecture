@@ -19,6 +19,8 @@ abstract class Order extends _i1.TableRow implements _i1.ProtocolSerialization {
     required this.itemType,
     required this.userId,
     this.user,
+    required this.companyId,
+    this.company,
   }) : super(id);
 
   factory Order({
@@ -28,6 +30,8 @@ abstract class Order extends _i1.TableRow implements _i1.ProtocolSerialization {
     required String itemType,
     required int userId,
     _i2.User? user,
+    required int companyId,
+    _i2.Company? company,
   }) = _OrderImpl;
 
   factory Order.fromJson(Map<String, dynamic> jsonSerialization) {
@@ -41,6 +45,11 @@ abstract class Order extends _i1.TableRow implements _i1.ProtocolSerialization {
           ? null
           : _i2.User.fromJson(
               (jsonSerialization['user'] as Map<String, dynamic>)),
+      companyId: jsonSerialization['companyId'] as int,
+      company: jsonSerialization['company'] == null
+          ? null
+          : _i2.Company.fromJson(
+              (jsonSerialization['company'] as Map<String, dynamic>)),
     );
   }
 
@@ -58,6 +67,10 @@ abstract class Order extends _i1.TableRow implements _i1.ProtocolSerialization {
 
   _i2.User? user;
 
+  int companyId;
+
+  _i2.Company? company;
+
   @override
   _i1.Table get table => t;
 
@@ -68,6 +81,8 @@ abstract class Order extends _i1.TableRow implements _i1.ProtocolSerialization {
     String? itemType,
     int? userId,
     _i2.User? user,
+    int? companyId,
+    _i2.Company? company,
   });
   @override
   Map<String, dynamic> toJson() {
@@ -78,6 +93,8 @@ abstract class Order extends _i1.TableRow implements _i1.ProtocolSerialization {
       'itemType': itemType,
       'userId': userId,
       if (user != null) 'user': user?.toJson(),
+      'companyId': companyId,
+      if (company != null) 'company': company?.toJson(),
     };
   }
 
@@ -90,11 +107,19 @@ abstract class Order extends _i1.TableRow implements _i1.ProtocolSerialization {
       'itemType': itemType,
       'userId': userId,
       if (user != null) 'user': user?.toJsonForProtocol(),
+      'companyId': companyId,
+      if (company != null) 'company': company?.toJsonForProtocol(),
     };
   }
 
-  static OrderInclude include({_i2.UserInclude? user}) {
-    return OrderInclude._(user: user);
+  static OrderInclude include({
+    _i2.UserInclude? user,
+    _i2.CompanyInclude? company,
+  }) {
+    return OrderInclude._(
+      user: user,
+      company: company,
+    );
   }
 
   static OrderIncludeList includeList({
@@ -133,6 +158,8 @@ class _OrderImpl extends Order {
     required String itemType,
     required int userId,
     _i2.User? user,
+    required int companyId,
+    _i2.Company? company,
   }) : super._(
           id: id,
           name: name,
@@ -140,6 +167,8 @@ class _OrderImpl extends Order {
           itemType: itemType,
           userId: userId,
           user: user,
+          companyId: companyId,
+          company: company,
         );
 
   @override
@@ -150,6 +179,8 @@ class _OrderImpl extends Order {
     String? itemType,
     int? userId,
     Object? user = _Undefined,
+    int? companyId,
+    Object? company = _Undefined,
   }) {
     return Order(
       id: id is int? ? id : this.id,
@@ -158,6 +189,8 @@ class _OrderImpl extends Order {
       itemType: itemType ?? this.itemType,
       userId: userId ?? this.userId,
       user: user is _i2.User? ? user : this.user?.copyWith(),
+      companyId: companyId ?? this.companyId,
+      company: company is _i2.Company? ? company : this.company?.copyWith(),
     );
   }
 }
@@ -180,6 +213,10 @@ class OrderTable extends _i1.Table {
       'userId',
       this,
     );
+    companyId = _i1.ColumnInt(
+      'companyId',
+      this,
+    );
   }
 
   late final _i1.ColumnString name;
@@ -191,6 +228,10 @@ class OrderTable extends _i1.Table {
   late final _i1.ColumnInt userId;
 
   _i2.UserTable? _user;
+
+  late final _i1.ColumnInt companyId;
+
+  _i2.CompanyTable? _company;
 
   _i2.UserTable get user {
     if (_user != null) return _user!;
@@ -205,6 +246,19 @@ class OrderTable extends _i1.Table {
     return _user!;
   }
 
+  _i2.CompanyTable get company {
+    if (_company != null) return _company!;
+    _company = _i1.createRelationTable(
+      relationFieldName: 'company',
+      field: Order.t.companyId,
+      foreignField: _i2.Company.t.id,
+      tableRelation: tableRelation,
+      createTable: (foreignTableRelation) =>
+          _i2.CompanyTable(tableRelation: foreignTableRelation),
+    );
+    return _company!;
+  }
+
   @override
   List<_i1.Column> get columns => [
         id,
@@ -212,6 +266,7 @@ class OrderTable extends _i1.Table {
         price,
         itemType,
         userId,
+        companyId,
       ];
 
   @override
@@ -219,19 +274,31 @@ class OrderTable extends _i1.Table {
     if (relationField == 'user') {
       return user;
     }
+    if (relationField == 'company') {
+      return company;
+    }
     return null;
   }
 }
 
 class OrderInclude extends _i1.IncludeObject {
-  OrderInclude._({_i2.UserInclude? user}) {
+  OrderInclude._({
+    _i2.UserInclude? user,
+    _i2.CompanyInclude? company,
+  }) {
     _user = user;
+    _company = company;
   }
 
   _i2.UserInclude? _user;
 
+  _i2.CompanyInclude? _company;
+
   @override
-  Map<String, _i1.Include?> get includes => {'user': _user};
+  Map<String, _i1.Include?> get includes => {
+        'user': _user,
+        'company': _company,
+      };
 
   @override
   _i1.Table get table => Order.t;
@@ -433,6 +500,25 @@ class OrderAttachRowRepository {
     await session.db.updateRow<Order>(
       $order,
       columns: [Order.t.userId],
+    );
+  }
+
+  Future<void> company(
+    _i1.Session session,
+    Order order,
+    _i2.Company company,
+  ) async {
+    if (order.id == null) {
+      throw ArgumentError.notNull('order.id');
+    }
+    if (company.id == null) {
+      throw ArgumentError.notNull('company.id');
+    }
+
+    var $order = order.copyWith(companyId: company.id);
+    await session.db.updateRow<Order>(
+      $order,
+      columns: [Order.t.companyId],
     );
   }
 }

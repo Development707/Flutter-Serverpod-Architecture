@@ -23,6 +23,9 @@ abstract class Company extends _i1.TableRow
     this.workers,
     this.addressId,
     this.address,
+    this.orders,
+    this.ceoId,
+    this.ceo,
   }) : super(id);
 
   factory Company({
@@ -33,6 +36,9 @@ abstract class Company extends _i1.TableRow
     List<_i2.Employee>? workers,
     int? addressId,
     _i2.Address? address,
+    List<_i2.Order>? orders,
+    int? ceoId,
+    _i2.User? ceo,
   }) = _CompanyImpl;
 
   factory Company.fromJson(Map<String, dynamic> jsonSerialization) {
@@ -54,6 +60,14 @@ abstract class Company extends _i1.TableRow
           ? null
           : _i2.Address.fromJson(
               (jsonSerialization['address'] as Map<String, dynamic>)),
+      orders: (jsonSerialization['orders'] as List?)
+          ?.map((e) => _i2.Order.fromJson((e as Map<String, dynamic>)))
+          .toList(),
+      ceoId: jsonSerialization['ceoId'] as int?,
+      ceo: jsonSerialization['ceo'] == null
+          ? null
+          : _i2.User.fromJson(
+              (jsonSerialization['ceo'] as Map<String, dynamic>)),
     );
   }
 
@@ -76,6 +90,12 @@ abstract class Company extends _i1.TableRow
 
   _i2.Address? address;
 
+  List<_i2.Order>? orders;
+
+  int? ceoId;
+
+  _i2.User? ceo;
+
   @override
   _i1.Table get table => t;
 
@@ -87,6 +107,9 @@ abstract class Company extends _i1.TableRow
     List<_i2.Employee>? workers,
     int? addressId,
     _i2.Address? address,
+    List<_i2.Order>? orders,
+    int? ceoId,
+    _i2.User? ceo,
   });
   @override
   Map<String, dynamic> toJson() {
@@ -100,6 +123,10 @@ abstract class Company extends _i1.TableRow
         'workers': workers?.toJson(valueToJson: (v) => v.toJson()),
       if (addressId != null) 'addressId': addressId,
       if (address != null) 'address': address?.toJson(),
+      if (orders != null)
+        'orders': orders?.toJson(valueToJson: (v) => v.toJson()),
+      if (ceoId != null) 'ceoId': ceoId,
+      if (ceo != null) 'ceo': ceo?.toJson(),
     };
   }
 
@@ -116,6 +143,10 @@ abstract class Company extends _i1.TableRow
         'workers': workers?.toJson(valueToJson: (v) => v.toJsonForProtocol()),
       if (addressId != null) 'addressId': addressId,
       if (address != null) 'address': address?.toJsonForProtocol(),
+      if (orders != null)
+        'orders': orders?.toJson(valueToJson: (v) => v.toJsonForProtocol()),
+      if (ceoId != null) 'ceoId': ceoId,
+      if (ceo != null) 'ceo': ceo?.toJsonForProtocol(),
     };
   }
 
@@ -123,11 +154,15 @@ abstract class Company extends _i1.TableRow
     _i2.UserIncludeList? employees,
     _i2.EmployeeIncludeList? workers,
     _i2.AddressInclude? address,
+    _i2.OrderIncludeList? orders,
+    _i2.UserInclude? ceo,
   }) {
     return CompanyInclude._(
       employees: employees,
       workers: workers,
       address: address,
+      orders: orders,
+      ceo: ceo,
     );
   }
 
@@ -168,6 +203,9 @@ class _CompanyImpl extends Company {
     List<_i2.Employee>? workers,
     int? addressId,
     _i2.Address? address,
+    List<_i2.Order>? orders,
+    int? ceoId,
+    _i2.User? ceo,
   }) : super._(
           id: id,
           name: name,
@@ -176,6 +214,9 @@ class _CompanyImpl extends Company {
           workers: workers,
           addressId: addressId,
           address: address,
+          orders: orders,
+          ceoId: ceoId,
+          ceo: ceo,
         );
 
   @override
@@ -187,6 +228,9 @@ class _CompanyImpl extends Company {
     Object? workers = _Undefined,
     Object? addressId = _Undefined,
     Object? address = _Undefined,
+    Object? orders = _Undefined,
+    Object? ceoId = _Undefined,
+    Object? ceo = _Undefined,
   }) {
     return Company(
       id: id is int? ? id : this.id,
@@ -197,6 +241,9 @@ class _CompanyImpl extends Company {
       workers: workers is List<_i2.Employee>? ? workers : this.workers?.clone(),
       addressId: addressId is int? ? addressId : this.addressId,
       address: address is _i2.Address? ? address : this.address?.copyWith(),
+      orders: orders is List<_i2.Order>? ? orders : this.orders?.clone(),
+      ceoId: ceoId is int? ? ceoId : this.ceoId,
+      ceo: ceo is _i2.User? ? ceo : this.ceo?.copyWith(),
     );
   }
 }
@@ -209,6 +256,10 @@ class CompanyTable extends _i1.Table {
     );
     addressId = _i1.ColumnInt(
       'addressId',
+      this,
+    );
+    ceoId = _i1.ColumnInt(
+      'ceoId',
       this,
     );
   }
@@ -229,6 +280,14 @@ class CompanyTable extends _i1.Table {
   late final _i1.ColumnInt addressId;
 
   _i2.AddressTable? _address;
+
+  _i2.OrderTable? ___orders;
+
+  _i1.ManyRelation<_i2.OrderTable>? _orders;
+
+  late final _i1.ColumnInt ceoId;
+
+  _i2.UserTable? _ceo;
 
   _i2.UserTable get __employees {
     if (___employees != null) return ___employees!;
@@ -269,6 +328,32 @@ class CompanyTable extends _i1.Table {
     return _address!;
   }
 
+  _i2.OrderTable get __orders {
+    if (___orders != null) return ___orders!;
+    ___orders = _i1.createRelationTable(
+      relationFieldName: '__orders',
+      field: Company.t.id,
+      foreignField: _i2.Order.t.companyId,
+      tableRelation: tableRelation,
+      createTable: (foreignTableRelation) =>
+          _i2.OrderTable(tableRelation: foreignTableRelation),
+    );
+    return ___orders!;
+  }
+
+  _i2.UserTable get ceo {
+    if (_ceo != null) return _ceo!;
+    _ceo = _i1.createRelationTable(
+      relationFieldName: 'ceo',
+      field: Company.t.ceoId,
+      foreignField: _i2.User.t.id,
+      tableRelation: tableRelation,
+      createTable: (foreignTableRelation) =>
+          _i2.UserTable(tableRelation: foreignTableRelation),
+    );
+    return _ceo!;
+  }
+
   _i1.ManyRelation<_i2.UserTable> get employees {
     if (_employees != null) return _employees!;
     var relationTable = _i1.createRelationTable(
@@ -305,11 +390,30 @@ class CompanyTable extends _i1.Table {
     return _workers!;
   }
 
+  _i1.ManyRelation<_i2.OrderTable> get orders {
+    if (_orders != null) return _orders!;
+    var relationTable = _i1.createRelationTable(
+      relationFieldName: 'orders',
+      field: Company.t.id,
+      foreignField: _i2.Order.t.companyId,
+      tableRelation: tableRelation,
+      createTable: (foreignTableRelation) =>
+          _i2.OrderTable(tableRelation: foreignTableRelation),
+    );
+    _orders = _i1.ManyRelation<_i2.OrderTable>(
+      tableWithRelations: relationTable,
+      table: _i2.OrderTable(
+          tableRelation: relationTable.tableRelation!.lastRelation),
+    );
+    return _orders!;
+  }
+
   @override
   List<_i1.Column> get columns => [
         id,
         name,
         addressId,
+        ceoId,
       ];
 
   @override
@@ -323,6 +427,12 @@ class CompanyTable extends _i1.Table {
     if (relationField == 'address') {
       return address;
     }
+    if (relationField == 'orders') {
+      return __orders;
+    }
+    if (relationField == 'ceo') {
+      return ceo;
+    }
     return null;
   }
 }
@@ -332,10 +442,14 @@ class CompanyInclude extends _i1.IncludeObject {
     _i2.UserIncludeList? employees,
     _i2.EmployeeIncludeList? workers,
     _i2.AddressInclude? address,
+    _i2.OrderIncludeList? orders,
+    _i2.UserInclude? ceo,
   }) {
     _employees = employees;
     _workers = workers;
     _address = address;
+    _orders = orders;
+    _ceo = ceo;
   }
 
   _i2.UserIncludeList? _employees;
@@ -344,11 +458,17 @@ class CompanyInclude extends _i1.IncludeObject {
 
   _i2.AddressInclude? _address;
 
+  _i2.OrderIncludeList? _orders;
+
+  _i2.UserInclude? _ceo;
+
   @override
   Map<String, _i1.Include?> get includes => {
         'employees': _employees,
         'workers': _workers,
         'address': _address,
+        'orders': _orders,
+        'ceo': _ceo,
       };
 
   @override
@@ -579,6 +699,25 @@ class CompanyAttachRepository {
       columns: [_i2.Employee.t.companyId],
     );
   }
+
+  Future<void> orders(
+    _i1.Session session,
+    Company company,
+    List<_i2.Order> order,
+  ) async {
+    if (order.any((e) => e.id == null)) {
+      throw ArgumentError.notNull('order.id');
+    }
+    if (company.id == null) {
+      throw ArgumentError.notNull('company.id');
+    }
+
+    var $order = order.map((e) => e.copyWith(companyId: company.id)).toList();
+    await session.db.update<_i2.Order>(
+      $order,
+      columns: [_i2.Order.t.companyId],
+    );
+  }
 }
 
 class CompanyAttachRowRepository {
@@ -600,6 +739,25 @@ class CompanyAttachRowRepository {
     await session.db.updateRow<Company>(
       $company,
       columns: [Company.t.addressId],
+    );
+  }
+
+  Future<void> ceo(
+    _i1.Session session,
+    Company company,
+    _i2.User ceo,
+  ) async {
+    if (company.id == null) {
+      throw ArgumentError.notNull('company.id');
+    }
+    if (ceo.id == null) {
+      throw ArgumentError.notNull('ceo.id');
+    }
+
+    var $company = company.copyWith(ceoId: ceo.id);
+    await session.db.updateRow<Company>(
+      $company,
+      columns: [Company.t.ceoId],
     );
   }
 
@@ -640,6 +798,25 @@ class CompanyAttachRowRepository {
       columns: [_i2.Employee.t.companyId],
     );
   }
+
+  Future<void> orders(
+    _i1.Session session,
+    Company company,
+    _i2.Order order,
+  ) async {
+    if (order.id == null) {
+      throw ArgumentError.notNull('order.id');
+    }
+    if (company.id == null) {
+      throw ArgumentError.notNull('company.id');
+    }
+
+    var $order = order.copyWith(companyId: company.id);
+    await session.db.updateRow<_i2.Order>(
+      $order,
+      columns: [_i2.Order.t.companyId],
+    );
+  }
 }
 
 class CompanyDetachRepository {
@@ -674,6 +851,21 @@ class CompanyDetachRepository {
       columns: [_i2.Employee.t.companyId],
     );
   }
+
+  Future<void> orders(
+    _i1.Session session,
+    List<_i2.Order> order,
+  ) async {
+    if (order.any((e) => e.id == null)) {
+      throw ArgumentError.notNull('order.id');
+    }
+
+    var $order = order.map((e) => e.copyWith(companyId: null)).toList();
+    await session.db.update<_i2.Order>(
+      $order,
+      columns: [_i2.Order.t.companyId],
+    );
+  }
 }
 
 class CompanyDetachRowRepository {
@@ -691,6 +883,21 @@ class CompanyDetachRowRepository {
     await session.db.updateRow<Company>(
       $company,
       columns: [Company.t.addressId],
+    );
+  }
+
+  Future<void> ceo(
+    _i1.Session session,
+    Company company,
+  ) async {
+    if (company.id == null) {
+      throw ArgumentError.notNull('company.id');
+    }
+
+    var $company = company.copyWith(ceoId: null);
+    await session.db.updateRow<Company>(
+      $company,
+      columns: [Company.t.ceoId],
     );
   }
 
@@ -721,6 +928,21 @@ class CompanyDetachRowRepository {
     await session.db.updateRow<_i2.Employee>(
       $employee,
       columns: [_i2.Employee.t.companyId],
+    );
+  }
+
+  Future<void> orders(
+    _i1.Session session,
+    _i2.Order order,
+  ) async {
+    if (order.id == null) {
+      throw ArgumentError.notNull('order.id');
+    }
+
+    var $order = order.copyWith(companyId: null);
+    await session.db.updateRow<_i2.Order>(
+      $order,
+      columns: [_i2.Order.t.companyId],
     );
   }
 }
