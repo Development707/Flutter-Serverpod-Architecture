@@ -22,6 +22,11 @@ example:
   - getFreezedCustomClass:
   - doThingy:
   - getRemoteIpAddress:
+pagination:
+  - limit:
+  - offset:
+  - pagination:
+  - paginationCursor:
 post:
   - createPost:
   - getPost:

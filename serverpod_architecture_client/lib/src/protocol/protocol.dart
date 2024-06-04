@@ -212,6 +212,10 @@ class Protocol extends _i1.SerializationManager {
       return (data as List).map((e) => deserialize<_i20.Company>(e)).toList()
           as dynamic;
     }
+    if (t == Map<String, dynamic>) {
+      return (data as Map).map((k, v) =>
+          MapEntry(deserialize<String>(k), deserialize<dynamic>(v))) as dynamic;
+    }
     if (t == List<_i21.Post>) {
       return (data as List).map((e) => deserialize<_i21.Post>(e)).toList()
           as dynamic;

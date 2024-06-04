@@ -229,6 +229,58 @@ class EndpointExample extends _i1.EndpointRef {
       );
 }
 
+/// {@category Endpoint}
+class EndpointPagination extends _i1.EndpointRef {
+  EndpointPagination(_i1.EndpointCaller caller) : super(caller);
+
+  @override
+  String get name => 'pagination';
+
+  /// Limit
+  _i2.Future<List<_i5.Company>> limit() =>
+      caller.callServerEndpoint<List<_i5.Company>>(
+        'pagination',
+        'limit',
+        {},
+      );
+
+  /// Offset
+  _i2.Future<List<_i5.Company>> offset() =>
+      caller.callServerEndpoint<List<_i5.Company>>(
+        'pagination',
+        'offset',
+        {},
+      );
+
+  /// Using Limit and Offset for Pagination
+  _i2.Future<List<_i5.Company>> pagination(
+    int page,
+    int perPage,
+  ) =>
+      caller.callServerEndpoint<List<_i5.Company>>(
+        'pagination',
+        'pagination',
+        {
+          'page': page,
+          'perPage': perPage,
+        },
+      );
+
+  /// Using Cursor-based for Pagination
+  _i2.Future<Map<String, dynamic>> paginationCursor({
+    int? cursor,
+    required int perPage,
+  }) =>
+      caller.callServerEndpoint<Map<String, dynamic>>(
+        'pagination',
+        'paginationCursor',
+        {
+          'cursor': cursor,
+          'perPage': perPage,
+        },
+      );
+}
+
 /// CRUD endpoint for handling all operations on `Post` objects.
 /// {@category Endpoint}
 class EndpointPost extends _i1.EndpointRef {
@@ -671,6 +723,7 @@ class Client extends _i1.ServerpodClient {
     cat = EndpointCat(this);
     company = EndpointCompany(this);
     example = EndpointExample(this);
+    pagination = EndpointPagination(this);
     post = EndpointPost(this);
     relationQueries = EndpointRelationQueries(this);
     sort = EndpointSort(this);
@@ -684,6 +737,8 @@ class Client extends _i1.ServerpodClient {
   late final EndpointCompany company;
 
   late final EndpointExample example;
+
+  late final EndpointPagination pagination;
 
   late final EndpointPost post;
 
@@ -699,6 +754,7 @@ class Client extends _i1.ServerpodClient {
         'cat': cat,
         'company': company,
         'example': example,
+        'pagination': pagination,
         'post': post,
         'relationQueries': relationQueries,
         'sort': sort,
