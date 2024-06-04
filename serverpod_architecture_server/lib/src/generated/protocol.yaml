@@ -40,6 +40,7 @@ relationQueries:
   - bulkAttachRows:
   - detachSingleRow:
   - bulkDetachRows:
+  - transaction:
 sort:
   - orderBy:
   - orderDescending:

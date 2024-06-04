@@ -23,6 +23,8 @@ import 'package:serverpod_architecture_server/src/generated/cat.dart' as _i11;
 import 'package:serverpod_architecture_server/src/generated/company.dart'
     as _i12;
 import 'package:serverpod_architecture_server/src/generated/post.dart' as _i13;
+import 'package:serverpod_architecture_server/src/generated/employee.dart'
+    as _i14;
 
 class Endpoints extends _i1.EndpointDispatch {
   @override
@@ -713,6 +715,31 @@ class Endpoints extends _i1.EndpointDispatch {
                   .bulkDetachRows(
             session,
             params['employeeId'],
+          ),
+        ),
+        'transaction': _i1.MethodConnector(
+          name: 'transaction',
+          params: {
+            'employee': _i1.ParameterDescription(
+              name: 'employee',
+              type: _i1.getType<_i14.Employee>(),
+              nullable: false,
+            ),
+            'company': _i1.ParameterDescription(
+              name: 'company',
+              type: _i1.getType<_i12.Company>(),
+              nullable: false,
+            ),
+          },
+          call: (
+            _i1.Session session,
+            Map<String, dynamic> params,
+          ) async =>
+              (endpoints['relationQueries'] as _i7.RelationQueriesEndpoint)
+                  .transaction(
+            session,
+            params['employee'],
+            params['company'],
           ),
         ),
       },

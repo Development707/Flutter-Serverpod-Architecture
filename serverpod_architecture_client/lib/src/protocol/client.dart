@@ -413,6 +413,20 @@ class EndpointRelationQueries extends _i1.EndpointRef {
         'bulkDetachRows',
         {'employeeId': employeeId},
       );
+
+  /// Transactions
+  _i2.Future<bool> transaction(
+    _i9.Employee employee,
+    _i5.Company company,
+  ) =>
+      caller.callServerEndpoint<bool>(
+        'relationQueries',
+        'transaction',
+        {
+          'employee': employee,
+          'company': company,
+        },
+      );
 }
 
 /// {@category Endpoint}

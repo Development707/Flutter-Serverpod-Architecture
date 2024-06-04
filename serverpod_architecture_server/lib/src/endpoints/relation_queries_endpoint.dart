@@ -137,4 +137,20 @@ class RelationQueriesEndpoint extends Endpoint {
     Employee? employee = await Employee.db.findById(session, employeeId);
     return Company.db.detach.workers(session, [employee!]);
   }
+
+  /// Transactions
+  Future<bool> transaction(
+    Session session,
+    Employee employee,
+    Company company,
+  ) async {
+    return session.db.transaction((Transaction transaction) async {
+      // Do some database queries here.
+      await Company.db.insertRow(session, company, transaction: transaction);
+      await Employee.db.insertRow(session, employee, transaction: transaction);
+
+      // Optionally return a value.
+      return true;
+    });
+  }
 }
