@@ -36,6 +36,7 @@ import 'package:serverpod_architecture_client/src/protocol/post.dart' as _i22;
 import 'package:serverpod_architecture_client/src/protocol/user.dart' as _i23;
 import 'package:serverpod_architecture_shared/serverpod_architecture_shared.dart'
     as _i24;
+import 'package:serverpod_auth_client/serverpod_auth_client.dart' as _i25;
 export 'address.dart';
 export 'blocking.dart';
 export 'cat.dart';
@@ -249,11 +250,19 @@ class Protocol extends _i1.SerializationManager {
       return (data != null ? _i24.FreezedCustomClass.fromJson(data) : null)
           as T;
     }
+    try {
+      return _i25.Protocol().deserialize<T>(data, t);
+    } on _i1.DeserializationTypeNotFoundException catch (_) {}
     return super.deserialize<T>(data, t);
   }
 
   @override
   String? getClassNameForObject(Object data) {
+    String? className;
+    className = _i25.Protocol().getClassNameForObject(data);
+    if (className != null) {
+      return 'serverpod_auth.$className';
+    }
     if (data is _i24.ClassName) {
       return 'ClassName';
     }
@@ -313,6 +322,10 @@ class Protocol extends _i1.SerializationManager {
 
   @override
   dynamic deserializeByClassName(Map<String, dynamic> data) {
+    if (data['className'].startsWith('serverpod_auth.')) {
+      data['className'] = data['className'].substring(15);
+      return _i25.Protocol().deserializeByClassName(data);
+    }
     if (data['className'] == 'ClassName') {
       return deserialize<_i24.ClassName>(data['data']);
     }

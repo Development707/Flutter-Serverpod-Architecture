@@ -28,6 +28,7 @@ import 'package:serverpod_architecture_server/src/generated/company.dart'
 import 'package:serverpod_architecture_server/src/generated/post.dart' as _i16;
 import 'package:serverpod_architecture_server/src/generated/employee.dart'
     as _i17;
+import 'package:serverpod_auth_server/serverpod_auth_server.dart' as _i18;
 
 class Endpoints extends _i1.EndpointDispatch {
   @override
@@ -1300,5 +1301,6 @@ class Endpoints extends _i1.EndpointDispatch {
         ),
       },
     );
+    modules['serverpod_auth'] = _i18.Endpoints()..initializeEndpoints(server);
   }
 }

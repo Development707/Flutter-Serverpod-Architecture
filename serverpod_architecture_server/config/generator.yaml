@@ -5,3 +5,7 @@ client_package_path: ../serverpod_architecture_client
 extraClasses:
   - package:serverpod_architecture_shared/serverpod_architecture_shared.dart:ClassName
   - package:serverpod_architecture_shared/serverpod_architecture_shared.dart:FreezedCustomClass
+
+modules:
+  serverpod_auth:
+    nickname: auth

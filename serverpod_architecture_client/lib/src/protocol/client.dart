@@ -23,7 +23,8 @@ import 'package:serverpod_architecture_client/src/protocol/post.dart' as _i9;
 import 'package:serverpod_architecture_client/src/protocol/employee.dart'
     as _i10;
 import 'package:serverpod_architecture_client/src/protocol/user.dart' as _i11;
-import 'protocol.dart' as _i12;
+import 'package:serverpod_auth_client/serverpod_auth_client.dart' as _i12;
+import 'protocol.dart' as _i13;
 
 /// CRUD endpoint for handling all operations on `Blocking` objects.
 /// {@category Endpoint}
@@ -742,6 +743,14 @@ class EndpointUser extends _i1.EndpointRef {
       );
 }
 
+class _Modules {
+  _Modules(Client client) {
+    auth = _i12.Caller(client);
+  }
+
+  late final _i12.Caller auth;
+}
+
 class Client extends _i1.ServerpodClient {
   Client(
     String host, {
@@ -757,7 +766,7 @@ class Client extends _i1.ServerpodClient {
     Function(_i1.MethodCallContext)? onSucceededCall,
   }) : super(
           host,
-          _i12.Protocol(),
+          _i13.Protocol(),
           securityContext: securityContext,
           authenticationKeyManager: authenticationKeyManager,
           streamingConnectionTimeout: streamingConnectionTimeout,
@@ -776,6 +785,7 @@ class Client extends _i1.ServerpodClient {
     relationQueries = EndpointRelationQueries(this);
     sort = EndpointSort(this);
     user = EndpointUser(this);
+    modules = _Modules(this);
   }
 
   late final EndpointBlocking blocking;
@@ -800,6 +810,8 @@ class Client extends _i1.ServerpodClient {
 
   late final EndpointUser user;
 
+  late final _Modules modules;
+
   @override
   Map<String, _i1.EndpointRef> get endpointRefLookup => {
         'blocking': blocking,
@@ -816,5 +828,6 @@ class Client extends _i1.ServerpodClient {
       };
 
   @override
-  Map<String, _i1.ModuleEndpointCaller> get moduleLookup => {};
+  Map<String, _i1.ModuleEndpointCaller> get moduleLookup =>
+      {'auth': modules.auth};
 }

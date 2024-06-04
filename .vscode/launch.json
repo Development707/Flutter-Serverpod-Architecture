@@ -23,11 +23,11 @@
             "internalConsoleOptions": "openOnSessionStart",
             "type": "dart",
             "program": "bin/main.dart",
-            "preLaunchTask": "server: docker compose up --build --detach",
-            "postDebugTask": "server: docker compose stop",
             "args": [
                 "--apply-migrations"
             ],
+            "preLaunchTask": "server: docker compose up --build --detach",
+            "postDebugTask": "server: docker compose stop",
         }
     ]
 }
