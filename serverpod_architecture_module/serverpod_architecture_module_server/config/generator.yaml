@@ -1,0 +1,4 @@
+type: module
+nickname: serverpod_architecture_module
+
+client_package_path: ../serverpod_architecture_module_client
