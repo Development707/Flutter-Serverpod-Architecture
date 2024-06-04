@@ -9,7 +9,10 @@ fields:
   foundedDate: DateTime?, !persist
 
   ### A list of people currently employed at the company.
-  employees: List<User>?, relation(name=company_employee)
+  employees: List<User>?, relation(name=company_employees)
+
+  workers: List<Employee>?, relation(name=company_workers)
+  address: Address?, relation(optional, onUpdate=Cascade, onDelete=SetNull)
 indexes:
   company_name_idx:
     fields: name

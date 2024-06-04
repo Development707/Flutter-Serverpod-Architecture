@@ -28,6 +28,18 @@ post:
   - getPosts:
   - updatePost:
   - deletePost:
+relationQueries:
+  - include:
+  - nestedInclude:
+  - includeLists:
+  - nestedIncludeLists:
+  - filter:
+  - sort:
+  - pagination:
+  - attachSingleRow:
+  - bulkAttachRows:
+  - detachSingleRow:
+  - bulkDetachRows:
 user:
   - find:
   - equal:

@@ -4,7 +4,7 @@ fields:
   name: String
   addressId: int, relation(parent=address)
   age: int
-  company: Company?, relation(name=company_employee)
+  company: Company?, relation(name=company_employees)
   orders: List<Order>?, relation(name=user_orders)
 indexes:
   user_address_unique_idx:

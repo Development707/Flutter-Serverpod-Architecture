@@ -11,47 +11,42 @@
 import 'package:serverpod_client/serverpod_client.dart' as _i1;
 import 'protocol.dart' as _i2;
 
-/// Information about a company.
-abstract class Company implements _i1.SerializableModel {
-  Company._({
+abstract class Employee implements _i1.SerializableModel {
+  Employee._({
     this.id,
     required this.name,
-    this.foundedDate,
-    this.employees,
-    this.workers,
+    this.email,
     this.addressId,
     this.address,
+    required this.companyId,
+    this.company,
   });
 
-  factory Company({
+  factory Employee({
     int? id,
     required String name,
-    DateTime? foundedDate,
-    List<_i2.User>? employees,
-    List<_i2.Employee>? workers,
+    String? email,
     int? addressId,
     _i2.Address? address,
-  }) = _CompanyImpl;
+    required int companyId,
+    _i2.Company? company,
+  }) = _EmployeeImpl;
 
-  factory Company.fromJson(Map<String, dynamic> jsonSerialization) {
-    return Company(
+  factory Employee.fromJson(Map<String, dynamic> jsonSerialization) {
+    return Employee(
       id: jsonSerialization['id'] as int?,
       name: jsonSerialization['name'] as String,
-      foundedDate: jsonSerialization['foundedDate'] == null
-          ? null
-          : _i1.DateTimeJsonExtension.fromJson(
-              jsonSerialization['foundedDate']),
-      employees: (jsonSerialization['employees'] as List?)
-          ?.map((e) => _i2.User.fromJson((e as Map<String, dynamic>)))
-          .toList(),
-      workers: (jsonSerialization['workers'] as List?)
-          ?.map((e) => _i2.Employee.fromJson((e as Map<String, dynamic>)))
-          .toList(),
+      email: jsonSerialization['email'] as String?,
       addressId: jsonSerialization['addressId'] as int?,
       address: jsonSerialization['address'] == null
           ? null
           : _i2.Address.fromJson(
               (jsonSerialization['address'] as Map<String, dynamic>)),
+      companyId: jsonSerialization['companyId'] as int,
+      company: jsonSerialization['company'] == null
+          ? null
+          : _i2.Company.fromJson(
+              (jsonSerialization['company'] as Map<String, dynamic>)),
     );
   }
 
@@ -60,42 +55,37 @@ abstract class Company implements _i1.SerializableModel {
   /// the id will be null.
   int? id;
 
-  /// The name of the company.
   String name;
 
-  /// The date the company was founded, if known.
-  DateTime? foundedDate;
-
-  /// A list of people currently employed at the company.
-  List<_i2.User>? employees;
-
-  List<_i2.Employee>? workers;
+  String? email;
 
   int? addressId;
 
   _i2.Address? address;
 
-  Company copyWith({
+  int companyId;
+
+  _i2.Company? company;
+
+  Employee copyWith({
     int? id,
     String? name,
-    DateTime? foundedDate,
-    List<_i2.User>? employees,
-    List<_i2.Employee>? workers,
+    String? email,
     int? addressId,
     _i2.Address? address,
+    int? companyId,
+    _i2.Company? company,
   });
   @override
   Map<String, dynamic> toJson() {
     return {
       if (id != null) 'id': id,
       'name': name,
-      if (foundedDate != null) 'foundedDate': foundedDate?.toJson(),
-      if (employees != null)
-        'employees': employees?.toJson(valueToJson: (v) => v.toJson()),
-      if (workers != null)
-        'workers': workers?.toJson(valueToJson: (v) => v.toJson()),
+      if (email != null) 'email': email,
       if (addressId != null) 'addressId': addressId,
       if (address != null) 'address': address?.toJson(),
+      'companyId': companyId,
+      if (company != null) 'company': company?.toJson(),
     };
   }
 
@@ -107,44 +97,43 @@ abstract class Company implements _i1.SerializableModel {
 
 class _Undefined {}
 
-class _CompanyImpl extends Company {
-  _CompanyImpl({
+class _EmployeeImpl extends Employee {
+  _EmployeeImpl({
     int? id,
     required String name,
-    DateTime? foundedDate,
-    List<_i2.User>? employees,
-    List<_i2.Employee>? workers,
+    String? email,
     int? addressId,
     _i2.Address? address,
+    required int companyId,
+    _i2.Company? company,
   }) : super._(
           id: id,
           name: name,
-          foundedDate: foundedDate,
-          employees: employees,
-          workers: workers,
+          email: email,
           addressId: addressId,
           address: address,
+          companyId: companyId,
+          company: company,
         );
 
   @override
-  Company copyWith({
+  Employee copyWith({
     Object? id = _Undefined,
     String? name,
-    Object? foundedDate = _Undefined,
-    Object? employees = _Undefined,
-    Object? workers = _Undefined,
+    Object? email = _Undefined,
     Object? addressId = _Undefined,
     Object? address = _Undefined,
+    int? companyId,
+    Object? company = _Undefined,
   }) {
-    return Company(
+    return Employee(
       id: id is int? ? id : this.id,
       name: name ?? this.name,
-      foundedDate: foundedDate is DateTime? ? foundedDate : this.foundedDate,
-      employees:
-          employees is List<_i2.User>? ? employees : this.employees?.clone(),
-      workers: workers is List<_i2.Employee>? ? workers : this.workers?.clone(),
+      email: email is String? ? email : this.email,
       addressId: addressId is int? ? addressId : this.addressId,
       address: address is _i2.Address? ? address : this.address?.copyWith(),
+      companyId: companyId ?? this.companyId,
+      company: company is _i2.Company? ? company : this.company?.copyWith(),
     );
   }
 }
