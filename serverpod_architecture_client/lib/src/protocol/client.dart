@@ -18,7 +18,8 @@ import 'package:serverpod_architecture_shared/src/class_name.dart' as _i6;
 import 'package:serverpod_architecture_shared/src/freezed_custom_class.dart'
     as _i7;
 import 'package:serverpod_architecture_client/src/protocol/post.dart' as _i8;
-import 'protocol.dart' as _i9;
+import 'package:serverpod_architecture_client/src/protocol/user.dart' as _i9;
+import 'protocol.dart' as _i10;
 
 /// CRUD endpoint for handling all operations on `Blocking` objects.
 /// {@category Endpoint}
@@ -298,6 +299,173 @@ class EndpointPost extends _i1.EndpointRef {
       );
 }
 
+/// {@category Endpoint}
+class EndpointUser extends _i1.EndpointRef {
+  EndpointUser(_i1.EndpointCaller caller) : super(caller);
+
+  @override
+  String get name => 'user';
+
+  /// Retrieves a list of all users in the database.
+  _i2.Future<List<_i9.User>> find() =>
+      caller.callServerEndpoint<List<_i9.User>>(
+        'user',
+        'find',
+        {},
+      );
+
+  /// Retrieves a list of all users in the database that have the given name.
+  _i2.Future<List<_i9.User>> equal(String value) =>
+      caller.callServerEndpoint<List<_i9.User>>(
+        'user',
+        'equal',
+        {'value': value},
+      );
+
+  /// Retrieves a list of all users in the database that do not have the given name.
+  _i2.Future<List<_i9.User>> notEqual(String value) =>
+      caller.callServerEndpoint<List<_i9.User>>(
+        'user',
+        'notEqual',
+        {'value': value},
+      );
+
+  /// Retrieves a list of all users in the database that have the given age.
+  _i2.Future<List<_i9.User>> operators(int value) =>
+      caller.callServerEndpoint<List<_i9.User>>(
+        'user',
+        'operators',
+        {'value': value},
+      );
+
+  /// Retrieves a list of all users in the database that
+  _i2.Future<List<_i9.User>> between(
+    int min,
+    int max,
+  ) =>
+      caller.callServerEndpoint<List<_i9.User>>(
+        'user',
+        'between',
+        {
+          'min': min,
+          'max': max,
+        },
+      );
+
+  /// Retrieves a list of all users in the database that do not have the given age.
+  _i2.Future<List<_i9.User>> notBetween(
+    int min,
+    int max,
+  ) =>
+      caller.callServerEndpoint<List<_i9.User>>(
+        'user',
+        'notBetween',
+        {
+          'min': min,
+          'max': max,
+        },
+      );
+
+  /// Retrieves a list of all users in the database that have the given name.
+  _i2.Future<List<_i9.User>> inSet(Set<String> values) =>
+      caller.callServerEndpoint<List<_i9.User>>(
+        'user',
+        'inSet',
+        {'values': values},
+      );
+
+  /// Retrieves a list of all users in the database that do not have the given name.
+  _i2.Future<List<_i9.User>> notInSet(Set<String> values) =>
+      caller.callServerEndpoint<List<_i9.User>>(
+        'user',
+        'notInSet',
+        {'values': values},
+      );
+
+  /// Retrieves a list of all users in the database that have the given name.
+  _i2.Future<List<_i9.User>> like(String value) =>
+      caller.callServerEndpoint<List<_i9.User>>(
+        'user',
+        'like',
+        {'value': value},
+      );
+
+  /// Retrieves a list of all users in the database that do not have the given name.
+  _i2.Future<List<_i9.User>> notLike(String value) =>
+      caller.callServerEndpoint<List<_i9.User>>(
+        'user',
+        'notLike',
+        {'value': value},
+      );
+
+  /// Retrieves a list of all users in the database that have the given name.
+  _i2.Future<List<_i9.User>> iLike(String value) =>
+      caller.callServerEndpoint<List<_i9.User>>(
+        'user',
+        'iLike',
+        {'value': value},
+      );
+
+  /// Retrieves a list of all users in the database that do not have the given name.
+  _i2.Future<List<_i9.User>> notILike(String value) =>
+      caller.callServerEndpoint<List<_i9.User>>(
+        'user',
+        'notILike',
+        {'value': value},
+      );
+
+  /// Retrieves a list of all users in the database that have the given name.
+  ///
+  /// * The `&` operator is used to chain two statements together with an `and` operation.
+  /// * The `|` operator is used to chain two statements together with an `or` operation.
+  _i2.Future<List<_i9.User>> logicalOperators(String value) =>
+      caller.callServerEndpoint<List<_i9.User>>(
+        'user',
+        'logicalOperators',
+        {'value': value},
+      );
+
+  /// One-to-one relationships
+  _i2.Future<List<_i9.User>> oneToOne(int value) =>
+      caller.callServerEndpoint<List<_i9.User>>(
+        'user',
+        'oneToOne',
+        {'value': value},
+      );
+
+  /// One-to-many relationships
+  _i2.Future<List<_i9.User>> oneToMany(int id) =>
+      caller.callServerEndpoint<List<_i9.User>>(
+        'user',
+        'oneToMany',
+        {'id': id},
+      );
+
+  /// None relationships
+  _i2.Future<List<_i9.User>> none(int id) =>
+      caller.callServerEndpoint<List<_i9.User>>(
+        'user',
+        'none',
+        {'id': id},
+      );
+
+  /// Any relationships
+  _i2.Future<List<_i9.User>> any(int id) =>
+      caller.callServerEndpoint<List<_i9.User>>(
+        'user',
+        'any',
+        {'id': id},
+      );
+
+  /// Every relationships
+  _i2.Future<List<_i9.User>> every(int id) =>
+      caller.callServerEndpoint<List<_i9.User>>(
+        'user',
+        'every',
+        {'id': id},
+      );
+}
+
 class Client extends _i1.ServerpodClient {
   Client(
     String host, {
@@ -313,7 +481,7 @@ class Client extends _i1.ServerpodClient {
     Function(_i1.MethodCallContext)? onSucceededCall,
   }) : super(
           host,
-          _i9.Protocol(),
+          _i10.Protocol(),
           securityContext: securityContext,
           authenticationKeyManager: authenticationKeyManager,
           streamingConnectionTimeout: streamingConnectionTimeout,
@@ -326,6 +494,7 @@ class Client extends _i1.ServerpodClient {
     company = EndpointCompany(this);
     example = EndpointExample(this);
     post = EndpointPost(this);
+    user = EndpointUser(this);
   }
 
   late final EndpointBlocking blocking;
@@ -338,6 +507,8 @@ class Client extends _i1.ServerpodClient {
 
   late final EndpointPost post;
 
+  late final EndpointUser user;
+
   @override
   Map<String, _i1.EndpointRef> get endpointRefLookup => {
         'blocking': blocking,
@@ -345,6 +516,7 @@ class Client extends _i1.ServerpodClient {
         'company': company,
         'example': example,
         'post': post,
+        'user': user,
       };
 
   @override

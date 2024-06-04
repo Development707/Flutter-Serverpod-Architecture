@@ -10,27 +10,33 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:serverpod/serverpod.dart' as _i1;
 import 'protocol.dart' as _i2;
+import 'package:serverpod_serialization/serverpod_serialization.dart';
 
 abstract class User extends _i1.TableRow implements _i1.ProtocolSerialization {
   User._({
     int? id,
+    required this.name,
     required this.addressId,
     required this.age,
     required this.companyId,
     this.company,
+    this.orders,
   }) : super(id);
 
   factory User({
     int? id,
+    required String name,
     required int addressId,
     required int age,
     required int companyId,
     _i2.Company? company,
+    List<_i2.Order>? orders,
   }) = _UserImpl;
 
   factory User.fromJson(Map<String, dynamic> jsonSerialization) {
     return User(
       id: jsonSerialization['id'] as int?,
+      name: jsonSerialization['name'] as String,
       addressId: jsonSerialization['addressId'] as int,
       age: jsonSerialization['age'] as int,
       companyId: jsonSerialization['companyId'] as int,
@@ -38,12 +44,17 @@ abstract class User extends _i1.TableRow implements _i1.ProtocolSerialization {
           ? null
           : _i2.Company.fromJson(
               (jsonSerialization['company'] as Map<String, dynamic>)),
+      orders: (jsonSerialization['orders'] as List?)
+          ?.map((e) => _i2.Order.fromJson((e as Map<String, dynamic>)))
+          .toList(),
     );
   }
 
   static final t = UserTable();
 
   static const db = UserRepository._();
+
+  String name;
 
   int addressId;
 
@@ -53,24 +64,31 @@ abstract class User extends _i1.TableRow implements _i1.ProtocolSerialization {
 
   _i2.Company? company;
 
+  List<_i2.Order>? orders;
+
   @override
   _i1.Table get table => t;
 
   User copyWith({
     int? id,
+    String? name,
     int? addressId,
     int? age,
     int? companyId,
     _i2.Company? company,
+    List<_i2.Order>? orders,
   });
   @override
   Map<String, dynamic> toJson() {
     return {
       if (id != null) 'id': id,
+      'name': name,
       'addressId': addressId,
       'age': age,
       'companyId': companyId,
       if (company != null) 'company': company?.toJson(),
+      if (orders != null)
+        'orders': orders?.toJson(valueToJson: (v) => v.toJson()),
     };
   }
 
@@ -78,15 +96,24 @@ abstract class User extends _i1.TableRow implements _i1.ProtocolSerialization {
   Map<String, dynamic> toJsonForProtocol() {
     return {
       if (id != null) 'id': id,
+      'name': name,
       'addressId': addressId,
       'age': age,
       'companyId': companyId,
       if (company != null) 'company': company?.toJsonForProtocol(),
+      if (orders != null)
+        'orders': orders?.toJson(valueToJson: (v) => v.toJsonForProtocol()),
     };
   }
 
-  static UserInclude include({_i2.CompanyInclude? company}) {
-    return UserInclude._(company: company);
+  static UserInclude include({
+    _i2.CompanyInclude? company,
+    _i2.OrderIncludeList? orders,
+  }) {
+    return UserInclude._(
+      company: company,
+      orders: orders,
+    );
   }
 
   static UserIncludeList includeList({
@@ -120,38 +147,50 @@ class _Undefined {}
 class _UserImpl extends User {
   _UserImpl({
     int? id,
+    required String name,
     required int addressId,
     required int age,
     required int companyId,
     _i2.Company? company,
+    List<_i2.Order>? orders,
   }) : super._(
           id: id,
+          name: name,
           addressId: addressId,
           age: age,
           companyId: companyId,
           company: company,
+          orders: orders,
         );
 
   @override
   User copyWith({
     Object? id = _Undefined,
+    String? name,
     int? addressId,
     int? age,
     int? companyId,
     Object? company = _Undefined,
+    Object? orders = _Undefined,
   }) {
     return User(
       id: id is int? ? id : this.id,
+      name: name ?? this.name,
       addressId: addressId ?? this.addressId,
       age: age ?? this.age,
       companyId: companyId ?? this.companyId,
       company: company is _i2.Company? ? company : this.company?.copyWith(),
+      orders: orders is List<_i2.Order>? ? orders : this.orders?.clone(),
     );
   }
 }
 
 class UserTable extends _i1.Table {
   UserTable({super.tableRelation}) : super(tableName: 'user') {
+    name = _i1.ColumnString(
+      'name',
+      this,
+    );
     addressId = _i1.ColumnInt(
       'addressId',
       this,
@@ -166,6 +205,8 @@ class UserTable extends _i1.Table {
     );
   }
 
+  late final _i1.ColumnString name;
+
   late final _i1.ColumnInt addressId;
 
   late final _i1.ColumnInt age;
@@ -173,6 +214,10 @@ class UserTable extends _i1.Table {
   late final _i1.ColumnInt companyId;
 
   _i2.CompanyTable? _company;
+
+  _i2.OrderTable? ___orders;
+
+  _i1.ManyRelation<_i2.OrderTable>? _orders;
 
   _i2.CompanyTable get company {
     if (_company != null) return _company!;
@@ -187,9 +232,41 @@ class UserTable extends _i1.Table {
     return _company!;
   }
 
+  _i2.OrderTable get __orders {
+    if (___orders != null) return ___orders!;
+    ___orders = _i1.createRelationTable(
+      relationFieldName: '__orders',
+      field: User.t.id,
+      foreignField: _i2.Order.t.userId,
+      tableRelation: tableRelation,
+      createTable: (foreignTableRelation) =>
+          _i2.OrderTable(tableRelation: foreignTableRelation),
+    );
+    return ___orders!;
+  }
+
+  _i1.ManyRelation<_i2.OrderTable> get orders {
+    if (_orders != null) return _orders!;
+    var relationTable = _i1.createRelationTable(
+      relationFieldName: 'orders',
+      field: User.t.id,
+      foreignField: _i2.Order.t.userId,
+      tableRelation: tableRelation,
+      createTable: (foreignTableRelation) =>
+          _i2.OrderTable(tableRelation: foreignTableRelation),
+    );
+    _orders = _i1.ManyRelation<_i2.OrderTable>(
+      tableWithRelations: relationTable,
+      table: _i2.OrderTable(
+          tableRelation: relationTable.tableRelation!.lastRelation),
+    );
+    return _orders!;
+  }
+
   @override
   List<_i1.Column> get columns => [
         id,
+        name,
         addressId,
         age,
         companyId,
@@ -200,19 +277,31 @@ class UserTable extends _i1.Table {
     if (relationField == 'company') {
       return company;
     }
+    if (relationField == 'orders') {
+      return __orders;
+    }
     return null;
   }
 }
 
 class UserInclude extends _i1.IncludeObject {
-  UserInclude._({_i2.CompanyInclude? company}) {
+  UserInclude._({
+    _i2.CompanyInclude? company,
+    _i2.OrderIncludeList? orders,
+  }) {
     _company = company;
+    _orders = orders;
   }
 
   _i2.CompanyInclude? _company;
 
+  _i2.OrderIncludeList? _orders;
+
   @override
-  Map<String, _i1.Include?> get includes => {'company': _company};
+  Map<String, _i1.Include?> get includes => {
+        'company': _company,
+        'orders': _orders,
+      };
 
   @override
   _i1.Table get table => User.t;
@@ -240,6 +329,8 @@ class UserIncludeList extends _i1.IncludeList {
 
 class UserRepository {
   const UserRepository._();
+
+  final attach = const UserAttachRepository._();
 
   final attachRow = const UserAttachRowRepository._();
 
@@ -395,6 +486,29 @@ class UserRepository {
   }
 }
 
+class UserAttachRepository {
+  const UserAttachRepository._();
+
+  Future<void> orders(
+    _i1.Session session,
+    User user,
+    List<_i2.Order> order,
+  ) async {
+    if (order.any((e) => e.id == null)) {
+      throw ArgumentError.notNull('order.id');
+    }
+    if (user.id == null) {
+      throw ArgumentError.notNull('user.id');
+    }
+
+    var $order = order.map((e) => e.copyWith(userId: user.id)).toList();
+    await session.db.update<_i2.Order>(
+      $order,
+      columns: [_i2.Order.t.userId],
+    );
+  }
+}
+
 class UserAttachRowRepository {
   const UserAttachRowRepository._();
 
@@ -414,6 +528,25 @@ class UserAttachRowRepository {
     await session.db.updateRow<User>(
       $user,
       columns: [User.t.companyId],
+    );
+  }
+
+  Future<void> orders(
+    _i1.Session session,
+    User user,
+    _i2.Order order,
+  ) async {
+    if (order.id == null) {
+      throw ArgumentError.notNull('order.id');
+    }
+    if (user.id == null) {
+      throw ArgumentError.notNull('user.id');
+    }
+
+    var $order = order.copyWith(userId: user.id);
+    await session.db.updateRow<_i2.Order>(
+      $order,
+      columns: [_i2.Order.t.userId],
     );
   }
 }

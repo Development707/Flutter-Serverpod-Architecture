@@ -1,0 +1,7 @@
+class: Order
+table: order
+fields:
+  name: String
+  price: double
+  itemType: String
+  user: User?, relation(name=user_orders)

@@ -28,3 +28,22 @@ post:
   - getPosts:
   - updatePost:
   - deletePost:
+user:
+  - find:
+  - equal:
+  - notEqual:
+  - operators:
+  - between:
+  - notBetween:
+  - inSet:
+  - notInSet:
+  - like:
+  - notLike:
+  - iLike:
+  - notILike:
+  - logicalOperators:
+  - oneToOne:
+  - oneToMany:
+  - none:
+  - any:
+  - every:

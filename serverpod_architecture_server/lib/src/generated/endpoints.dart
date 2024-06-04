@@ -14,12 +14,13 @@ import '../endpoints/cat_endpoint.dart' as _i3;
 import '../endpoints/company_endpoint.dart' as _i4;
 import '../endpoints/example_endpoint.dart' as _i5;
 import '../endpoints/post_endpoint.dart' as _i6;
+import '../endpoints/user_endpoint.dart' as _i7;
 import 'package:serverpod_architecture_server/src/generated/blocking.dart'
-    as _i7;
-import 'package:serverpod_architecture_server/src/generated/cat.dart' as _i8;
+    as _i8;
+import 'package:serverpod_architecture_server/src/generated/cat.dart' as _i9;
 import 'package:serverpod_architecture_server/src/generated/company.dart'
-    as _i9;
-import 'package:serverpod_architecture_server/src/generated/post.dart' as _i10;
+    as _i10;
+import 'package:serverpod_architecture_server/src/generated/post.dart' as _i11;
 
 class Endpoints extends _i1.EndpointDispatch {
   @override
@@ -53,6 +54,12 @@ class Endpoints extends _i1.EndpointDispatch {
         ..initialize(
           server,
           'post',
+          null,
+        ),
+      'user': _i7.UserEndpoint()
+        ..initialize(
+          server,
+          'user',
           null,
         ),
     };
@@ -93,7 +100,7 @@ class Endpoints extends _i1.EndpointDispatch {
           params: {
             'blocking': _i1.ParameterDescription(
               name: 'blocking',
-              type: _i1.getType<_i7.Blocking>(),
+              type: _i1.getType<_i8.Blocking>(),
               nullable: false,
             )
           },
@@ -111,7 +118,7 @@ class Endpoints extends _i1.EndpointDispatch {
           params: {
             'blocking': _i1.ParameterDescription(
               name: 'blocking',
-              type: _i1.getType<_i7.Blocking>(),
+              type: _i1.getType<_i8.Blocking>(),
               nullable: false,
             )
           },
@@ -129,7 +136,7 @@ class Endpoints extends _i1.EndpointDispatch {
           params: {
             'blocking': _i1.ParameterDescription(
               name: 'blocking',
-              type: _i1.getType<_i7.Blocking>(),
+              type: _i1.getType<_i8.Blocking>(),
               nullable: false,
             )
           },
@@ -180,7 +187,7 @@ class Endpoints extends _i1.EndpointDispatch {
           params: {
             'cat': _i1.ParameterDescription(
               name: 'cat',
-              type: _i1.getType<_i8.Cat>(),
+              type: _i1.getType<_i9.Cat>(),
               nullable: false,
             )
           },
@@ -198,7 +205,7 @@ class Endpoints extends _i1.EndpointDispatch {
           params: {
             'cat': _i1.ParameterDescription(
               name: 'cat',
-              type: _i1.getType<_i8.Cat>(),
+              type: _i1.getType<_i9.Cat>(),
               nullable: false,
             )
           },
@@ -216,7 +223,7 @@ class Endpoints extends _i1.EndpointDispatch {
           params: {
             'cat': _i1.ParameterDescription(
               name: 'cat',
-              type: _i1.getType<_i8.Cat>(),
+              type: _i1.getType<_i9.Cat>(),
               nullable: false,
             )
           },
@@ -268,7 +275,7 @@ class Endpoints extends _i1.EndpointDispatch {
           params: {
             'company': _i1.ParameterDescription(
               name: 'company',
-              type: _i1.getType<_i9.Company>(),
+              type: _i1.getType<_i10.Company>(),
               nullable: false,
             )
           },
@@ -286,7 +293,7 @@ class Endpoints extends _i1.EndpointDispatch {
           params: {
             'company': _i1.ParameterDescription(
               name: 'company',
-              type: _i1.getType<_i9.Company>(),
+              type: _i1.getType<_i10.Company>(),
               nullable: false,
             )
           },
@@ -304,7 +311,7 @@ class Endpoints extends _i1.EndpointDispatch {
           params: {
             'company': _i1.ParameterDescription(
               name: 'company',
-              type: _i1.getType<_i9.Company>(),
+              type: _i1.getType<_i10.Company>(),
               nullable: false,
             )
           },
@@ -391,7 +398,7 @@ class Endpoints extends _i1.EndpointDispatch {
           params: {
             'post': _i1.ParameterDescription(
               name: 'post',
-              type: _i1.getType<_i10.Post>(),
+              type: _i1.getType<_i11.Post>(),
               nullable: false,
             )
           },
@@ -436,7 +443,7 @@ class Endpoints extends _i1.EndpointDispatch {
           params: {
             'post': _i1.ParameterDescription(
               name: 'post',
-              type: _i1.getType<_i10.Post>(),
+              type: _i1.getType<_i11.Post>(),
               nullable: false,
             )
           },
@@ -454,7 +461,7 @@ class Endpoints extends _i1.EndpointDispatch {
           params: {
             'post': _i1.ParameterDescription(
               name: 'post',
-              type: _i1.getType<_i10.Post>(),
+              type: _i1.getType<_i11.Post>(),
               nullable: false,
             )
           },
@@ -465,6 +472,339 @@ class Endpoints extends _i1.EndpointDispatch {
               (endpoints['post'] as _i6.PostEndpoint).deletePost(
             session,
             params['post'],
+          ),
+        ),
+      },
+    );
+    connectors['user'] = _i1.EndpointConnector(
+      name: 'user',
+      endpoint: endpoints['user']!,
+      methodConnectors: {
+        'find': _i1.MethodConnector(
+          name: 'find',
+          params: {},
+          call: (
+            _i1.Session session,
+            Map<String, dynamic> params,
+          ) async =>
+              (endpoints['user'] as _i7.UserEndpoint).find(session),
+        ),
+        'equal': _i1.MethodConnector(
+          name: 'equal',
+          params: {
+            'value': _i1.ParameterDescription(
+              name: 'value',
+              type: _i1.getType<String>(),
+              nullable: false,
+            )
+          },
+          call: (
+            _i1.Session session,
+            Map<String, dynamic> params,
+          ) async =>
+              (endpoints['user'] as _i7.UserEndpoint).equal(
+            session,
+            params['value'],
+          ),
+        ),
+        'notEqual': _i1.MethodConnector(
+          name: 'notEqual',
+          params: {
+            'value': _i1.ParameterDescription(
+              name: 'value',
+              type: _i1.getType<String>(),
+              nullable: false,
+            )
+          },
+          call: (
+            _i1.Session session,
+            Map<String, dynamic> params,
+          ) async =>
+              (endpoints['user'] as _i7.UserEndpoint).notEqual(
+            session,
+            params['value'],
+          ),
+        ),
+        'operators': _i1.MethodConnector(
+          name: 'operators',
+          params: {
+            'value': _i1.ParameterDescription(
+              name: 'value',
+              type: _i1.getType<int>(),
+              nullable: false,
+            )
+          },
+          call: (
+            _i1.Session session,
+            Map<String, dynamic> params,
+          ) async =>
+              (endpoints['user'] as _i7.UserEndpoint).operators(
+            session,
+            params['value'],
+          ),
+        ),
+        'between': _i1.MethodConnector(
+          name: 'between',
+          params: {
+            'min': _i1.ParameterDescription(
+              name: 'min',
+              type: _i1.getType<int>(),
+              nullable: false,
+            ),
+            'max': _i1.ParameterDescription(
+              name: 'max',
+              type: _i1.getType<int>(),
+              nullable: false,
+            ),
+          },
+          call: (
+            _i1.Session session,
+            Map<String, dynamic> params,
+          ) async =>
+              (endpoints['user'] as _i7.UserEndpoint).between(
+            session,
+            params['min'],
+            params['max'],
+          ),
+        ),
+        'notBetween': _i1.MethodConnector(
+          name: 'notBetween',
+          params: {
+            'min': _i1.ParameterDescription(
+              name: 'min',
+              type: _i1.getType<int>(),
+              nullable: false,
+            ),
+            'max': _i1.ParameterDescription(
+              name: 'max',
+              type: _i1.getType<int>(),
+              nullable: false,
+            ),
+          },
+          call: (
+            _i1.Session session,
+            Map<String, dynamic> params,
+          ) async =>
+              (endpoints['user'] as _i7.UserEndpoint).notBetween(
+            session,
+            params['min'],
+            params['max'],
+          ),
+        ),
+        'inSet': _i1.MethodConnector(
+          name: 'inSet',
+          params: {
+            'values': _i1.ParameterDescription(
+              name: 'values',
+              type: _i1.getType<Set<String>>(),
+              nullable: false,
+            )
+          },
+          call: (
+            _i1.Session session,
+            Map<String, dynamic> params,
+          ) async =>
+              (endpoints['user'] as _i7.UserEndpoint).inSet(
+            session,
+            params['values'],
+          ),
+        ),
+        'notInSet': _i1.MethodConnector(
+          name: 'notInSet',
+          params: {
+            'values': _i1.ParameterDescription(
+              name: 'values',
+              type: _i1.getType<Set<String>>(),
+              nullable: false,
+            )
+          },
+          call: (
+            _i1.Session session,
+            Map<String, dynamic> params,
+          ) async =>
+              (endpoints['user'] as _i7.UserEndpoint).notInSet(
+            session,
+            params['values'],
+          ),
+        ),
+        'like': _i1.MethodConnector(
+          name: 'like',
+          params: {
+            'value': _i1.ParameterDescription(
+              name: 'value',
+              type: _i1.getType<String>(),
+              nullable: false,
+            )
+          },
+          call: (
+            _i1.Session session,
+            Map<String, dynamic> params,
+          ) async =>
+              (endpoints['user'] as _i7.UserEndpoint).like(
+            session,
+            params['value'],
+          ),
+        ),
+        'notLike': _i1.MethodConnector(
+          name: 'notLike',
+          params: {
+            'value': _i1.ParameterDescription(
+              name: 'value',
+              type: _i1.getType<String>(),
+              nullable: false,
+            )
+          },
+          call: (
+            _i1.Session session,
+            Map<String, dynamic> params,
+          ) async =>
+              (endpoints['user'] as _i7.UserEndpoint).notLike(
+            session,
+            params['value'],
+          ),
+        ),
+        'iLike': _i1.MethodConnector(
+          name: 'iLike',
+          params: {
+            'value': _i1.ParameterDescription(
+              name: 'value',
+              type: _i1.getType<String>(),
+              nullable: false,
+            )
+          },
+          call: (
+            _i1.Session session,
+            Map<String, dynamic> params,
+          ) async =>
+              (endpoints['user'] as _i7.UserEndpoint).iLike(
+            session,
+            params['value'],
+          ),
+        ),
+        'notILike': _i1.MethodConnector(
+          name: 'notILike',
+          params: {
+            'value': _i1.ParameterDescription(
+              name: 'value',
+              type: _i1.getType<String>(),
+              nullable: false,
+            )
+          },
+          call: (
+            _i1.Session session,
+            Map<String, dynamic> params,
+          ) async =>
+              (endpoints['user'] as _i7.UserEndpoint).notILike(
+            session,
+            params['value'],
+          ),
+        ),
+        'logicalOperators': _i1.MethodConnector(
+          name: 'logicalOperators',
+          params: {
+            'value': _i1.ParameterDescription(
+              name: 'value',
+              type: _i1.getType<String>(),
+              nullable: false,
+            )
+          },
+          call: (
+            _i1.Session session,
+            Map<String, dynamic> params,
+          ) async =>
+              (endpoints['user'] as _i7.UserEndpoint).logicalOperators(
+            session,
+            params['value'],
+          ),
+        ),
+        'oneToOne': _i1.MethodConnector(
+          name: 'oneToOne',
+          params: {
+            'value': _i1.ParameterDescription(
+              name: 'value',
+              type: _i1.getType<int>(),
+              nullable: false,
+            )
+          },
+          call: (
+            _i1.Session session,
+            Map<String, dynamic> params,
+          ) async =>
+              (endpoints['user'] as _i7.UserEndpoint).oneToOne(
+            session,
+            params['value'],
+          ),
+        ),
+        'oneToMany': _i1.MethodConnector(
+          name: 'oneToMany',
+          params: {
+            'id': _i1.ParameterDescription(
+              name: 'id',
+              type: _i1.getType<int>(),
+              nullable: false,
+            )
+          },
+          call: (
+            _i1.Session session,
+            Map<String, dynamic> params,
+          ) async =>
+              (endpoints['user'] as _i7.UserEndpoint).oneToMany(
+            session,
+            params['id'],
+          ),
+        ),
+        'none': _i1.MethodConnector(
+          name: 'none',
+          params: {
+            'id': _i1.ParameterDescription(
+              name: 'id',
+              type: _i1.getType<int>(),
+              nullable: false,
+            )
+          },
+          call: (
+            _i1.Session session,
+            Map<String, dynamic> params,
+          ) async =>
+              (endpoints['user'] as _i7.UserEndpoint).none(
+            session,
+            params['id'],
+          ),
+        ),
+        'any': _i1.MethodConnector(
+          name: 'any',
+          params: {
+            'id': _i1.ParameterDescription(
+              name: 'id',
+              type: _i1.getType<int>(),
+              nullable: false,
+            )
+          },
+          call: (
+            _i1.Session session,
+            Map<String, dynamic> params,
+          ) async =>
+              (endpoints['user'] as _i7.UserEndpoint).any(
+            session,
+            params['id'],
+          ),
+        ),
+        'every': _i1.MethodConnector(
+          name: 'every',
+          params: {
+            'id': _i1.ParameterDescription(
+              name: 'id',
+              type: _i1.getType<int>(),
+              nullable: false,
+            )
+          },
+          call: (
+            _i1.Session session,
+            Map<String, dynamic> params,
+          ) async =>
+              (endpoints['user'] as _i7.UserEndpoint).every(
+            session,
+            params['id'],
           ),
         ),
       },
