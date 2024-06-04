@@ -16,6 +16,7 @@ class CachingEndpoint extends Endpoint {
       userData = await UserData.db.findById(session, userId);
       await session.caches.local
           .put(cacheKey, userData!, lifetime: Duration(minutes: 5));
+      session.log('Cached user data for user $userId');
     }
 
     // Return the user data to the client
