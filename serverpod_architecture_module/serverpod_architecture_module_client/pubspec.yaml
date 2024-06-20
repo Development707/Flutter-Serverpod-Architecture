@@ -6,4 +6,4 @@ homepage: https://www.example.com
 environment:
   sdk: ">=3.1.0 <4.0.0"
 dependencies:
-  serverpod_client: 2.0.0
+  serverpod_client: 2.0.1

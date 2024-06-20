@@ -10,7 +10,7 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  serverpod_flutter: 2.0.0
+  serverpod_flutter: 2.0.1
 
 dependency_overrides:
   serverpod_architecture_module_client:
