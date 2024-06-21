@@ -30,6 +30,8 @@ void run(List<String> args) async {
     RouteStaticDirectory(serverDirectory: 'static', basePath: '/'),
     '/*',
   );
+  // Configure Google Sign-In.
+  pod.webServer.addRoute(auth.RouteGoogleSignIn(), '/googlesignin');
 
   // Configure Auth
   auth.AuthConfig.set(auth.AuthConfig(

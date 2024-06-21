@@ -10,21 +10,43 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:serverpod_client/serverpod_client.dart' as _i1;
 import 'dart:async' as _i2;
+import 'package:serverpod_auth_client/serverpod_auth_client.dart' as _i3;
 import 'package:serverpod_architecture_client/src/protocol/blocking.dart'
-    as _i3;
-import 'package:serverpod_architecture_client/src/protocol/user_data_spy.dart'
     as _i4;
-import 'package:serverpod_architecture_client/src/protocol/cat.dart' as _i5;
-import 'package:serverpod_architecture_client/src/protocol/company.dart' as _i6;
-import 'package:serverpod_architecture_shared/src/class_name.dart' as _i7;
+import 'package:serverpod_architecture_client/src/protocol/user_data_spy.dart'
+    as _i5;
+import 'package:serverpod_architecture_client/src/protocol/cat.dart' as _i6;
+import 'package:serverpod_architecture_client/src/protocol/company.dart' as _i7;
+import 'package:serverpod_architecture_shared/src/class_name.dart' as _i8;
 import 'package:serverpod_architecture_shared/src/freezed_custom_class.dart'
-    as _i8;
-import 'package:serverpod_architecture_client/src/protocol/post.dart' as _i9;
+    as _i9;
+import 'package:serverpod_architecture_client/src/protocol/post.dart' as _i10;
 import 'package:serverpod_architecture_client/src/protocol/employee.dart'
-    as _i10;
-import 'package:serverpod_architecture_client/src/protocol/user.dart' as _i11;
-import 'package:serverpod_auth_client/serverpod_auth_client.dart' as _i12;
+    as _i11;
+import 'package:serverpod_architecture_client/src/protocol/user.dart' as _i12;
 import 'protocol.dart' as _i13;
+
+/// {@category Endpoint}
+class EndpointAuthentication extends _i1.EndpointRef {
+  EndpointAuthentication(_i1.EndpointCaller caller) : super(caller);
+
+  @override
+  String get name => 'authentication';
+
+  _i2.Future<void> changeScopesAdmin(int userId) =>
+      caller.callServerEndpoint<void>(
+        'authentication',
+        'changeScopesAdmin',
+        {'userId': userId},
+      );
+
+  _i2.Future<_i3.UserInfo?> findUserLogin() =>
+      caller.callServerEndpoint<_i3.UserInfo?>(
+        'authentication',
+        'findUserLogin',
+        {},
+      );
+}
 
 /// CRUD endpoint for handling all operations on `Blocking` objects.
 /// {@category Endpoint}
@@ -35,39 +57,39 @@ class EndpointBlocking extends _i1.EndpointRef {
   String get name => 'blocking';
 
   /// Retrieves all `Blocking`s.
-  _i2.Future<List<_i3.Blocking>> getBlockings() =>
-      caller.callServerEndpoint<List<_i3.Blocking>>(
+  _i2.Future<List<_i4.Blocking>> getBlockings() =>
+      caller.callServerEndpoint<List<_i4.Blocking>>(
         'blocking',
         'getBlockings',
         {},
       );
 
   /// Retrieves a `Blocking` by its id.
-  _i2.Future<_i3.Blocking?> getBlocking(int id) =>
-      caller.callServerEndpoint<_i3.Blocking?>(
+  _i2.Future<_i4.Blocking?> getBlocking(int id) =>
+      caller.callServerEndpoint<_i4.Blocking?>(
         'blocking',
         'getBlocking',
         {'id': id},
       );
 
   /// Creates a new `Blocking`.
-  _i2.Future<_i3.Blocking> createBlocking(_i3.Blocking blocking) =>
-      caller.callServerEndpoint<_i3.Blocking>(
+  _i2.Future<_i4.Blocking> createBlocking(_i4.Blocking blocking) =>
+      caller.callServerEndpoint<_i4.Blocking>(
         'blocking',
         'createBlocking',
         {'blocking': blocking},
       );
 
   /// Updates a `Blocking`.
-  _i2.Future<_i3.Blocking> updateBlocking(_i3.Blocking blocking) =>
-      caller.callServerEndpoint<_i3.Blocking>(
+  _i2.Future<_i4.Blocking> updateBlocking(_i4.Blocking blocking) =>
+      caller.callServerEndpoint<_i4.Blocking>(
         'blocking',
         'updateBlocking',
         {'blocking': blocking},
       );
 
   /// Deletes a `Blocking`.
-  _i2.Future<void> deleteBlocking(_i3.Blocking blocking) =>
+  _i2.Future<void> deleteBlocking(_i4.Blocking blocking) =>
       caller.callServerEndpoint<void>(
         'blocking',
         'deleteBlocking',
@@ -82,16 +104,16 @@ class EndpointCaching extends _i1.EndpointRef {
   @override
   String get name => 'caching';
 
-  _i2.Future<_i4.UserData> getUserData(int userId) =>
-      caller.callServerEndpoint<_i4.UserData>(
+  _i2.Future<_i5.UserData> getUserData(int userId) =>
+      caller.callServerEndpoint<_i5.UserData>(
         'caching',
         'getUserData',
         {'userId': userId},
       );
 
   /// Cache miss handler
-  _i2.Future<_i4.UserData?> getUserDataMiss(int userId) =>
-      caller.callServerEndpoint<_i4.UserData?>(
+  _i2.Future<_i5.UserData?> getUserDataMiss(int userId) =>
+      caller.callServerEndpoint<_i5.UserData?>(
         'caching',
         'getUserDataMiss',
         {'userId': userId},
@@ -113,15 +135,15 @@ class EndpointCat extends _i1.EndpointRef {
   ///
   /// Returns:
   /// - A [Future] that resolves to a list of [Cat] objects.
-  _i2.Future<List<_i5.Cat>> getCats() =>
-      caller.callServerEndpoint<List<_i5.Cat>>(
+  _i2.Future<List<_i6.Cat>> getCats() =>
+      caller.callServerEndpoint<List<_i6.Cat>>(
         'cat',
         'getCats',
         {},
       );
 
   /// Retrieves a single [Cat] object from the database using the provided [session] and [id].
-  _i2.Future<_i5.Cat?> getCat(int id) => caller.callServerEndpoint<_i5.Cat?>(
+  _i2.Future<_i6.Cat?> getCat(int id) => caller.callServerEndpoint<_i6.Cat?>(
         'cat',
         'getCat',
         {'id': id},
@@ -135,8 +157,8 @@ class EndpointCat extends _i1.EndpointRef {
   ///
   /// Returns:
   /// - A [Future] that resolves to the created [Cat] object.
-  _i2.Future<_i5.Cat> createCat(_i5.Cat cat) =>
-      caller.callServerEndpoint<_i5.Cat>(
+  _i2.Future<_i6.Cat> createCat(_i6.Cat cat) =>
+      caller.callServerEndpoint<_i6.Cat>(
         'cat',
         'createCat',
         {'cat': cat},
@@ -150,8 +172,8 @@ class EndpointCat extends _i1.EndpointRef {
   ///
   /// Returns:
   /// - A [Future] that resolves to the updated [Cat] object.
-  _i2.Future<_i5.Cat> updateCat(_i5.Cat cat) =>
-      caller.callServerEndpoint<_i5.Cat>(
+  _i2.Future<_i6.Cat> updateCat(_i6.Cat cat) =>
+      caller.callServerEndpoint<_i6.Cat>(
         'cat',
         'updateCat',
         {'cat': cat},
@@ -165,7 +187,7 @@ class EndpointCat extends _i1.EndpointRef {
   ///
   /// Returns:
   /// - A [Future] that resolves to `void`.
-  _i2.Future<void> deleteCat(_i5.Cat cat) => caller.callServerEndpoint<void>(
+  _i2.Future<void> deleteCat(_i6.Cat cat) => caller.callServerEndpoint<void>(
         'cat',
         'deleteCat',
         {'cat': cat},
@@ -179,36 +201,36 @@ class EndpointCompany extends _i1.EndpointRef {
   @override
   String get name => 'company';
 
-  _i2.Future<List<_i6.Company>> getAllCompanies() =>
-      caller.callServerEndpoint<List<_i6.Company>>(
+  _i2.Future<List<_i7.Company>> getAllCompanies() =>
+      caller.callServerEndpoint<List<_i7.Company>>(
         'company',
         'getAllCompanies',
         {},
       );
 
-  _i2.Future<_i6.Company?> getCompany(int id) =>
-      caller.callServerEndpoint<_i6.Company?>(
+  _i2.Future<_i7.Company?> getCompany(int id) =>
+      caller.callServerEndpoint<_i7.Company?>(
         'company',
         'getCompany',
         {'id': id},
       );
 
-  _i2.Future<_i6.Company> createCompany(_i6.Company company) =>
-      caller.callServerEndpoint<_i6.Company>(
+  _i2.Future<_i7.Company> createCompany(_i7.Company company) =>
+      caller.callServerEndpoint<_i7.Company>(
         'company',
         'createCompany',
         {'company': company},
       );
 
-  _i2.Future<_i6.Company> updateCompany(_i6.Company company) =>
-      caller.callServerEndpoint<_i6.Company>(
+  _i2.Future<_i7.Company> updateCompany(_i7.Company company) =>
+      caller.callServerEndpoint<_i7.Company>(
         'company',
         'updateCompany',
         {'company': company},
       );
 
-  _i2.Future<_i6.Company> deleteCompany(_i6.Company company) =>
-      caller.callServerEndpoint<_i6.Company>(
+  _i2.Future<_i7.Company> deleteCompany(_i7.Company company) =>
+      caller.callServerEndpoint<_i7.Company>(
         'company',
         'deleteCompany',
         {'company': company},
@@ -228,15 +250,15 @@ class EndpointExample extends _i1.EndpointRef {
         {'name': name},
       );
 
-  _i2.Future<_i7.ClassName> getCustomClass() =>
-      caller.callServerEndpoint<_i7.ClassName>(
+  _i2.Future<_i8.ClassName> getCustomClass() =>
+      caller.callServerEndpoint<_i8.ClassName>(
         'example',
         'getCustomClass',
         {},
       );
 
-  _i2.Future<_i8.FreezedCustomClass> getFreezedCustomClass() =>
-      caller.callServerEndpoint<_i8.FreezedCustomClass>(
+  _i2.Future<_i9.FreezedCustomClass> getFreezedCustomClass() =>
+      caller.callServerEndpoint<_i9.FreezedCustomClass>(
         'example',
         'getFreezedCustomClass',
         {},
@@ -263,27 +285,27 @@ class EndpointPagination extends _i1.EndpointRef {
   String get name => 'pagination';
 
   /// Limit
-  _i2.Future<List<_i6.Company>> limit() =>
-      caller.callServerEndpoint<List<_i6.Company>>(
+  _i2.Future<List<_i7.Company>> limit() =>
+      caller.callServerEndpoint<List<_i7.Company>>(
         'pagination',
         'limit',
         {},
       );
 
   /// Offset
-  _i2.Future<List<_i6.Company>> offset() =>
-      caller.callServerEndpoint<List<_i6.Company>>(
+  _i2.Future<List<_i7.Company>> offset() =>
+      caller.callServerEndpoint<List<_i7.Company>>(
         'pagination',
         'offset',
         {},
       );
 
   /// Using Limit and Offset for Pagination
-  _i2.Future<List<_i6.Company>> pagination(
+  _i2.Future<List<_i7.Company>> pagination(
     int page,
     int perPage,
   ) =>
-      caller.callServerEndpoint<List<_i6.Company>>(
+      caller.callServerEndpoint<List<_i7.Company>>(
         'pagination',
         'pagination',
         {
@@ -321,8 +343,8 @@ class EndpointPost extends _i1.EndpointRef {
   /// The [post] parameter is the post object to be inserted into the database.
   ///
   /// Returns a `Future` that resolves to the inserted post object.
-  _i2.Future<_i9.Post> createPost(_i9.Post post) =>
-      caller.callServerEndpoint<_i9.Post>(
+  _i2.Future<_i10.Post> createPost(_i10.Post post) =>
+      caller.callServerEndpoint<_i10.Post>(
         'post',
         'createPost',
         {'post': post},
@@ -334,7 +356,8 @@ class EndpointPost extends _i1.EndpointRef {
   /// The [id] parameter is the ID of the post to be retrieved.
   ///
   /// Returns a `Future` that resolves to the retrieved [Post] object, or `null` if no post with the given ID exists.
-  _i2.Future<_i9.Post?> getPost(int id) => caller.callServerEndpoint<_i9.Post?>(
+  _i2.Future<_i10.Post?> getPost(int id) =>
+      caller.callServerEndpoint<_i10.Post?>(
         'post',
         'getPost',
         {'id': id},
@@ -347,8 +370,8 @@ class EndpointPost extends _i1.EndpointRef {
   ///
   /// Returns:
   ///   - A [Future] that resolves to a list of [Post] objects.
-  _i2.Future<List<_i9.Post>> getPosts() =>
-      caller.callServerEndpoint<List<_i9.Post>>(
+  _i2.Future<List<_i10.Post>> getPosts() =>
+      caller.callServerEndpoint<List<_i10.Post>>(
         'post',
         'getPosts',
         {},
@@ -360,7 +383,8 @@ class EndpointPost extends _i1.EndpointRef {
   /// The [post] parameter is the post object to be updated in the database.
   ///
   /// This function returns a `Future` that resolves when the update is complete.
-  _i2.Future<void> updatePost(_i9.Post post) => caller.callServerEndpoint<void>(
+  _i2.Future<void> updatePost(_i10.Post post) =>
+      caller.callServerEndpoint<void>(
         'post',
         'updatePost',
         {'post': post},
@@ -372,7 +396,8 @@ class EndpointPost extends _i1.EndpointRef {
   /// The [post] parameter is the post object to be deleted from the database.
   ///
   /// Returns a `Future` that resolves to `void`.
-  _i2.Future<void> deletePost(_i9.Post post) => caller.callServerEndpoint<void>(
+  _i2.Future<void> deletePost(_i10.Post post) =>
+      caller.callServerEndpoint<void>(
         'post',
         'deletePost',
         {'post': post},
@@ -386,8 +411,8 @@ class EndpointRawAccess extends _i1.EndpointRef {
   @override
   String get name => 'rawAccess';
 
-  _i2.Future<List<_i6.Company>> unsafeQuery() =>
-      caller.callServerEndpoint<List<_i6.Company>>(
+  _i2.Future<List<_i7.Company>> unsafeQuery() =>
+      caller.callServerEndpoint<List<_i7.Company>>(
         'rawAccess',
         'unsafeQuery',
         {},
@@ -408,56 +433,56 @@ class EndpointRelationQueries extends _i1.EndpointRef {
   String get name => 'relationQueries';
 
   /// Include relational data
-  _i2.Future<_i10.Employee?> include(int employeeId) =>
-      caller.callServerEndpoint<_i10.Employee?>(
+  _i2.Future<_i11.Employee?> include(int employeeId) =>
+      caller.callServerEndpoint<_i11.Employee?>(
         'relationQueries',
         'include',
         {'employeeId': employeeId},
       );
 
   /// Nested includes
-  _i2.Future<_i10.Employee?> nestedInclude(int employeeId) =>
-      caller.callServerEndpoint<_i10.Employee?>(
+  _i2.Future<_i11.Employee?> nestedInclude(int employeeId) =>
+      caller.callServerEndpoint<_i11.Employee?>(
         'relationQueries',
         'nestedInclude',
         {'employeeId': employeeId},
       );
 
   /// Include relational lists
-  _i2.Future<_i6.Company?> includeLists(int employeeId) =>
-      caller.callServerEndpoint<_i6.Company?>(
+  _i2.Future<_i7.Company?> includeLists(int employeeId) =>
+      caller.callServerEndpoint<_i7.Company?>(
         'relationQueries',
         'includeLists',
         {'employeeId': employeeId},
       );
 
   /// Nested includes
-  _i2.Future<_i6.Company?> nestedIncludeLists(int employeeId) =>
-      caller.callServerEndpoint<_i6.Company?>(
+  _i2.Future<_i7.Company?> nestedIncludeLists(int employeeId) =>
+      caller.callServerEndpoint<_i7.Company?>(
         'relationQueries',
         'nestedIncludeLists',
         {'employeeId': employeeId},
       );
 
   /// Filter
-  _i2.Future<_i6.Company?> filter(int employeeId) =>
-      caller.callServerEndpoint<_i6.Company?>(
+  _i2.Future<_i7.Company?> filter(int employeeId) =>
+      caller.callServerEndpoint<_i7.Company?>(
         'relationQueries',
         'filter',
         {'employeeId': employeeId},
       );
 
   /// Sort
-  _i2.Future<_i6.Company?> sort(int employeeId) =>
-      caller.callServerEndpoint<_i6.Company?>(
+  _i2.Future<_i7.Company?> sort(int employeeId) =>
+      caller.callServerEndpoint<_i7.Company?>(
         'relationQueries',
         'sort',
         {'employeeId': employeeId},
       );
 
   /// Pagination
-  _i2.Future<_i6.Company?> pagination(int employeeId) =>
-      caller.callServerEndpoint<_i6.Company?>(
+  _i2.Future<_i7.Company?> pagination(int employeeId) =>
+      caller.callServerEndpoint<_i7.Company?>(
         'relationQueries',
         'pagination',
         {'employeeId': employeeId},
@@ -515,8 +540,8 @@ class EndpointRelationQueries extends _i1.EndpointRef {
 
   /// Transactions
   _i2.Future<bool> transaction(
-    _i10.Employee employee,
-    _i6.Company company,
+    _i11.Employee employee,
+    _i7.Company company,
   ) =>
       caller.callServerEndpoint<bool>(
         'relationQueries',
@@ -536,40 +561,40 @@ class EndpointSort extends _i1.EndpointRef {
   String get name => 'sort';
 
   /// orderBy
-  _i2.Future<List<_i6.Company>> orderBy() =>
-      caller.callServerEndpoint<List<_i6.Company>>(
+  _i2.Future<List<_i7.Company>> orderBy() =>
+      caller.callServerEndpoint<List<_i7.Company>>(
         'sort',
         'orderBy',
         {},
       );
 
   /// orderDescending
-  _i2.Future<List<_i6.Company>> orderDescending() =>
-      caller.callServerEndpoint<List<_i6.Company>>(
+  _i2.Future<List<_i7.Company>> orderDescending() =>
+      caller.callServerEndpoint<List<_i7.Company>>(
         'sort',
         'orderDescending',
         {},
       );
 
   /// orderByList
-  _i2.Future<List<_i6.Company>> orderByList() =>
-      caller.callServerEndpoint<List<_i6.Company>>(
+  _i2.Future<List<_i7.Company>> orderByList() =>
+      caller.callServerEndpoint<List<_i7.Company>>(
         'sort',
         'orderByList',
         {},
       );
 
   /// Sort on relations
-  _i2.Future<List<_i6.Company>> sort() =>
-      caller.callServerEndpoint<List<_i6.Company>>(
+  _i2.Future<List<_i7.Company>> sort() =>
+      caller.callServerEndpoint<List<_i7.Company>>(
         'sort',
         'sort',
         {},
       );
 
   /// Sort count sub-field
-  _i2.Future<List<_i6.Company>> sortCount() =>
-      caller.callServerEndpoint<List<_i6.Company>>(
+  _i2.Future<List<_i7.Company>> sortCount() =>
+      caller.callServerEndpoint<List<_i7.Company>>(
         'sort',
         'sortCount',
         {},
@@ -584,43 +609,43 @@ class EndpointUser extends _i1.EndpointRef {
   String get name => 'user';
 
   /// Retrieves a list of all users in the database.
-  _i2.Future<List<_i11.User>> find() =>
-      caller.callServerEndpoint<List<_i11.User>>(
+  _i2.Future<List<_i12.User>> find() =>
+      caller.callServerEndpoint<List<_i12.User>>(
         'user',
         'find',
         {},
       );
 
   /// Retrieves a list of all users in the database that have the given name.
-  _i2.Future<List<_i11.User>> equal(String value) =>
-      caller.callServerEndpoint<List<_i11.User>>(
+  _i2.Future<List<_i12.User>> equal(String value) =>
+      caller.callServerEndpoint<List<_i12.User>>(
         'user',
         'equal',
         {'value': value},
       );
 
   /// Retrieves a list of all users in the database that do not have the given name.
-  _i2.Future<List<_i11.User>> notEqual(String value) =>
-      caller.callServerEndpoint<List<_i11.User>>(
+  _i2.Future<List<_i12.User>> notEqual(String value) =>
+      caller.callServerEndpoint<List<_i12.User>>(
         'user',
         'notEqual',
         {'value': value},
       );
 
   /// Retrieves a list of all users in the database that have the given age.
-  _i2.Future<List<_i11.User>> operators(int value) =>
-      caller.callServerEndpoint<List<_i11.User>>(
+  _i2.Future<List<_i12.User>> operators(int value) =>
+      caller.callServerEndpoint<List<_i12.User>>(
         'user',
         'operators',
         {'value': value},
       );
 
   /// Retrieves a list of all users in the database that
-  _i2.Future<List<_i11.User>> between(
+  _i2.Future<List<_i12.User>> between(
     int min,
     int max,
   ) =>
-      caller.callServerEndpoint<List<_i11.User>>(
+      caller.callServerEndpoint<List<_i12.User>>(
         'user',
         'between',
         {
@@ -630,11 +655,11 @@ class EndpointUser extends _i1.EndpointRef {
       );
 
   /// Retrieves a list of all users in the database that do not have the given age.
-  _i2.Future<List<_i11.User>> notBetween(
+  _i2.Future<List<_i12.User>> notBetween(
     int min,
     int max,
   ) =>
-      caller.callServerEndpoint<List<_i11.User>>(
+      caller.callServerEndpoint<List<_i12.User>>(
         'user',
         'notBetween',
         {
@@ -644,48 +669,48 @@ class EndpointUser extends _i1.EndpointRef {
       );
 
   /// Retrieves a list of all users in the database that have the given name.
-  _i2.Future<List<_i11.User>> inSet(Set<String> values) =>
-      caller.callServerEndpoint<List<_i11.User>>(
+  _i2.Future<List<_i12.User>> inSet(Set<String> values) =>
+      caller.callServerEndpoint<List<_i12.User>>(
         'user',
         'inSet',
         {'values': values},
       );
 
   /// Retrieves a list of all users in the database that do not have the given name.
-  _i2.Future<List<_i11.User>> notInSet(Set<String> values) =>
-      caller.callServerEndpoint<List<_i11.User>>(
+  _i2.Future<List<_i12.User>> notInSet(Set<String> values) =>
+      caller.callServerEndpoint<List<_i12.User>>(
         'user',
         'notInSet',
         {'values': values},
       );
 
   /// Retrieves a list of all users in the database that have the given name.
-  _i2.Future<List<_i11.User>> like(String value) =>
-      caller.callServerEndpoint<List<_i11.User>>(
+  _i2.Future<List<_i12.User>> like(String value) =>
+      caller.callServerEndpoint<List<_i12.User>>(
         'user',
         'like',
         {'value': value},
       );
 
   /// Retrieves a list of all users in the database that do not have the given name.
-  _i2.Future<List<_i11.User>> notLike(String value) =>
-      caller.callServerEndpoint<List<_i11.User>>(
+  _i2.Future<List<_i12.User>> notLike(String value) =>
+      caller.callServerEndpoint<List<_i12.User>>(
         'user',
         'notLike',
         {'value': value},
       );
 
   /// Retrieves a list of all users in the database that have the given name.
-  _i2.Future<List<_i11.User>> iLike(String value) =>
-      caller.callServerEndpoint<List<_i11.User>>(
+  _i2.Future<List<_i12.User>> iLike(String value) =>
+      caller.callServerEndpoint<List<_i12.User>>(
         'user',
         'iLike',
         {'value': value},
       );
 
   /// Retrieves a list of all users in the database that do not have the given name.
-  _i2.Future<List<_i11.User>> notILike(String value) =>
-      caller.callServerEndpoint<List<_i11.User>>(
+  _i2.Future<List<_i12.User>> notILike(String value) =>
+      caller.callServerEndpoint<List<_i12.User>>(
         'user',
         'notILike',
         {'value': value},
@@ -695,48 +720,48 @@ class EndpointUser extends _i1.EndpointRef {
   ///
   /// * The `&` operator is used to chain two statements together with an `and` operation.
   /// * The `|` operator is used to chain two statements together with an `or` operation.
-  _i2.Future<List<_i11.User>> logicalOperators(String value) =>
-      caller.callServerEndpoint<List<_i11.User>>(
+  _i2.Future<List<_i12.User>> logicalOperators(String value) =>
+      caller.callServerEndpoint<List<_i12.User>>(
         'user',
         'logicalOperators',
         {'value': value},
       );
 
   /// One-to-one relationships
-  _i2.Future<List<_i11.User>> oneToOne(int value) =>
-      caller.callServerEndpoint<List<_i11.User>>(
+  _i2.Future<List<_i12.User>> oneToOne(int value) =>
+      caller.callServerEndpoint<List<_i12.User>>(
         'user',
         'oneToOne',
         {'value': value},
       );
 
   /// One-to-many relationships
-  _i2.Future<List<_i11.User>> oneToMany(int id) =>
-      caller.callServerEndpoint<List<_i11.User>>(
+  _i2.Future<List<_i12.User>> oneToMany(int id) =>
+      caller.callServerEndpoint<List<_i12.User>>(
         'user',
         'oneToMany',
         {'id': id},
       );
 
   /// None relationships
-  _i2.Future<List<_i11.User>> none(int id) =>
-      caller.callServerEndpoint<List<_i11.User>>(
+  _i2.Future<List<_i12.User>> none(int id) =>
+      caller.callServerEndpoint<List<_i12.User>>(
         'user',
         'none',
         {'id': id},
       );
 
   /// Any relationships
-  _i2.Future<List<_i11.User>> any(int id) =>
-      caller.callServerEndpoint<List<_i11.User>>(
+  _i2.Future<List<_i12.User>> any(int id) =>
+      caller.callServerEndpoint<List<_i12.User>>(
         'user',
         'any',
         {'id': id},
       );
 
   /// Every relationships
-  _i2.Future<List<_i11.User>> every(int id) =>
-      caller.callServerEndpoint<List<_i11.User>>(
+  _i2.Future<List<_i12.User>> every(int id) =>
+      caller.callServerEndpoint<List<_i12.User>>(
         'user',
         'every',
         {'id': id},
@@ -745,10 +770,10 @@ class EndpointUser extends _i1.EndpointRef {
 
 class _Modules {
   _Modules(Client client) {
-    auth = _i12.Caller(client);
+    auth = _i3.Caller(client);
   }
 
-  late final _i12.Caller auth;
+  late final _i3.Caller auth;
 }
 
 class Client extends _i1.ServerpodClient {
@@ -774,6 +799,7 @@ class Client extends _i1.ServerpodClient {
           onFailedCall: onFailedCall,
           onSucceededCall: onSucceededCall,
         ) {
+    authentication = EndpointAuthentication(this);
     blocking = EndpointBlocking(this);
     caching = EndpointCaching(this);
     cat = EndpointCat(this);
@@ -787,6 +813,8 @@ class Client extends _i1.ServerpodClient {
     user = EndpointUser(this);
     modules = _Modules(this);
   }
+
+  late final EndpointAuthentication authentication;
 
   late final EndpointBlocking blocking;
 
@@ -814,6 +842,7 @@ class Client extends _i1.ServerpodClient {
 
   @override
   Map<String, _i1.EndpointRef> get endpointRefLookup => {
+        'authentication': authentication,
         'blocking': blocking,
         'caching': caching,
         'cat': cat,

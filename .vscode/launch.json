@@ -16,7 +16,8 @@
             "args": [
                 "--device-id", "web-server", 
                 "--web-hostname", "localhost", 
-                // "--web-port", "7357"
+                "--web-port", "7357",
+                "--dart-define-from-file", ".env"
             ],
         },
         {

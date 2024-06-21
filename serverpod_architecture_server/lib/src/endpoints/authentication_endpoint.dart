@@ -21,6 +21,13 @@ class AuthenticationEndpoint extends Endpoint {
 
     return Users.findUserByUserId(session, info!.userId);
   }
+
+  Future<List<String>?> findUserGoogle(Session session) async {
+    final userId = (await findUserLogin(session))!.id!;
+    final googleClient = await GoogleAuth.authClientForUser(session, userId);
+
+    return googleClient?.credentials.scopes;
+  }
 }
 
 class CustomScope extends Scope {

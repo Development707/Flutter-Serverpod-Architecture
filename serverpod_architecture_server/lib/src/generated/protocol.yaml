@@ -1,3 +1,6 @@
+authentication:
+  - changeScopesAdmin:
+  - findUserLogin:
 blocking:
   - getBlockings:
   - getBlocking:
