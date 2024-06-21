@@ -34,6 +34,16 @@ void run(List<String> args) async {
   // Configure Auth
   auth.AuthConfig.set(auth.AuthConfig(
     minPasswordLength: 12,
+    sendValidationEmail: (session, email, validationCode) async {
+      // Send the validation email to the user.
+      // Return `true` if the email was successfully sent, otherwise `false`.
+      return true;
+    },
+    sendPasswordResetEmail: (session, userInfo, validationCode) async {
+      // Send the password reset email to the user.
+      // Return `true` if the email was successfully sent, otherwise `false`.
+      return true;
+    },
   ));
 
   // Start the server.

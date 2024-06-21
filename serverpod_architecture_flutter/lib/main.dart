@@ -3,6 +3,7 @@ import 'package:serverpod_architecture_client/serverpod_architecture_client.dart
 import 'package:serverpod_auth_shared_flutter/serverpod_auth_shared_flutter.dart';
 import 'package:serverpod_flutter/serverpod_flutter.dart';
 
+import 'authentication/authentication_page.dart';
 import 'company/company_page.dart';
 import 'exception/exception_page.dart';
 import 'home/home_page.dart';
@@ -60,6 +61,7 @@ class MyApp extends StatelessWidget {
         '/serialization': (context) => const SerializationPage(),
         '/exception': (context) => const ExceptionPage(),
         '/sessions': (context) => const SessionsPage(),
+        '/authentication': (context) => const AuthenticationPage(),
       },
     );
   }

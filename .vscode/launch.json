@@ -8,20 +8,25 @@
             "name": "Flutter",
             "cwd": "serverpod_architecture_flutter",
             "request": "launch",
+            "console": "debugConsole",
+            "internalConsoleOptions": "openOnSessionStart",
             "type": "dart",
             "flutterMode": "debug",
-            "deviceId": "chrome",
-            "console": "debugConsole",
-            "internalConsoleOptions": "openOnSessionStart"
+            "program": "lib/main.dart",
+            "args": [
+                "--device-id", "web-server", 
+                "--web-hostname", "localhost", 
+                // "--web-port", "7357"
+            ],
         },
         {
             "name": "Server",
             "cwd": "serverpod_architecture_server",
             "request": "launch",
-            "flutterMode": "release",
             "console": "debugConsole",
             "internalConsoleOptions": "openOnSessionStart",
             "type": "dart",
+            "flutterMode": "release",
             "program": "bin/main.dart",
             "args": [
                 "--apply-migrations"
