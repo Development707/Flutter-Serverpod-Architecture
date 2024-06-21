@@ -28,6 +28,7 @@ dependencies:
   serverpod_auth_shared_flutter: 2.0.1
   serverpod_auth_email_flutter: 2.0.1
   serverpod_auth_google_flutter: 2.0.1
+  serverpod_auth_apple_flutter: 2.0.1
   serverpod_architecture_client:
     path: ../serverpod_architecture_client
   serverpod_architecture_shared:

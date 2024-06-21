@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:serverpod_auth_apple_flutter/serverpod_auth_apple_flutter.dart';
 import 'package:serverpod_auth_email_flutter/serverpod_auth_email_flutter.dart';
 import 'package:serverpod_auth_google_flutter/serverpod_auth_google_flutter.dart';
 
@@ -16,6 +17,7 @@ class AuthenticationPage extends StatelessWidget {
         padding: const EdgeInsets.all(16),
         children: [
           const CustomEmailAuthUI(),
+          const SizedBox(height: 16),
           SignInWithEmailButton(
             caller: client.modules.auth,
             onSignedIn: () {
@@ -28,7 +30,11 @@ class AuthenticationPage extends StatelessWidget {
             serverClientId: const String.fromEnvironment(
                 'YOUR_SERVER_CLIENT_ID'), // needs to be supplied for the web integration
             redirectUri: Uri.parse('http://localhost:8082/googlesignin'),
-          )
+          ),
+          const SizedBox(height: 16),
+          SignInWithAppleButton(
+            caller: client.modules.auth,
+          ),
         ],
       ),
     );
